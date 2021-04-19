@@ -9,9 +9,9 @@ object Routes {
 
   def apply(): Route = {
     concat(
-      path("asd") {
+      path("ping") {
         get {
-          complete(200, "Happy christmas")
+          complete(200, "pong")
         }
       }
         ~ path("login") {

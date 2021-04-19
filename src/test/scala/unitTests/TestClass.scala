@@ -1,5 +1,0 @@
-package unitTests
-
-class TestClass {
-
-}
