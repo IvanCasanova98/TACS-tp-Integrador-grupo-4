@@ -1,9 +1,9 @@
 package server
+
 import akka.actor.typed.ActorSystem
 import akka.actor.typed.scaladsl.Behaviors
 import akka.http.scaladsl.Http
-import akka.http.scaladsl.model._
-import akka.http.scaladsl.server.Directives._
+import routes.Routes
 
 import scala.concurrent.ExecutionContextExecutor
 
@@ -15,12 +15,9 @@ object HttpServer {
 
     implicit val executionContext: ExecutionContextExecutor = system.executionContext
 
-    val route =
-      path("") {
-        get {
-          complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, "<h1>TACS Tp 1er cuatri 2021</h1>"))
-        }
-      }
+    val route = {
+      Routes()
+    }
 
     Http().newServerAt("0.0.0.0", 8080).bind(route)
 
