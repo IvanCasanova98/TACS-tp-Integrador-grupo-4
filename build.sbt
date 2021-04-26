@@ -23,3 +23,7 @@ libraryDependencies ++= Seq(
 
 enablePlugins(JavaAppPackaging)
 enablePlugins(DockerPlugin)
+
+
+import com.github.sbt.jacoco.JacocoPlugin.autoImport._
+jacocoReportSettings := JacocoReportSettings(title = "coverage", formats = Seq(JacocoReportFormats.XML))
