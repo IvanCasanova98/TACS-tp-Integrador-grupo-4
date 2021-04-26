@@ -15,13 +15,11 @@ object HttpServer {
 
     implicit val executionContext: ExecutionContextExecutor = system.executionContext
 
-    val route = {
-      Routes()
-    }
+    val route = Routes()
 
-    Http().newServerAt("0.0.0.0", 8080).bind(route)
+    Http().newServerAt("0.0.0.0", 9000).bind(route)
 
-    println(s"Server online at http://localhost:8080/")
+    println(s"Server online at http://localhost:9000/")
 
   }
 }
