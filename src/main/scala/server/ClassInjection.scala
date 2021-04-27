@@ -7,8 +7,8 @@ import scala.collection.mutable
 
 trait ClassInjection {
 
-  val db: mutable.HashMap[Int, Deck] = mutable.HashMap[Int, Deck]()
-  val deckRepository = new DeckRepository(db)
+  val deckDb: mutable.HashMap[Int, Deck] = mutable.HashMap[Int, Deck]()
+  val deckRepository = new DeckRepository(deckDb)
   val deckService = new DeckService(deckRepository)
 
 }
