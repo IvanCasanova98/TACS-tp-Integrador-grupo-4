@@ -12,7 +12,6 @@ import services.DeckService
 
 object DeckRoutes extends Json4sSnakeCaseSupport {
 
-  implicit val fm: Formats = DefaultFormats
   val logger: Logger = LoggerFactory.getLogger(classOf[DeckService])
 
   def apply(deckService: DeckService): Route = {
