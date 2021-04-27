@@ -2,6 +2,6 @@ package routes.inputs
 
 object DeckInputs {
 
-  case class PostDeckInput(name: String, cardIds: List[Int])
+  case class PartialDeckInput(name: String, cardIds: List[Int])
 
 }

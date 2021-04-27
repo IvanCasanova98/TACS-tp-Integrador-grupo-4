@@ -1,11 +1,11 @@
 package routes
 
-import akka.http.scaladsl.server.Directives.{as, complete, concat, delete, entity, get, path, post, put}
-import akka.http.scaladsl.server.PathMatchers.IntNumber
+import akka.http.scaladsl.model.StatusCodes
+import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
 import org.json4s.{DefaultFormats, Formats}
 import org.slf4j.{Logger, LoggerFactory}
-import routes.inputs.DeckInputs.PostDeckInput
+import routes.inputs.DeckInputs.PartialDeckInput
 import serializers.Json4sSnakeCaseSupport
 import services.DeckService
 
@@ -15,26 +15,35 @@ object DeckRoutes extends Json4sSnakeCaseSupport {
   val logger: Logger = LoggerFactory.getLogger(classOf[DeckService])
 
   def apply(deckService: DeckService): Route = {
-    path("decks") {
-      concat(
+    concat(
+      path("decks") {
         post {
-          entity(as[PostDeckInput]) { deck =>
-            logger.info(s"[POST] /decks arrived with name: ${deck.name}")
+          entity(as[PartialDeckInput]) { deck =>
+            logger.info("[POST] /decks")
             val deckId: Int = deckService.createDeck(deck)
-            complete(201, s"Deck created with id: $deckId")
-          }
-        },
-        path(IntNumber) { deckId =>
-          put {
-            //BODY: name, card_ids []
-            complete(204, s"$deckId")
-          }
-          delete {
-            complete(204, s"Deck deleted $deckId")
+            complete(StatusCodes.Created, s"Deck created with id: $deckId")
           }
         }
-      )
-    }
+      },
+      path("decks" / IntNumber) { deckId =>
+        put {
+          entity(as[PartialDeckInput]) { deck =>
+            logger.info(s"[PUT] /decks/$deckId")
+
+            deckService.updateDeck(deckId, deck)
+            complete(StatusCodes.NoContent, s"$deckId")
+          }
+        }
+      },
+      path("decks" / IntNumber) { deckId =>
+        delete {
+          logger.info(s"[DELETE] /decks/$deckId")
+          val deleted = deckService.deleteDeck(deckId)
+          val statusCode = if (deleted) StatusCodes.NoContent else StatusCodes.NotFound
+          complete(statusCode, s"Deck id $deckId was not found")
+        }
+      }
+    )
   }
 
 }

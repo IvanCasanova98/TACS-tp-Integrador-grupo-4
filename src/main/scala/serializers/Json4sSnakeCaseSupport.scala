@@ -30,7 +30,7 @@ trait Json4sSnakeCaseSupport {
    */
   implicit def jsonFromEntityUnmarshaller[A: Manifest](implicit formats: Formats): FromEntityUnmarshaller[A] =
     jsonStringUnmarshaller
-      .map(s => parse(s).camelizeKeys.extract[A])
+      .map(s => parse(s).camelizeKeys.noNulls.extract[A])
 
   /**
    * `A` => HTTP entity
