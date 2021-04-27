@@ -21,7 +21,7 @@ class DeckService(deckRepository: DeckRepository) {
     deckRepository.updateDeck(deck)
   }
 
-  def deleteDeck(deckId: Int): Boolean = {
+  def deleteDeck(deckId: Int): Deck = {
     logger.info(s"Deleting deck $deckId")
     deckRepository.deleteDeck(deckId)
   }

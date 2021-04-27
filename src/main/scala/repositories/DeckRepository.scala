@@ -19,8 +19,8 @@ class DeckRepository(db: mutable.HashMap[Int, Deck]) {
     db.update(deck.id, deck)
   }
 
-  def deleteDeck(deckId: Int): Boolean = {
-    db.remove(deckId).isDefined
+  def deleteDeck(deckId: Int): Deck = {
+    db.remove(deckId).getOrElse(throw DeckNotFoundException(deckId))
   }
 
 }
