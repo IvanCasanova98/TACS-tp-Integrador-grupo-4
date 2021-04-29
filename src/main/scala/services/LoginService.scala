@@ -6,10 +6,12 @@ import repositories.PlayerRepository
 
 class LoginService(playerRepository: PlayerRepository) {
 
-  val logger: Logger = LoggerFactory.getLogger(classOf[DeckService])
+  val logger: Logger = LoggerFactory.getLogger(classOf[LoginService])
 
   def getPlayerPermissions(playerId: String): PlayerPermissions = {
-    playerRepository.getPlayerPermissions(playerId)
+    val result = playerRepository.getPlayerPermissions(playerId)
+    logger.info(s"Found player permissions for playerId '$playerId': $result")
+    result
   }
 
 }

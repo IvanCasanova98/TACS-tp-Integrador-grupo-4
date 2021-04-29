@@ -23,7 +23,7 @@ object Routes extends ClassInjection with Json4sSnakeCaseSupport {
         ~ path("login") {
         post {
           entity(as[LoginInput]) { loginInput =>
-            logger.info("[POST] /login")
+            logger.info(s"[POST] /login with: ${loginInput}")
             handleRequest(() => loginService.getPlayerPermissions(loginInput.googleId), StatusCodes.OK)
           }
         }
