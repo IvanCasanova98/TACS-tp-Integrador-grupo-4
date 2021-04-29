@@ -4,6 +4,8 @@ import akka.http.scaladsl.model.StatusCodes
 import akka.http.scaladsl.server.Directives.{complete, get, parameters, patch, path, post, _}
 import akka.http.scaladsl.server.PathMatchers.IntNumber
 import akka.http.scaladsl.server.Route
+import routes.DeckRoutes.logger
+import routes.inputs.LoginInputs.LoginInput
 import serializers.Json4sSnakeCaseSupport
 import server.ClassInjection
 
@@ -19,6 +21,10 @@ object Routes extends ClassInjection with Json4sSnakeCaseSupport {
       }
         ~ path("login") {
         post {
+          entity(as[LoginInput]) { loginInput =>
+            logger.info("[POST] /login")
+
+          }
           complete("")
         }
       }
