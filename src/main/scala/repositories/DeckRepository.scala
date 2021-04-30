@@ -1,26 +1,19 @@
 package repositories
-import exceptions.Exceptions.DeckNotFoundException
-
-import scala.collection.mutable
 import models.Deck
+import repositories.daos.DeckIDao
 
-class DeckRepository(db: mutable.HashMap[Int, Deck]) {
-
-  var deckId = 0
+class DeckRepository(dao: DeckIDao) {
 
   def createDeck(deckName: String, cardIds: List[Int]): Int = {
-    deckId += 1
-    db.put(deckId, Deck(deckId, deckName, cardIds))
-    deckId
+    dao.createDeck(deckName,cardIds)
   }
 
   def updateDeck(deck: Deck): Unit = {
-    db.getOrElse(deck.id, throw DeckNotFoundException(deck.id))
-    db.update(deck.id, deck)
+    dao.updateDeck(deck)
   }
 
   def deleteDeck(deckId: Int): Deck = {
-    db.remove(deckId).getOrElse(throw DeckNotFoundException(deckId))
+    dao.deleteDeck(deckId)
   }
 
 }
