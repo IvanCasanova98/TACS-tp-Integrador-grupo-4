@@ -12,8 +12,8 @@ case class SuperheroApi()  {
   val uri = "https://superheroapi.com/api/"
   val access_token = "103706338543731"
 
-  def get_hero_by_id( identi: Int): String = {
-    val get = new HttpGet(uri.concat(access_token).concat("/").concat(identi.toString) )
+  def get_hero_by_id(hero_id: Int): String = {
+    val get = new HttpGet(uri.concat(access_token).concat("/").concat(hero_id.toString) )
     val responseget = (new DefaultHttpClient).execute(get)
     val handler = new BasicResponseHandler
     val json = JSON.parseFull(handler.handleResponse(responseget)).get.asInstanceOf[Map[Any, Any]]
@@ -34,4 +34,21 @@ case class SuperheroApi()  {
     //val imageUrl: String = ""
     //Card(id, name, powerStats, imageUrl)
   }
+
+  def search_heroes_by_name(hero_name: String): String = {
+    val get = new HttpGet(uri.concat(access_token).concat("/search/").concat(hero_name) )
+    val responseget = (new DefaultHttpClient).execute(get)
+    val handler = new BasicResponseHandler
+    val json = JSON.parseFull(handler.handleResponse(responseget)).get.asInstanceOf[List[Map[Any, Any]]]
+    if (Set("id","name","powerstats","image").subsetOf(json.keys.asInstanceOf[Set[String]])){
+      val id: Int = json.get("id").get.asInstanceOf[String].toInt
+      val name: String = json.get("name").get.asInstanceOf[String]
+      val imageUrl: String = json.get("image").get.asInstanceOf[Map[Any, Any]].get("url").get.asInstanceOf[String]
+      val powerStats: List[Attribute] = json.get("powerstats").get.asInstanceOf[List[Map[Any, Any]]].foreach(power => Attribute(AttributeName(power.asInstanceOf[Map[Any, Any]].get("name")), power.asInstanceOf[Map[Any, Any]].get("value").asInstanceOf[Int]))
+      //Card(id, name, json.get("powerstats").asInstanceOf[List[Attribute]], imageUrl).toString
+      json.toString()
+    }
+    else{
+      Set(json.keys).contains("id").toString()
+    }
 }
