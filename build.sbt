@@ -21,7 +21,8 @@ libraryDependencies ++= Seq(
   "org.scalatest" %% "scalatest" % "3.0.8" % Test,
   "com.fasterxml.jackson.datatype" % "jackson-datatype-jsr310" % "2.9.6",
   "org.json4s" %% "json4s-jackson" % vJson4s,
-  "org.json4s" %% "json4s-native" % vJson4s
+  "org.json4s" %% "json4s-native" % vJson4s,
+  "ch.megard" %% "akka-http-cors" % "1.1.1"
 )
 
 enablePlugins(JavaAppPackaging)

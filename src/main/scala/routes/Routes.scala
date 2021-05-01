@@ -5,29 +5,29 @@ import akka.http.scaladsl.server.Directives.{complete, get, parameters, patch, p
 import akka.http.scaladsl.server.PathMatchers.IntNumber
 import akka.http.scaladsl.server.Route
 import routes.DeckRoutes.logger
-import routes.Utils.handleRequest
+import server.CORSHandler
+import ch.megard.akka.http.cors.scaladsl.settings.CorsSettings
 import routes.inputs.LoginInputs.LoginInput
 import serializers.Json4sSnakeCaseSupport
 import server.ClassInjection
 
-object Routes extends ClassInjection with Json4sSnakeCaseSupport {
+object Routes extends ClassInjection with Json4sSnakeCaseSupport with CORSHandler {
 
+  val settings: CorsSettings = CorsSettings.defaultSettings
   def apply(): Route = {
 
     concat(
       path("ping") {
-        get {
-          complete(StatusCodes.OK, "pong")
-        }
+        complete(StatusCodes.OK, "pong")
       }
-        ~ path("login") {
+        ~ corsHandler(path("login") {
         post {
           entity(as[LoginInput]) { loginInput =>
             logger.info(s"[POST] /login with: ${loginInput}")
-            handleRequest(() => loginService.getPlayerPermissions(loginInput.googleId), StatusCodes.OK)
+            complete(StatusCodes.OK,loginService.getPlayerPermissions(loginInput.googleId))
           }
         }
-      }
+      })
         ~ DeckRoutes(deckService)
         ~ path("statistics") {
         parameters("search_by".as[String], "user_id".optional) { (searchBy, userId) =>
