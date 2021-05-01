@@ -24,7 +24,7 @@ object Routes extends ClassInjection with Json4sSnakeCaseSupport with CorsDirect
               post {
                   entity(as[LoginInput]) { loginInput =>
                     logger.info(s"[POST] /login with: $loginInput")
-                    complete(StatusCodes.OK, loginService.getPlayerPermissions(loginInput.googleId))
+                    complete(StatusCodes.OK, loginService.getPlayerPermissions(loginInput))
                   }
               }
             }
