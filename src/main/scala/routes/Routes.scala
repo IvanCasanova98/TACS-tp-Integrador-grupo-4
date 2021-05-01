@@ -4,6 +4,9 @@ import akka.http.scaladsl.model.StatusCodes
 import akka.http.scaladsl.server.Directives.{complete, get, parameters, patch, path, post, _}
 import akka.http.scaladsl.server.PathMatchers.IntNumber
 import akka.http.scaladsl.server.Route
+import routes.DeckRoutes.logger
+import routes.Utils.handleRequest
+import routes.inputs.LoginInputs.LoginInput
 import serializers.Json4sSnakeCaseSupport
 import server.ClassInjection
 
@@ -19,7 +22,10 @@ object Routes extends ClassInjection with Json4sSnakeCaseSupport {
       }
         ~ path("login") {
         post {
-          complete("")
+          entity(as[LoginInput]) { loginInput =>
+            logger.info(s"[POST] /login with: ${loginInput}")
+            handleRequest(() => loginService.getPlayerPermissions(loginInput.googleId), StatusCodes.OK)
+          }
         }
       }
         ~ DeckRoutes(deckService)
