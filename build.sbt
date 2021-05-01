@@ -7,7 +7,7 @@ scalaVersion := "2.13.5"
 mainClass in Compile := Some("server.HttpServer")
 
 val AkkaVersion = "2.6.8"
-val AkkaHttpVersion = "10.2.4"
+val AkkaHttpVersion = "10.2.2"
 val vJson4s = "3.7.0-M16"
 
 libraryDependencies ++= Seq(
