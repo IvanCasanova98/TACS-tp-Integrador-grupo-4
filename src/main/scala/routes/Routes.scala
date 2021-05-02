@@ -25,12 +25,12 @@ object Routes extends ClassInjection with Json4sSnakeCaseSupport {
         concat(
           path(IntNumber / "id"){ matchId =>
             get {
-              complete(StatusCodes.OK, SuperheroApi().get_hero_by_id(matchId))
+              complete(StatusCodes.OK, SuperheroApi().get_hero_by_id(matchId).to_json())
             }
           },
           path(Segment /  "name"){ matchString =>
             get {
-              complete(StatusCodes.OK, SuperheroApi().search_heroes_by_name(matchString))
+              complete(StatusCodes.OK, SuperheroApi().search_heroes_by_name(matchString).map(card => card.to_json()))
             }
           },
         )

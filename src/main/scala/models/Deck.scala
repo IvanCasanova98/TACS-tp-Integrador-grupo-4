@@ -1,6 +1,13 @@
 package models
 
-case class Card(id: Int, name: String, powerStats: List[Attribute], imageUrl: String)
+import scala.collection.immutable.HashMap
+
+case class Card(id: Int, name: String, powerStats: List[Attribute], imageUrl: String){
+  def to_json(): HashMap[Any, Any] ={
+    val powerStatsJson = powerStats.map(power => HashMap("name"-> power.name.name(), "value"-> power.value))
+    HashMap("id"-> id,"name"-> name, "imageUrl" -> imageUrl, "powerStats"-> powerStatsJson)
+  }
+}
 
 case class Deck(id: Int, name: String, cardIds: List[Int])
 
