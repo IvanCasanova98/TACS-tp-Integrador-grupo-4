@@ -6,6 +6,7 @@ import akka.http.scaladsl.server.PathMatchers.IntNumber
 import akka.http.scaladsl.server.Route
 import serializers.Json4sSnakeCaseSupport
 import server.ClassInjection
+import services.SuperheroApi
 
 object Routes extends ClassInjection with Json4sSnakeCaseSupport {
 
@@ -16,6 +17,20 @@ object Routes extends ClassInjection with Json4sSnakeCaseSupport {
         get {
           complete(StatusCodes.OK, "pong")
         }
+      },
+       pathPrefix("cards") {
+        concat(
+          path(IntNumber / "id"){ matchId =>
+            get {
+              complete(StatusCodes.OK, SuperheroApi().get_hero_by_id(matchId))
+            }
+          },
+          path(Segment /  "name"){ matchString =>
+            get {
+              complete(StatusCodes.OK, SuperheroApi().search_heroes_by_name(matchString))
+            }
+          },
+        )
       }
         ~ path("login") {
         post {
@@ -29,6 +44,7 @@ object Routes extends ClassInjection with Json4sSnakeCaseSupport {
           complete(StatusCodes.OK, "")
         }
       }
+
         ~ path("matches") {
         concat(
         post {

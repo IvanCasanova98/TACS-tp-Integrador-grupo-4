@@ -1,8 +1,5 @@
 package unitTests
-
-import akka.actor.typed.ActorRef
 import akka.http.scaladsl.testkit.ScalatestRouteTest
-import com.sun.tools.javac.jvm.PoolConstant.LoadableConstant.String
 import org.scalatest.{Matchers, WordSpec}
 import routes.Routes
 
