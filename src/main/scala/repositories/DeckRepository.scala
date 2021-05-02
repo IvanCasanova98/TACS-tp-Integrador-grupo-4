@@ -1,8 +1,8 @@
 package repositories
 import models.Deck
-import repositories.daos.DeckIDao
+import repositories.daos.DeckDao
 
-class DeckRepository(dao: DeckIDao) {
+class DeckRepository(dao: DeckDao) {
 
   def createDeck(deckName: String, cardIds: List[Int]): Int = {
     dao.createDeck(deckName,cardIds)

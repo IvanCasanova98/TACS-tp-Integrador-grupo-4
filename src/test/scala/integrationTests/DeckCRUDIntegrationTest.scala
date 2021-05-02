@@ -9,6 +9,7 @@ import org.json4s.{DefaultFormats, Formats}
 import org.scalatest.concurrent.ScalaFutures.convertScalaFuture
 import org.scalatest.{BeforeAndAfter, Matchers, WordSpec}
 import repositories.DeckRepository
+import repositories.daos.DeckLocalDao
 import routes.DeckRoutes
 import routes.inputs.DeckInputs.PartialDeckInput
 import serializers.Json4sSnakeCaseSupport
@@ -21,12 +22,12 @@ class DeckCRUDIntegrationTest extends WordSpec with Matchers with ScalatestRoute
   implicit val fm: Formats = DefaultFormats
   val postDeck: PartialDeckInput = PartialDeckInput("deckName", List(1,2,3,4))
   var db: mutable.HashMap[Int, Deck] = new mutable.HashMap[Int, Deck]()
-  var deckRoutes: Route = DeckRoutes(new DeckService(new DeckRepository(db)))
+  var deckRoutes: Route = DeckRoutes(new DeckService(new DeckRepository(new DeckLocalDao(db))))
   def postDeckEntity(partialDeckInput: PartialDeckInput): MessageEntity = Marshal(partialDeckInput).to[MessageEntity].futureValue
 
   before {
     db = new mutable.HashMap[Int, Deck]()
-    deckRoutes = DeckRoutes(new DeckService(new DeckRepository(db)))
+    deckRoutes = DeckRoutes(new DeckService(new DeckRepository(new DeckLocalDao(db))))
   }
 
     "Deck CRUD Test" when  {
