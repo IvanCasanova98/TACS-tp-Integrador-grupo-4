@@ -1,5 +1,4 @@
 package unitTests
-
 import akka.http.scaladsl.testkit.ScalatestRouteTest
 import org.scalatest.{Matchers, WordSpec}
 import routes.Routes
@@ -9,7 +8,7 @@ class TestRoutes extends WordSpec with Matchers with ScalatestRouteTest {
 
     "return pong when ping is called" in {
       Get("/ping") ~> Routes.apply() ~> check {
-        responseAs[String] shouldEqual "pong"
+        responseAs[String].substring(1,responseAs[String].length()-1) shouldEqual "pong"
       }
     }
   }

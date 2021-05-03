@@ -6,7 +6,7 @@ import models.Deck
 import scala.collection.mutable
 
 
-class DeckLocalDao(db: mutable.HashMap[Int, Deck]) extends DeckIDao {
+class DeckLocalDao(db: mutable.HashMap[Int, Deck]) extends DeckDao {
   var deckId = 0
 
   def createDeck(deckName: String, cardIds: List[Int]): Int = {

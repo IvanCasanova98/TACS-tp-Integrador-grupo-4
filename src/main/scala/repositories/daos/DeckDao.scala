@@ -2,7 +2,7 @@ package repositories.daos
 
 import models.Deck
 
-trait DeckIDao {
+trait DeckDao {
 
   def createDeck(deckName: String, cardIds: List[Int]): Int
   def updateDeck(deck: Deck): Unit

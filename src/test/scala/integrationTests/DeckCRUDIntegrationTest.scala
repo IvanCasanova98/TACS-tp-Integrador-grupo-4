@@ -22,14 +22,12 @@ class DeckCRUDIntegrationTest extends WordSpec with Matchers with ScalatestRoute
   implicit val fm: Formats = DefaultFormats
   val postDeck: PartialDeckInput = PartialDeckInput("deckName", List(1,2,3,4))
   var db: mutable.HashMap[Int, Deck] = new mutable.HashMap[Int, Deck]()
-  var deckDao: DeckLocalDao= new DeckLocalDao(db);
-  var deckRoutes: Route = DeckRoutes(new DeckService(new DeckRepository(deckDao)))
+  var deckRoutes: Route = DeckRoutes(new DeckService(new DeckRepository(new DeckLocalDao(db))))
   def postDeckEntity(partialDeckInput: PartialDeckInput): MessageEntity = Marshal(partialDeckInput).to[MessageEntity].futureValue
 
   before {
     db = new mutable.HashMap[Int, Deck]()
-    var deckDao: DeckLocalDao= new DeckLocalDao(db);
-    deckRoutes = DeckRoutes(new DeckService(new DeckRepository(deckDao)))
+    deckRoutes = DeckRoutes(new DeckService(new DeckRepository(new DeckLocalDao(db))))
   }
 
     "Deck CRUD Test" when  {
