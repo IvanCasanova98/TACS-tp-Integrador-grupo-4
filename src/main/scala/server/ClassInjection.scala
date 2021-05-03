@@ -10,6 +10,7 @@ import scala.collection.mutable
 trait ClassInjection {
 
   val deckLocalDb: mutable.HashMap[Int, Deck] = mutable.HashMap[Int, Deck]()
+  deckLocalDb.put(1, Deck(1, "myDeck", List(1,2,3,4)))
   //Local Dao for saving stuff in memory
   val deckDao = new DeckLocalDao(deckLocalDb)
 

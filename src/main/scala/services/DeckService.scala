@@ -7,8 +7,13 @@ import org.slf4j.LoggerFactory
 import repositories.DeckRepository
 
 class DeckService(deckRepository: DeckRepository) {
-
   val logger: Logger = LoggerFactory.getLogger(classOf[DeckService])
+
+
+  def getAll: List[Deck] = {
+    logger.info(s"Listing all decks")
+    deckRepository.getDecks
+  }
 
   def createDeck(deck: PartialDeckInput): Int = {
     logger.info(s"Creating new deck with name: ${deck.name}")
