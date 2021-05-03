@@ -17,7 +17,9 @@ trait ClassInjection {
   val deckService = new DeckService(deckRepository)
 
 
-  val playerDb: mutable.HashMap[String, Player] = mutable.HashMap[String, Player]()
+  val playerDb: mutable.HashMap[String, Player] = mutable.HashMap[String, Player](
+    ("104725077753706905086"->Player("IDIDID","Franco Giannotti",true,false))
+  )
   val playerRepository = new PlayerRepository(playerDb)
   val loginService = new LoginService(playerRepository)
 
