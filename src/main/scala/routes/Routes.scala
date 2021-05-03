@@ -20,17 +20,18 @@ object Routes extends ClassInjection with Json4sSnakeCaseSupport with CorsDirect
     handleRejections(CorsDirectives.corsRejectionHandler) {
       cors(settings) {
         concat(
-          handleRejections(RejectionHandler.default) {
+          DeckRoutes(deckService)
+          ~ handleRejections(RejectionHandler.default) {
             path("login") {
               post {
-                  entity(as[LoginInput]) { loginInput =>
-                    logger.info(s"[POST] /login with: $loginInput")
-                    complete(StatusCodes.OK, loginService.getPlayerPermissions(loginInput))
-                  }
+                entity(as[LoginInput]) { loginInput =>
+                  logger.info(s"[POST] /login with: $loginInput")
+                  complete(StatusCodes.OK, loginService.getPlayerPermissions(loginInput))
+                }
               }
             }
-          },
-            pathPrefix("cards") {
+          }
+          ~  pathPrefix("cards") {
             concat(
               path(IntNumber / "id"){ matchId =>
                 get {
@@ -44,7 +45,6 @@ object Routes extends ClassInjection with Json4sSnakeCaseSupport with CorsDirect
               },
             )
           }
-            ~ DeckRoutes(deckService)
             ~ path("statistics") {
             parameters("search_by".as[String], "user_id".optional) { (searchBy, userId) =>
               //Query params search match or user
