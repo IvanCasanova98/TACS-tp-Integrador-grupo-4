@@ -24,4 +24,6 @@ class DeckLocalDao(db: mutable.HashMap[Int, Deck]) extends DeckDao {
     db.remove(deckId).getOrElse(throw DeckNotFoundException(deckId))
   }
 
+  def getDecks: List[Deck] = db.values.toList
+
 }
