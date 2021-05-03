@@ -11,7 +11,6 @@ import routes.inputs.LoginInputs.LoginInput
 import serializers.Json4sSnakeCaseSupport
 import server.ClassInjection
 import services.SuperheroApi
-import services.SuperheroApi
 
 object Routes extends ClassInjection with Json4sSnakeCaseSupport with CorsDirectives {
 
