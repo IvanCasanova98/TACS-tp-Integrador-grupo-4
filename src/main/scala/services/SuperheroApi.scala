@@ -40,7 +40,11 @@ case class SuperheroApi() {
       val name: String = card_json("name").asInstanceOf[String]
       val imageUrl: String = card_json("image").asInstanceOf[Map[Any, Any]]("url").asInstanceOf[String]
       val powerStats: Map[Any, Any] = card_json("powerstats").asInstanceOf[Map[Any, Any]]
-      val powerStatsCorrect: List[Attribute] = powerStats.map(power => Attribute(AtributeNameClass(power.asInstanceOf[(String, String)]._1), power.asInstanceOf[(String, String)]._2.toInt)).toList
+      if (!json_has_all_powerstats(powerStats,card_json("appearance").asInstanceOf[Map[Any,Any]])){throw NotEnoughAttribute()}
+      var powerStatsCorrect: List[Attribute] = powerStats.map(power => Attribute(AtributeNameClass(power.asInstanceOf[(String, String)]._1), power.asInstanceOf[(String, String)]._2.toInt)).toList
+      val height: String = card_json("appearance").asInstanceOf[Map[Any,Any]]("height").asInstanceOf[List[String]](1).replace(" cm", "")
+      val weight: String = card_json("appearance").asInstanceOf[Map[Any,Any]]("weight").asInstanceOf[List[String]](1).replace(" kg", "")
+      powerStatsCorrect = powerStatsCorrect ++ List(Attribute(AtributeNameClass("height"), height.toInt), Attribute(AtributeNameClass("weight"), weight.toInt))
       Card(id, name, powerStatsCorrect, imageUrl)}
     else
       {
@@ -57,6 +61,11 @@ case class SuperheroApi() {
   def json_has_all_atributes(card_json: Map[Any, Any]): Boolean = {
     Set("id", "name", "powerstats", "image").subsetOf(card_json.keys.asInstanceOf[Set[String]])
     }
+  def json_has_all_powerstats(powerstarts: Map[Any, Any], appearance: Map[Any, Any]): Boolean = {
+    var attribute: List[String] = powerstarts.map(power => power.asInstanceOf[(String, String)]._1).asInstanceOf[List[String]]
+    attribute = attribute ++ appearance.keys.toList.asInstanceOf[List[String]]
+    Set("combat", "intelligence", "strength", "power", "speed", "height","weight").subsetOf(attribute.toSet)
+  }
 
 
 }
