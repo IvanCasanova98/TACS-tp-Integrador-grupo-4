@@ -9,3 +9,4 @@ target
 .DS_Store
 project/boot/
 project/plugins/project/
+.vscode
