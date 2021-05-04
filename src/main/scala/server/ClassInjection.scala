@@ -25,7 +25,8 @@ trait ClassInjection {
 
 
   val playerDb: mutable.HashMap[String, Player] = mutable.HashMap[String, Player](
-    ("104725077753706905086"->Player("IDIDID","Franco Giannotti",true,false))
+    ("104725077753706905086"->Player("IDIDID","Franco Giannotti",true,false)),
+    ("104065320855221322833" -> Player("JuliId", "Julieta Abuin", true, false))
   )
   val playerRepository = new PlayerRepository(playerDb)
   val loginService = new LoginService(playerRepository)

@@ -1,6 +1,6 @@
 package routes
 
-import akka.http.scaladsl.model.HttpMethods.POST
+import akka.http.scaladsl.model.HttpMethods.{POST, DELETE, PUT, PATCH, OPTIONS}
 import akka.http.scaladsl.model.{HttpMethods, StatusCodes}
 import akka.http.scaladsl.server.Directives.{complete, get, parameters, patch, path, pathPrefix, post, _}
 import akka.http.scaladsl.server.PathMatchers.IntNumber
@@ -18,7 +18,7 @@ object Routes extends ClassInjection with Json4sSnakeCaseSupport with CorsDirect
 
   val settings: CorsSettings = CorsSettings.defaultSettings.withAllowGenericHttpRequests(true)
     .withAllowedOrigins(HttpOriginMatcher("http://localhost:3000"))
-    .withAllowedMethods(Seq(POST, HttpMethods.DELETE, HttpMethods.OPTIONS))
+    .withAllowedMethods(Seq(POST, DELETE, OPTIONS, PUT, PATCH))
 
   def apply(): Route = {
     handleRejections(CorsDirectives.corsRejectionHandler) {
