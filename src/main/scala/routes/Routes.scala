@@ -1,10 +1,12 @@
 package routes
 
-import akka.http.scaladsl.model.StatusCodes
+import akka.http.scaladsl.model.HttpMethods.POST
+import akka.http.scaladsl.model.{HttpMethods, StatusCodes}
 import akka.http.scaladsl.server.Directives.{complete, get, parameters, patch, path, pathPrefix, post, _}
 import akka.http.scaladsl.server.PathMatchers.IntNumber
-import akka.http.scaladsl.server.{RejectionHandler, Route}
+import akka.http.scaladsl.server.Route
 import ch.megard.akka.http.cors.scaladsl.CorsDirectives
+import ch.megard.akka.http.cors.scaladsl.model.HttpOriginMatcher
 import ch.megard.akka.http.cors.scaladsl.settings.CorsSettings
 import routes.DeckRoutes.logger
 import routes.inputs.LoginInputs.LoginInput
@@ -15,30 +17,29 @@ import services.SuperheroApi
 object Routes extends ClassInjection with Json4sSnakeCaseSupport with CorsDirectives {
 
   val settings: CorsSettings = CorsSettings.defaultSettings.withAllowGenericHttpRequests(true)
+    .withAllowedOrigins(HttpOriginMatcher("http://localhost:3000"))
+    .withAllowedMethods(Seq(POST, HttpMethods.DELETE, HttpMethods.OPTIONS))
 
   def apply(): Route = {
     handleRejections(CorsDirectives.corsRejectionHandler) {
       cors(settings) {
         concat(
           DeckRoutes(deckService)
-          ~ handleRejections(RejectionHandler.default) {
-            path("login") {
-              post {
-                entity(as[LoginInput]) { loginInput =>
-                  logger.info(s"[POST] /login with: $loginInput")
-                  complete(StatusCodes.OK, loginService.getPlayerPermissions(loginInput))
-                }
+            ~ path("login") {
+            post {
+              entity(as[LoginInput]) { loginInput =>
+                logger.info(s"[POST] /login with: $loginInput")
+                complete(StatusCodes.OK, loginService.getPlayerPermissions(loginInput))
               }
             }
-          }
-          ~  pathPrefix("cards") {
+          } ~ pathPrefix("cards") {
             concat(
-              path(IntNumber / "id"){ matchId =>
+              path(IntNumber / "id") { matchId =>
                 get {
                   complete(StatusCodes.OK, SuperheroApi().get_hero_by_id(matchId).to_json())
                 }
               },
-              path(Segment /  "name"){ matchString =>
+              path(Segment / "name") { matchString =>
                 get {
                   complete(StatusCodes.OK, SuperheroApi().search_heroes_by_name(matchString).map(card => card.to_json()))
                 }
