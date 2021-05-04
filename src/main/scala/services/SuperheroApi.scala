@@ -41,7 +41,7 @@ case class SuperheroApi() {
       val imageUrl: String = card_json("image").asInstanceOf[Map[Any, Any]]("url").asInstanceOf[String]
       val powerStats: Map[Any, Any] = card_json("powerstats").asInstanceOf[Map[Any, Any]]
       if (!json_has_all_powerstats(powerStats,card_json("appearance").asInstanceOf[Map[Any,Any]])){throw NotEnoughAttribute()}
-      var powerStatsCorrect: List[Attribute] = powerStats.map(power => Attribute(AtributeNameClass(power.asInstanceOf[(String, String)]._1), power.asInstanceOf[(String, String)]._2.toInt)).toList
+      var powerStatsCorrect: List[Attribute] = powerStats.map(power => Attribute(AtributeNameClass(power.asInstanceOf[(String, String)]._1), if (power.asInstanceOf[(String, String)]._2 == "null"){0}else{power.asInstanceOf[(String, String)]._2.toInt})).toList
       val height: String = card_json("appearance").asInstanceOf[Map[Any,Any]]("height").asInstanceOf[List[String]](1).replace(" cm", "")
       val weight: String = card_json("appearance").asInstanceOf[Map[Any,Any]]("weight").asInstanceOf[List[String]](1).replace(" kg", "")
       powerStatsCorrect = powerStatsCorrect ++ List(Attribute(AtributeNameClass("height"), height.toInt), Attribute(AtributeNameClass("weight"), weight.toInt))
