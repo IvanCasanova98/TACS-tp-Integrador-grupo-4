@@ -25,60 +25,10 @@ object Routes extends ClassInjection with Json4sSnakeCaseSupport with CorsDirect
       cors(settings) {
         concat(
           DeckRoutes(deckService)
-            ~ path("login") {
-            post {
-              entity(as[LoginInput]) { loginInput =>
-                logger.info(s"[POST] /login with: $loginInput")
-                complete(StatusCodes.OK, loginService.getPlayerPermissions(loginInput))
-              }
-            }
-          } ~ pathPrefix("cards") {
-            concat(
-              path(IntNumber / "id") { matchId =>
-                get {
-                  complete(StatusCodes.OK, SuperheroApi().get_hero_by_id(matchId).to_json())
-                }
-              },
-              path(Segment / "name") { matchString =>
-                get {
-                  complete(StatusCodes.OK, SuperheroApi().search_heroes_by_name(matchString).map(card => card.to_json()))
-                }
-              },
-            )
-          }
-            ~ path("statistics") {
-            parameters("search_by".as[String], "user_id".optional) { (searchBy, userId) =>
-              //Query params search match or user
-              complete(StatusCodes.OK, "")
-            }
-          }
-            ~ path("matches") {
-            concat(
-              post {
-                //BODY deck_id, user_ids [], status CREATED
-                complete(StatusCodes.Created, "Match created")
-              },
-              path(IntNumber / "result") { matchId =>
-                get {
-                  complete(StatusCodes.OK, s"$matchId result: user1 won")
-                }
-              },
-              path(IntNumber / "movements") { matchId =>
-                get {
-                  complete(StatusCodes.OK, s"Match $matchId Movements []: attribute, cards, result")
-                }
-              },
-              path(IntNumber / "status") { matchId =>
-                patch {
-                  //BODY status = { FINISHED | IN_PROCESS | PAUSED | CANCELED}
-                  complete(StatusCodes.NoContent, "Match finished")
-                }
-              },
-              parameters("user_id".as[String]) { (userId) =>
-                complete(StatusCodes.OK, "")
-              }
-            )
-          }
+            ~ LoginRoute()
+            ~ CardRoutes()
+            ~ StatisticsRoutes()
+            ~ MatchRoutes()
         )
       }
     }
