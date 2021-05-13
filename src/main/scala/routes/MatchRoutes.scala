@@ -6,46 +6,40 @@ import akka.http.scaladsl.server.Route
 import ch.megard.akka.http.cors.scaladsl.CorsDirectives
 import org.slf4j.{Logger, LoggerFactory}
 import routes.Routes.{cors, settings}
+import routes.Utils.handleRequest
+import routes.inputs.MatchInputs.PostMatchDTO
 import serializers.Json4sSnakeCaseSupport
-import services.DeckService
+import services.{DeckService, MatchService}
+
 
 object MatchRoutes extends Json4sSnakeCaseSupport {
 
-  val logger: Logger = LoggerFactory.getLogger(classOf[DeckService])
+  val logger: Logger = LoggerFactory.getLogger(classOf[MatchService])
 
-  def apply(): Route = {
-    handleRejections(CorsDirectives.corsRejectionHandler) {
-      cors(settings) {
-        concat(
-          path("matches") {
-            concat(
-              post {
-                //BODY deck_id, user_ids [], status CREATED
-                complete(StatusCodes.Created, "Match created")
-              },
-              path(IntNumber / "result") { matchId =>
-                get {
-                  complete(StatusCodes.OK, s"$matchId result: user1 won")
-                }
-              },
-              path(IntNumber / "movements") { matchId =>
-                get {
-                  complete(StatusCodes.OK, s"Match $matchId Movements []: attribute, cards, result")
-                }
-              },
-              path(IntNumber / "status") { matchId =>
-                patch {
-                  //BODY status = { FINISHED | IN_PROCESS | PAUSED | CANCELED}
-                  complete(StatusCodes.NoContent, "Match finished")
-                }
-              },
-              parameters("user_id".as[String]) { (userId) =>
-                complete(StatusCodes.OK, "")
-              }
-            )
+  def apply(matchService: MatchService): Route = {
+    concat(
+      path("matches") {
+        post {
+          entity(as[PostMatchDTO]) { postMatchDTO =>
+            //BODY deck_id, user_ids [], status CREATED
+            logger.info(s"[POST] /matches with $postMatchDTO")
+            complete(StatusCodes.Created, matchService.createMatch(postMatchDTO.deckId, postMatchDTO.matchCreator).toString)
           }
-        )
+        }
+      } ~ path("matches" / IntNumber / "result") { matchId =>
+        get {
+          complete(StatusCodes.OK, s"$matchId result: user1 won")
+        }
+      } ~ path("matches" / IntNumber / "movements") { matchId =>
+        get {
+          complete(StatusCodes.OK, s"Match $matchId Movements []: attribute, cards, result")
+        }
+      } ~ path("matches" / IntNumber / "status") { matchId =>
+        patch {
+          //BODY status = { FINISHED | IN_PROCESS | PAUSED | CANCELED}
+          complete(StatusCodes.NoContent, "Match finished")
+        }
       }
-    }
+    )
   }
 }

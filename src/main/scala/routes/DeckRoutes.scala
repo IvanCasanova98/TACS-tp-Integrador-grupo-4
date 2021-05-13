@@ -16,39 +16,34 @@ object DeckRoutes extends Json4sSnakeCaseSupport {
   val logger: Logger = LoggerFactory.getLogger(classOf[DeckService])
 
   def apply(deckService: DeckService): Route = {
-    handleRejections(CorsDirectives.corsRejectionHandler) {
-      cors(settings) {
-        concat(
-          path("decks") {
-            get {
-              logger.info("[GET] /decks")
-              complete(StatusCodes.OK, deckService.getAll)
-            }
-          } ~ path("decks") {
-            post {
-              entity(as[PartialDeckInput]) { deck =>
-                logger.info("[POST] /decks")
-                val deckId: Int = deckService.createDeck(deck)
-                handleRequest(() => s"Deck created with id: $deckId", StatusCodes.Created)
-              }
-            }
-          } ~ path("decks" / IntNumber) { deckId =>
-            put {
-              entity(as[PartialDeckInput]) { deck =>
-                logger.info(s"[PUT] /decks/$deckId")
-                handleRequest(() => deckService.updateDeck(deckId, deck))
-              }
-            }
+    concat(
+      path("decks") {
+        get {
+          logger.info("[GET] /decks")
+          complete(StatusCodes.OK, deckService.getAll)
+        }
+      } ~ path("decks") {
+        post {
+          entity(as[PartialDeckInput]) { deck =>
+            logger.info("[POST] /decks")
+            val deckId: Int = deckService.createDeck(deck)
+            handleRequest(() => s"Deck created with id: $deckId", StatusCodes.Created)
           }
-            ~ path("decks" / IntNumber) { deckId =>
-            delete {
-              logger.info(s"[DELETE] /decks/$deckId")
-              handleRequest(() => deckService.deleteDeck(deckId))
-            }
+        }
+      } ~ path("decks" / IntNumber) { deckId =>
+        put {
+          entity(as[PartialDeckInput]) { deck =>
+            logger.info(s"[PUT] /decks/$deckId")
+            handleRequest(() => deckService.updateDeck(deckId, deck))
           }
-        )
+        }
       }
-    }
-
+        ~ path("decks" / IntNumber) { deckId =>
+        delete {
+          logger.info(s"[DELETE] /decks/$deckId")
+          handleRequest(() => deckService.deleteDeck(deckId))
+        }
+      }
+    )
   }
 }

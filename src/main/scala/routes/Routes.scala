@@ -25,10 +25,10 @@ object Routes extends ClassInjection with Json4sSnakeCaseSupport with CorsDirect
       cors(settings) {
         concat(
           DeckRoutes(deckService)
+            ~ MatchRoutes(matchService)
             ~ LoginRoute()
             ~ CardRoutes()
             ~ StatisticsRoutes()
-            ~ MatchRoutes()
         )
       }
     }
