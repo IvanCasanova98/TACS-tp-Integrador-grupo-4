@@ -2,9 +2,11 @@ package server
 
 import akka.actor.typed.ActorSystem
 import akka.actor.typed.scaladsl.Behaviors
-import akka.http.scaladsl.Http
+import akka.http.scaladsl.{ConnectionContext, Http, HttpConnectionContext, HttpsConnectionContext}
 import routes.Routes
 
+import java.security.SecureRandom
+import javax.net.ssl.SSLContext
 import scala.concurrent.ExecutionContextExecutor
 
 object HttpServer {
