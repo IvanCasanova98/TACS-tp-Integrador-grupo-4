@@ -1,71 +1,88 @@
 package routes
 
-import akka.http.scaladsl.server.Directives.{complete, delete, get, parameters, patch, path, pathPrefix, post, put}
+import akka.http.scaladsl.model.HttpMethods.{POST, DELETE, PUT, PATCH, OPTIONS}
+import akka.http.scaladsl.model.{HttpMethods, StatusCodes}
+import akka.http.scaladsl.server.Directives.{complete, get, parameters, patch, path, pathPrefix, post, _}
 import akka.http.scaladsl.server.PathMatchers.IntNumber
 import akka.http.scaladsl.server.Route
-import akka.http.scaladsl.server.Directives._
+import ch.megard.akka.http.cors.scaladsl.CorsDirectives
+import ch.megard.akka.http.cors.scaladsl.model.HttpOriginMatcher
+import ch.megard.akka.http.cors.scaladsl.settings.CorsSettings
+import routes.DeckRoutes.logger
+import routes.inputs.LoginInputs.LoginInput
+import serializers.Json4sSnakeCaseSupport
+import server.ClassInjection
+import services.SuperheroApi
 
-object Routes {
+object Routes extends ClassInjection with Json4sSnakeCaseSupport with CorsDirectives {
+
+  val settings: CorsSettings = CorsSettings.defaultSettings.withAllowGenericHttpRequests(true)
+    .withAllowedOrigins(HttpOriginMatcher("http://localhost:3000"))
+    .withAllowedMethods(Seq(POST, DELETE, OPTIONS, PUT, PATCH))
 
   def apply(): Route = {
-    concat(
-      path("ping") {
-        get {
-          complete(200, "pong")
-        }
-      }
-        ~ path("login") {
-        post {
-          complete("")
-        }
-      }
-        ~ pathPrefix("decks") {
-        post {
-          //BODY: name, card_ids []
-          complete(201, "deck created with id")
-        }
-        path(IntNumber) { deckId =>
-          put {
-            //BODY: name, card_ids []
-            complete(204, s"$deckId")
+    handleRejections(CorsDirectives.corsRejectionHandler) {
+      cors(settings) {
+        concat(
+          DeckRoutes(deckService)
+            ~ path("login") {
+            post {
+              entity(as[LoginInput]) { loginInput =>
+                logger.info(s"[POST] /login with: $loginInput")
+                complete(StatusCodes.OK, loginService.getPlayerPermissions(loginInput))
+              }
+            }
+          } ~ pathPrefix("cards") {
+            concat(
+              path(IntNumber / "id") { matchId =>
+                get {
+                  complete(StatusCodes.OK, SuperheroApi().get_hero_by_id(matchId).to_json())
+                }
+              },
+              path(Segment / "name") { matchString =>
+                get {
+                  complete(StatusCodes.OK, SuperheroApi().search_heroes_by_name(matchString).map(card => card.to_json()))
+                }
+              },
+            )
           }
-          delete {
-            complete(204, s"Deck deleted $deckId")
+            ~ path("statistics") {
+            parameters("search_by".as[String], "user_id".optional) { (searchBy, userId) =>
+              //Query params search match or user
+              complete(StatusCodes.OK, "")
+            }
           }
-        }
+            ~ path("matches") {
+            concat(
+              post {
+                //BODY deck_id, user_ids [], status CREATED
+                complete(StatusCodes.Created, "Match created")
+              },
+              path(IntNumber / "result") { matchId =>
+                get {
+                  complete(StatusCodes.OK, s"$matchId result: user1 won")
+                }
+              },
+              path(IntNumber / "movements") { matchId =>
+                get {
+                  complete(StatusCodes.OK, s"Match $matchId Movements []: attribute, cards, result")
+                }
+              },
+              path(IntNumber / "status") { matchId =>
+                patch {
+                  //BODY status = { FINISHED | IN_PROCESS | PAUSED | CANCELED}
+                  complete(StatusCodes.NoContent, "Match finished")
+                }
+              },
+              parameters("user_id".as[String]) { (userId) =>
+                complete(StatusCodes.OK, "")
+              }
+            )
+          }
+        )
       }
-        ~ pathPrefix("statistics") {
-        parameters("search_by".as[String], "user_id".optional) { (searchBy, userId) =>
-          //Query params search match or user
-          complete(200, "")
-        }
-      }
-        ~ pathPrefix("matches") {
-        post {
-          //BODY deck_id, user_ids [], status CREATED
-          complete(201, "Match created")
-        }
-        path(IntNumber / "result") { matchId =>
-          get {
-            complete(200, s"$matchId result: user1 won")
-          }
-        }
-        path(IntNumber / "movements") { matchId =>
-          get {
-            complete(200, s"Match $matchId Movements []: attribute, cards, result")
-          }
-        }
-        path(IntNumber / "status") { matchId =>
-          patch {
-            //BODY status = { FINISHED | IN_PROCESS | PAUSED | CANCELED}
-            complete(204, "Match finished")
-          }
-        }
-        parameters("user_id".as[String]) { (userId) =>
-          complete(200, "")
-        }
-      }
-    )
+    }
   }
 }
+
 
