@@ -4,11 +4,11 @@ import exceptions.ExceptionsSuperheroApi._
 import models.{Attribute, AttributeName, Card}
 import org.apache.http.client.methods.HttpGet
 import org.apache.http.impl.client.BasicResponseHandler
-
-import scala.util.parsing.json.JSON
-
 import org.apache.http.client.HttpClient
 import org.apache.http.impl.client.HttpClientBuilder
+import scala.util.parsing.json.JSON
+
+
 
 
 case class SuperheroApi() {
