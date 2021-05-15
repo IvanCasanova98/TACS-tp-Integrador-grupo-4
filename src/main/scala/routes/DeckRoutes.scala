@@ -2,10 +2,8 @@ package routes
 
 import akka.http.scaladsl.model.StatusCodes
 import akka.http.scaladsl.server.Directives._
-import akka.http.scaladsl.server.{RejectionHandler, Route}
-import ch.megard.akka.http.cors.scaladsl.CorsDirectives
+import akka.http.scaladsl.server.Route
 import org.slf4j.{Logger, LoggerFactory}
-import routes.Routes.{cors, deckService, settings}
 import routes.Utils.handleRequest
 import routes.inputs.DeckInputs.PartialDeckInput
 import serializers.Json4sSnakeCaseSupport

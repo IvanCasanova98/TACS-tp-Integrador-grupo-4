@@ -1,21 +1,18 @@
 package server
 
-import akka.actor.typed.ActorSystem
-import akka.actor.typed.scaladsl.Behaviors
-import akka.http.scaladsl.{ConnectionContext, Http, HttpConnectionContext, HttpsConnectionContext}
+import akka.actor.ActorSystem
+import akka.http.scaladsl.Http
+import akka.stream.Materializer
 import routes.Routes
 
-import java.security.SecureRandom
-import javax.net.ssl.SSLContext
-import scala.concurrent.ExecutionContextExecutor
+import java.util.concurrent.Executors
+import scala.concurrent.{ExecutionContext, ExecutionContextExecutor}
 
 object HttpServer {
 
   def main(args: Array[String]): Unit = {
 
-    implicit val system: ActorSystem[Nothing] = ActorSystem(Behaviors.empty, "tacs-tp")
-
-    implicit val executionContext: ExecutionContextExecutor = system.executionContext
+    implicit val system: ActorSystem = ActorSystem("tacs-tp")
 
     val route = Routes()
 
