@@ -7,4 +7,4 @@ Para levantar el server
 `sbt docker:publishLocal`
 
 #### Correr la imagen en docker
-`docker run --rm -p8080:8080 tacs-tp-integrador-grupo-4:{VERSION}`
+`docker run --rm -p 9000:9000 tacs-tp-integrador-grupo-4:{VERSION}`

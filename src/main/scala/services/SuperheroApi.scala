@@ -3,12 +3,16 @@ package services
 import exceptions.ExceptionsSuperheroApi._
 import models.{Attribute, AttributeName, Card}
 import org.apache.http.client.methods.HttpGet
-import org.apache.http.impl.client.DefaultHttpClient
 import org.apache.http.impl.client.BasicResponseHandler
-
+import org.apache.http.client.HttpClient
+import org.apache.http.impl.client.HttpClientBuilder
 import scala.util.parsing.json.JSON
 
+
+
+
 case class SuperheroApi() {
+  val httpClient: HttpClient = HttpClientBuilder.create.build
 
   val uri = "https://superheroapi.com/api/"
   val access_token = "103706338543731"
@@ -19,7 +23,7 @@ case class SuperheroApi() {
 
   def get_hero_by_id(hero_id: Int): Card = {
     val get = new HttpGet(uri.concat(access_token).concat("/").concat(hero_id.toString))
-    val responseget = (new DefaultHttpClient).execute(get)
+    val responseget = httpClient.execute(get)
     val handler = new BasicResponseHandler
     val json = JSON.parseFull(handler.handleResponse(responseget)).get.asInstanceOf[Map[Any, Any]]
     adapt_card_json(json)
@@ -27,7 +31,7 @@ case class SuperheroApi() {
 
   def search_heroes_by_name(hero_name: String): List[Card] = {
     val get = new HttpGet(uri.concat(access_token).concat("/search/").concat(hero_name))
-    val responseget = (new DefaultHttpClient).execute(get)
+    val responseget = httpClient.execute(get)
     val handler = new BasicResponseHandler
     val json = JSON.parseFull(handler.handleResponse(responseget)).get.asInstanceOf[Map[Any, Any]]("results").asInstanceOf[List[Map[Any, Any]]]
     json.filter(json_has_all_atributes).map(adapt_card_json)

@@ -23,7 +23,10 @@ libraryDependencies ++= Seq(
   "org.json4s" %% "json4s-jackson" % vJson4s,
   "org.json4s" %% "json4s-native" % vJson4s,
   "ch.megard" %% "akka-http-cors" % "1.1.1",
-  "org.apache.httpcomponents" % "httpclient" % "4.5.2"
+  "org.apache.httpcomponents" % "httpclient" % "4.5.2",
+  "org.scala-lang.modules" %% "scala-parser-combinators" % "1.1.2",
+  // https://mvnrepository.com/artifact/com.google.api-client/google-api-client
+  "com.google.api-client" % "google-api-client" % "1.31.5"
 )
 
 enablePlugins(JavaAppPackaging)

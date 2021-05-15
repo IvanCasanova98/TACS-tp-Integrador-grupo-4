@@ -7,7 +7,7 @@ import scala.collection.mutable
 
 class PlayerRepository(db: mutable.HashMap[String, Player]) {
 
-  def getPlayerPermissions(loginInput: LoginInput): PlayerPermissions = {
+  def getOrCreatePlayerPermissions(loginInput: LoginInput): PlayerPermissions = {
     val player = db.get(loginInput.googleId)
     player match {
       case Some(player) => PlayerPermissions(isAuthenticated = true, isAuthorized = !player.isBlocked, isAdmin = player.isAdmin)
