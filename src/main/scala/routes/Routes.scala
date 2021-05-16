@@ -10,6 +10,7 @@ import ch.megard.akka.http.cors.scaladsl.model.{HttpHeaderRange, HttpOriginMatch
 import ch.megard.akka.http.cors.scaladsl.settings.CorsSettings
 import serializers.Json4sSnakeCaseSupport
 import server.ClassInjection
+import services.ConnectedPlayersService
 
 object Routes extends ClassInjection with Json4sSnakeCaseSupport with CorsDirectives {
 
@@ -19,9 +20,12 @@ object Routes extends ClassInjection with Json4sSnakeCaseSupport with CorsDirect
     .withAllowedHeaders(HttpHeaderRange.*)
 
   def apply()(implicit actorSystem: ActorSystem): Route = {
+    implicit val materializer: Materializer = Materializer.matFromSystem
+    val conectionsService = new ConnectedPlayersService(actorSystem)
+
     handleRejections(CorsDirectives.corsRejectionHandler) {
       cors(settings) {
-        concat(PlayRoutes()
+        concat(PlayRoutes(conectionsService)
           ~ DeckRoutes(deckService)
           ~ MatchRoutes(matchService)
           ~ LoginRoute()

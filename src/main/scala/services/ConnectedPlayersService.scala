@@ -10,15 +10,14 @@ import org.reactivestreams.Publisher
 class ConnectedPlayersActor extends Actor {
 
   var participants: Map[String, ActorRef] = Map.empty[String, ActorRef]
-
   def broadcast(message: String): Unit = participants.values.foreach(_ ! message)
 
   override def receive: Receive = {
     case UserJoined(name, actorRef) =>
+      println(participants.mkString(""))
       println(s"User $name joined server")
       participants += name -> actorRef
       broadcast(participants.keys.toString())
-
     case UserLeft(name) =>
       println(s"User $name left")
       participants -= name
@@ -29,7 +28,7 @@ class ConnectedPlayersActor extends Actor {
 class ConnectedPlayersService(actorSystem: ActorSystem)(implicit val mat: Materializer) {
   private[this] val connectedPlayersActor = actorSystem.actorOf(Props(classOf[ConnectedPlayersActor]))
 
-  def websocketFlow(user: String): Flow[Message, Message, Any] = {
+  def websocketFlow(userId: String): Flow[Message, Message, Any] = {
     val (actorRef: ActorRef, publisher: Publisher[TextMessage.Strict]) =
       Source.actorRef[String](16, OverflowStrategy.fail)
         .map(msg =>
@@ -38,7 +37,7 @@ class ConnectedPlayersService(actorSystem: ActorSystem)(implicit val mat: Materi
         ).toMat(Sink.asPublisher(false))(Keep.both).run()
 
     // Announce the user has joined
-    connectedPlayersActor ! UserJoined(user, actorRef)
+    connectedPlayersActor ! UserJoined(userId, actorRef)
 
     val sink: Sink[Message, Any] = Flow[Message]
       .map {
@@ -48,7 +47,7 @@ class ConnectedPlayersService(actorSystem: ActorSystem)(implicit val mat: Materi
         case _ => println(s"Received something else")
       }.to(Sink.onComplete(_ =>
       // Announce the user has left
-      connectedPlayersActor ! UserLeft(user)
+      connectedPlayersActor ! UserLeft(userId)
     ))
     //Factory method allows for materialization of this Source
     Flow.fromSinkAndSource(sink, Source.fromPublisher(publisher))
