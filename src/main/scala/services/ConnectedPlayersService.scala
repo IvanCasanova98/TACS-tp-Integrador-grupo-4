@@ -6,13 +6,13 @@ import akka.stream.scaladsl.{Flow, _}
 import akka.stream.{Materializer, OverflowStrategy}
 import models.Events.{UserJoined, UserLeft}
 import org.reactivestreams.Publisher
-import server.ClassInjection
 import play.api.libs.json.{Json, Writes}
+import routes.Routes.playerRepository
 
 
 case class PlayerDTO(userId: String, userName:String)
 
-class ConnectedPlayersActor extends Actor with ClassInjection {
+class ConnectedPlayersActor extends Actor {
 
   var participantsActors: Map[String, ActorRef] = Map.empty[String, ActorRef]
   var playersConnected: List[PlayerDTO] = List()
@@ -37,10 +37,10 @@ class ConnectedPlayersActor extends Actor with ClassInjection {
   override def receive: Receive = {
     case UserJoined(userId, actorRef) =>
       println(s"User $userId joined server")
-      participantsActors += userId -> actorRef
+      val foundPlayer = playerRepository.getPlayerById(userId)
 
-      val playerFound = playerRepository.getPlayerById(userId)
-      playersConnected = playersConnected :+ PlayerDTO(userId = playerFound.userId, userName = playerFound.userName)
+      participantsActors += userId -> actorRef
+      playersConnected = playersConnected :+ PlayerDTO(userId = foundPlayer.userId, userName = foundPlayer.userName)
       broadcast(playersConnected)
 
     case UserLeft(userId) =>

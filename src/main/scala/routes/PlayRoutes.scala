@@ -11,10 +11,10 @@ object PlayRoutes {
 
   def apply(service: ConnectedPlayersService): Route = {
     concat(
-      pathSingleSlash {
-        logger.info("Player joining lobby")
-        parameter("userId") { userName =>
-          handleWebSocketMessages(service.websocketFlow(userName))
+      path("home") {
+        logger.info("Player joined home")
+        parameter("userId") { userId =>
+          handleWebSocketMessages(service.websocketFlow(userId))
         }
       }
       /*~ path("match/join" / IntNumber) { matchId =>
