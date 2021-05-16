@@ -26,7 +26,8 @@ libraryDependencies ++= Seq(
   "org.apache.httpcomponents" % "httpclient" % "4.5.2",
   "org.scala-lang.modules" %% "scala-parser-combinators" % "1.1.2",
   // https://mvnrepository.com/artifact/com.google.api-client/google-api-client
-  "com.google.api-client" % "google-api-client" % "1.31.5"
+  "com.google.api-client" % "google-api-client" % "1.31.5",
+  "com.typesafe.play" %% "play-json" % "2.8.1"
 )
 
 enablePlugins(JavaAppPackaging)

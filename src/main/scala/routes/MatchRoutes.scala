@@ -15,7 +15,6 @@ import services.{DeckService, MatchService}
 object MatchRoutes extends Json4sSnakeCaseSupport {
 
   val logger: Logger = LoggerFactory.getLogger(classOf[MatchService])
-
   def apply(matchService: MatchService): Route = {
     concat(
       path("matches") {
