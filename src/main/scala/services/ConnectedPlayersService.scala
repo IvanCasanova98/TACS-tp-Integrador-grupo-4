@@ -15,7 +15,7 @@ case class PlayerDTO(userId: String, userName:String)
 class ConnectedPlayersActor extends Actor {
 
   var participantsActors: Map[String, ActorRef] = Map.empty[String, ActorRef]
-  var playersConnected: List[PlayerDTO] = List()
+  var playersConnected: Map[String, PlayerDTO] = Map.empty[String, PlayerDTO]
 
   def broadcast(users: List[PlayerDTO]): Unit = {
     //no se donde meter esto :)
@@ -40,15 +40,16 @@ class ConnectedPlayersActor extends Actor {
       val foundPlayer = playerRepository.getPlayerById(userId)
 
       participantsActors += userId -> actorRef
-      playersConnected = playersConnected :+ PlayerDTO(userId = foundPlayer.userId, userName = foundPlayer.userName)
-      broadcast(playersConnected)
+      playersConnected += userId -> PlayerDTO(userId = foundPlayer.userId, userName = foundPlayer.userName)
+
+      broadcast(playersConnected.values.toList)
 
     case UserLeft(userId) =>
       println(s"User $userId left")
       participantsActors -= userId
+      playersConnected -= userId
 
-      playersConnected = playersConnected.filter(p => p.userId == userId)
-      broadcast(playersConnected)
+      broadcast(playersConnected.values.toList)
   }
 }
 
