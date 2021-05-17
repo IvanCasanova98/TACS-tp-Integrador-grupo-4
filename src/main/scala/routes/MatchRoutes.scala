@@ -23,7 +23,7 @@ object MatchRoutes extends Json4sSnakeCaseSupport {
           entity(as[PostMatchDTO]) { postMatchDTO =>
             //BODY deck_id, user_ids [], status CREATED
             logger.info(s"[POST] /matches with $postMatchDTO")
-            handleRequest(() => matchService.createMatch(postMatchDTO.deckId, postMatchDTO.matchCreatorId, postMatchDTO.challengedUserId).toString, StatusCodes.Created)
+            handleRequest(() => matchService.createMatch(postMatchDTO.deckId, postMatchDTO.matchCreatorId, postMatchDTO.challengedPlayerId).toString, StatusCodes.Created)
           }
         }
       } ~ path("matches" / IntNumber / "result") { matchId =>
