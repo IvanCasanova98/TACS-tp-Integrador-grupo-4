@@ -5,7 +5,7 @@ import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
 import ch.megard.akka.http.cors.scaladsl.CorsDirectives
 import org.slf4j.{Logger, LoggerFactory}
-import routes.Routes.{cors, settings}
+import routes.Routes.{cors, matchService, settings}
 import routes.Utils.handleRequest
 import routes.inputs.MatchInputs.PostMatchDTO
 import serializers.Json4sSnakeCaseSupport
@@ -15,6 +15,7 @@ import services.{DeckService, MatchService}
 object MatchRoutes extends Json4sSnakeCaseSupport {
 
   val logger: Logger = LoggerFactory.getLogger(classOf[MatchService])
+
   def apply(matchService: MatchService): Route = {
     concat(
       path("matches") {
@@ -22,7 +23,7 @@ object MatchRoutes extends Json4sSnakeCaseSupport {
           entity(as[PostMatchDTO]) { postMatchDTO =>
             //BODY deck_id, user_ids [], status CREATED
             logger.info(s"[POST] /matches with $postMatchDTO")
-            complete(StatusCodes.Created, matchService.createMatch(postMatchDTO.deckId, postMatchDTO.matchCreator).toString)
+            handleRequest(() => matchService.createMatch(postMatchDTO.deckId, postMatchDTO.matchCreatorId, postMatchDTO.challengedUserId).toString, StatusCodes.Created)
           }
         }
       } ~ path("matches" / IntNumber / "result") { matchId =>

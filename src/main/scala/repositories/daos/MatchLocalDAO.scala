@@ -8,9 +8,9 @@ import scala.collection.mutable
 class MatchLocalDAO(db: mutable.HashMap[Int, MatchDBDTO]) extends MatchDAO {
   var matchId: Int = 0
 
-  override def createMatch(deckId: Int, matchCreator: String): Int = {
+  override def createMatch(deckId: Int, matchCreator: String, challengedUser: String): Int = {
     matchId += 1
-    db.put(matchId, MatchDBDTO(matchId, CREATED, matchCreator, None, deckId))
+    db.put(matchId, MatchDBDTO(matchId, CREATED, matchCreator, challengedUser, deckId))
     matchId
   }
 
