@@ -6,27 +6,14 @@ import routes.Routes
 class TestRoutes extends WordSpec with Matchers with ScalatestRouteTest {
   "The routes" should {
 
-    "websocket connection test" in {
+    "websocket connection to home test" in {
       val wsClient = WSProbe()
 
-      WS("/", wsClient.flow) ~> Routes() ~>
+      WS("/home?userId=52615", wsClient.flow) ~> Routes() ~>
         check {
-          // check response for WS Upgrade headers
           isWebSocketUpgrade shouldEqual true
-
-          // manually run a WS conversation
-          wsClient.sendMessage("Peter")
-          wsClient.expectMessage("ECHO: Peter")
-
-          wsClient.sendCompletion()
-          wsClient.expectCompletion()
+          wsClient.expectMessage("[\"{\\\"user_name\\\":\\\"NOT-FOUND\\\",\\\"user_id\\\":\\\"\\\"}\"]")
         }
-    }
-
-    "return pong when ping is called" in {
-      Get("/ping") ~> Routes.apply() ~> check {
-        responseAs[String].substring(1,responseAs[String].length()-1) shouldEqual "pong"
-      }
     }
   }
 }

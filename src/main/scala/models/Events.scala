@@ -12,5 +12,10 @@ object Events {
 
   case class IncomingMessage(sender: String, message: String) extends ConnectionEvent
 
+  sealed trait MatchEvent
+
+  case class UserJoinedMatch(userId: String, matchActor: ActorRef) extends MatchEvent
+
+  case class UserLeftMatch(userId: String) extends MatchEvent
 
 }
