@@ -7,6 +7,7 @@ import akka.stream.{Materializer, OverflowStrategy}
 import models.Events.{UserJoinedMatch, UserLeftMatch}
 import org.reactivestreams.Publisher
 import org.slf4j.{Logger, LoggerFactory}
+import routes.Routes.matchService
 
 class MatchRoomActor(matchId: Int) extends Actor {
   val logger: Logger = LoggerFactory.getLogger(classOf[MatchRoomActor])
@@ -14,9 +15,14 @@ class MatchRoomActor(matchId: Int) extends Actor {
 
   override def receive: Receive = {
     case UserJoinedMatch(userId, actorRef) =>
-      participants += userId -> actorRef
-      logger.info(s"User $userId joined match[$matchId]")
-      TextMessage(s"User $userId joined match $matchId")
+      if (matchService.isUserAuthorizedToJoinMatch(matchId, userId)) {
+        participants += userId -> actorRef
+        logger.info(s"User $userId joined match[$matchId]")
+        TextMessage(s"User $userId joined match $matchId")
+      } else {
+        logger.info(s"User $userId is not allowed to join match[$matchId]")
+        TextMessage(s"User $userId is not allowed to join match $matchId")
+      }
 
     case UserLeftMatch(userId) =>
       logger.info(s"User $userId left match[$matchId]")
