@@ -18,7 +18,7 @@ class MatchRoomActor(matchId: Int) extends Actor {
       TextMessage(s"User $userId joined match $matchId")
 
     case UserLeftMatch(userId) =>
-      println(s"User $userId left channel[$matchId]")
+      println(s"User $userId left match[$matchId]")
       participants -= userId
       TextMessage(s"User $userId left match [$matchId]")
 
