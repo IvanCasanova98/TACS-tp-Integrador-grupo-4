@@ -6,19 +6,20 @@ import akka.stream.scaladsl.{Flow, Keep, Sink, Source}
 import akka.stream.{Materializer, OverflowStrategy}
 import models.Events.{UserJoinedMatch, UserLeftMatch}
 import org.reactivestreams.Publisher
+import org.slf4j.{Logger, LoggerFactory}
 
 class MatchRoomActor(matchId: Int) extends Actor {
-
+  val logger: Logger = LoggerFactory.getLogger(classOf[MatchRoomActor])
   var participants: Map[String, ActorRef] = Map.empty[String, ActorRef]
 
   override def receive: Receive = {
     case UserJoinedMatch(userId, actorRef) =>
       participants += userId -> actorRef
-      println(s"User $userId joined match[$matchId]")
+      logger.info(s"User $userId joined match[$matchId]")
       TextMessage(s"User $userId joined match $matchId")
 
     case UserLeftMatch(userId) =>
-      println(s"User $userId left match[$matchId]")
+      logger.info(s"User $userId left match[$matchId]")
       participants -= userId
       TextMessage(s"User $userId left match [$matchId]")
 
