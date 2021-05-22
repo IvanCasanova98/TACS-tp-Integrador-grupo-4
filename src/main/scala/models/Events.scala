@@ -12,6 +12,8 @@ object Events {
 
   case class IncomingMessage(sender: String, message: String) extends ConnectionEvent
 
+  case class GenericMessageToUser(message: String, userId: String) extends ConnectionEvent
+
   sealed trait MatchEvent
 
   case class UserJoinedMatch(userId: String, matchActor: ActorRef) extends MatchEvent

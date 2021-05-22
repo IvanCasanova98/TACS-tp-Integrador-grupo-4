@@ -21,6 +21,6 @@ class PlayerRepository(db: mutable.HashMap[String, Player]) {
 
   def getPlayerById(userId: String):Player  = {
     //todo: fix this @juli
-    db.getOrElse(userId, Player("","NOT-FOUND",false,false))
+    db.getOrElse(userId, Player(userId,"NOT-FOUND",false,false))
   }
 }

@@ -4,7 +4,7 @@ import akka.actor.{Actor, ActorRef, ActorSystem, Props}
 import akka.http.scaladsl.model.ws.{Message, TextMessage}
 import akka.stream.scaladsl.{Flow, _}
 import akka.stream.{Materializer, OverflowStrategy}
-import models.Events.{UserJoined, UserLeft}
+import models.Events.{GenericMessageToUser, UserJoined, UserLeft}
 import org.reactivestreams.Publisher
 import org.slf4j.{Logger, LoggerFactory}
 import play.api.libs.json.{Json, Writes}
@@ -36,6 +36,10 @@ class ConnectedPlayersActor extends Actor {
     participantsActors.values.foreach(_ ! Json.stringify(Json.toJson(usersAsStringList)))
   }
 
+  def sendMessageToUserId(message: String, userId: String) = {
+    participantsActors.get(userId).foreach( _ ! message)
+  }
+
   override def receive: Receive = {
     case UserJoined(userId, actorRef) =>
       logger.info(s"User $userId joined server")
@@ -52,12 +56,20 @@ class ConnectedPlayersActor extends Actor {
       playersConnected -= userId
 
       broadcast(playersConnected.values.toList)
+
+    case GenericMessageToUser(message,userId) =>
+      logger.info(s"sending generic message $message to userId $userId")
+      logger.info("hola")
+      sendMessageToUserId(message, userId)
+
   }
 }
 
 class ConnectedPlayersService(actorSystem: ActorSystem)(implicit val mat: Materializer) {
   private[this] val connectedPlayersActor = actorSystem.actorOf(Props(classOf[ConnectedPlayersActor]))
   val logger: Logger = LoggerFactory.getLogger(classOf[ConnectedPlayersService])
+
+  def sendMessageToUserId(message: String,userId: String): Unit = connectedPlayersActor ! GenericMessageToUser(message,userId)
 
   def websocketFlow(userId: String): Flow[Message, Message, Any] = {
     val (actorRef: ActorRef, publisher: Publisher[TextMessage.Strict]) =

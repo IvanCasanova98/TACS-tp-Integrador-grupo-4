@@ -13,12 +13,17 @@ class MatchRoomActor(matchId: Int) extends Actor {
   val logger: Logger = LoggerFactory.getLogger(classOf[MatchRoomActor])
   var participants: Map[String, ActorRef] = Map.empty[String, ActorRef]
 
-  override def receive: Receive = {
+    override def receive: Receive = {
     case UserJoinedMatch(userId, actorRef) =>
       if (matchService.isUserAuthorizedToJoinMatch(matchId, userId)) {
         participants += userId -> actorRef
         logger.info(s"User $userId joined match[$matchId]")
         TextMessage(s"User $userId joined match $matchId")
+        if (participants.size == 2){
+          var msg = "READY"
+          participants.keys.foreach(userId => msg = msg+":"+userId)
+          broadcast(msg)
+        }
       } else {
         logger.info(s"User $userId is not allowed to join match[$matchId]")
         TextMessage(s"User $userId is not allowed to join match $matchId")
@@ -32,7 +37,7 @@ class MatchRoomActor(matchId: Int) extends Actor {
     case msg => TextMessage(s"Something else arrived $msg")
   }
 
-  //def broadcast(message: TextMessage): Unit = participants.values.foreach(_ ! message)
+  def broadcast(message: String): Unit = participants.values.foreach(_ ! message)
 
 }
 

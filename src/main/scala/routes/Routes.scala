@@ -29,7 +29,7 @@ object Routes extends ClassInjection with Json4sSnakeCaseSupport with CorsDirect
       cors(settings) {
         concat(PlayRoutes(connectionsService, matchRooms)
           ~ DeckRoutes(deckService)
-          ~ MatchRoutes(matchService)
+          ~ MatchRoutes(matchService,connectionsService)
           ~ LoginRoute()
           ~ CardRoutes()
           ~ StatisticsRoutes()

@@ -23,9 +23,12 @@ trait ClassInjection {
   val matchLocalDb: mutable.HashMap[Int, MatchDBDTO] = mutable.HashMap[Int, MatchDBDTO]()
 
   val playerDb: mutable.HashMap[String, Player] = mutable.HashMap[String, Player](
-    ("104725077753706905086"->Player("IDIDID","Franco Giannotti",true,false)),
-    ("104065320855221322833" -> Player("JuliId", "Julieta Abuin", true, false))
+    ("104725077753706905086"->Player("104725077753706905086","Franco Giannotti",isAdmin = true,isBlocked = false)),
+    ("104065320855221322833" -> Player("104065320855221322833", "Julieta Abuin", isAdmin = true, isBlocked = false)),
+      ("102400486230688279463" -> Player("102400486230688279463", "FRANCO GIANNOTTI CALENS", isAdmin = true, isBlocked = false))
+
   )
+
 
   //Local Dao for saving stuff in memory
   val deckDao = new DeckLocalDao(deckLocalDb)
