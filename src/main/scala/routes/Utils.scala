@@ -9,8 +9,7 @@ object Utils {
 
   def handleRequest[T, S <: StatusCode](tryCatchable: () => T, successCode: S = StatusCodes.NoContent ): StandardRoute = {
     try {
-      tryCatchable.apply
-      complete(successCode, "")
+      complete(successCode, tryCatchable.apply.toString)
     } catch {
       case e: DeckNotFoundException => complete(StatusCodes.NotFound, e.getMessage)
       case e: Exception => complete(StatusCodes.InternalServerError, e.getMessage)

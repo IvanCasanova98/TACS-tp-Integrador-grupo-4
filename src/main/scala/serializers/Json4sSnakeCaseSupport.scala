@@ -13,7 +13,7 @@ trait Json4sSnakeCaseSupport {
 
   implicit val formats: Formats = DefaultFormats
 
-  private val jsonStringUnmarshaller =
+  implicit val jsonStringUnmarshaller: FromEntityUnmarshaller[String] =
     Unmarshaller.byteStringUnmarshaller
       .forContentTypes(ContentTypeRange(ContentTypes.`application/json`))
       .mapWithCharset {
@@ -21,8 +21,9 @@ trait Json4sSnakeCaseSupport {
         case (data, charset) => data.decodeString(charset.nioCharset.name)
       }
 
-  protected val jsonStringMarshaller: ToEntityMarshaller[String] =
+  implicit val jsonStringMarshaller: ToEntityMarshaller[String] =
     Marshaller.stringMarshaller(MediaTypes.`application/json`)
+
 
   /**
    * HTTP entity => `A`

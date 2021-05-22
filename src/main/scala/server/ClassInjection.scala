@@ -1,9 +1,12 @@
 package server
 
-import models.{Deck, Player}
-import repositories.daos.DeckLocalDao
-import repositories.{DeckRepository, PlayerRepository}
-import services.{DeckService, LoginService}
+import akka.actor.ActorSystem
+import akka.stream.Materializer
+import models.{Deck, Match, Player}
+import repositories.daos.{DeckLocalDao, MatchLocalDAO}
+import repositories.dbdtos.MatchDBDTO
+import repositories.{DeckRepository, MatchRepository, PlayerRepository}
+import services.{ConnectedPlayersService, DeckService, LoginService, MatchService}
 
 import scala.collection.mutable
 
@@ -17,18 +20,23 @@ trait ClassInjection {
   deckLocalDb.put(5, Deck(5, "A-bomb mazo", List(1,2,3,4)))
   deckLocalDb.put(6, Deck(6, "Batman super deck", List(1,2,4,5,3,2,2)))
 
-  //Local Dao for saving stuff in memory
-  val deckDao = new DeckLocalDao(deckLocalDb)
-
-  val deckRepository = new DeckRepository(deckDao)
-  val deckService = new DeckService(deckRepository)
-
+  val matchLocalDb: mutable.HashMap[Int, MatchDBDTO] = mutable.HashMap[Int, MatchDBDTO]()
 
   val playerDb: mutable.HashMap[String, Player] = mutable.HashMap[String, Player](
     ("104725077753706905086"->Player("IDIDID","Franco Giannotti",true,false)),
     ("104065320855221322833" -> Player("JuliId", "Julieta Abuin", true, false))
   )
+
+  //Local Dao for saving stuff in memory
+  val deckDao = new DeckLocalDao(deckLocalDb)
+  val matchDao = new MatchLocalDAO(matchLocalDb)
+
+  val deckRepository = new DeckRepository(deckDao)
+  val matchRepository = new MatchRepository(matchDao)
   val playerRepository = new PlayerRepository(playerDb)
+
+  val deckService = new DeckService(deckRepository)
+  val matchService = new MatchService(matchRepository)
   val loginService = new LoginService(playerRepository)
 
 }
