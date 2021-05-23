@@ -3,7 +3,6 @@ package routes
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
 import models.MatchRooms
-import routes.DeckRoutes.logger
 import services.ConnectedPlayersService
 
 object PlayRoutes {

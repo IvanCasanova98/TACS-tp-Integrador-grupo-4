@@ -33,6 +33,7 @@ object Routes extends ClassInjection with Json4sSnakeCaseSupport with CorsDirect
           ~ LoginRoute()
           ~ CardRoutes()
           ~ StatisticsRoutes()
+          ~ PlayerRoutes(playerRepository)
         )
       }
     }
