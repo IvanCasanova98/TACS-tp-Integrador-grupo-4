@@ -4,7 +4,7 @@ import akka.actor.{Actor, ActorRef, ActorSystem, Props}
 import akka.http.scaladsl.model.ws.{Message, TextMessage}
 import akka.stream.scaladsl.{Flow, Keep, Sink, Source}
 import akka.stream.{Materializer, OverflowStrategy}
-import models.Events.{UserJoinedMatch, UserLeftMatch}
+import models.Events.{UserIsReady, UserJoinedMatch, UserLeftMatch}
 import org.reactivestreams.Publisher
 import org.slf4j.{Logger, LoggerFactory}
 import routes.Routes.matchService
@@ -12,6 +12,7 @@ import routes.Routes.matchService
 class MatchRoomActor(matchId: Int) extends Actor {
   val logger: Logger = LoggerFactory.getLogger(classOf[MatchRoomActor])
   var participants: Map[String, ActorRef] = Map.empty[String, ActorRef]
+  var playersReady: Set[String] = Set.empty
 
     override def receive: Receive = {
     case UserJoinedMatch(userId, actorRef) =>
@@ -20,7 +21,7 @@ class MatchRoomActor(matchId: Int) extends Actor {
         logger.info(s"User $userId joined match[$matchId]")
         TextMessage(s"User $userId joined match $matchId")
         if (participants.size == 2){
-          var msg = "READY"
+          var msg = "IN_LOBBY"
           participants.keys.foreach(userId => msg = msg+":"+userId)
           broadcast(msg)
         }
@@ -34,11 +35,24 @@ class MatchRoomActor(matchId: Int) extends Actor {
       participants -= userId
       TextMessage(s"User $userId left match [$matchId]")
 
+    case UserIsReady(userId) =>
+      logger.info(s"User $userId is ready to play")
+      playersReady = playersReady + userId
+      val opponent = participants.keys.find(k => k != userId)
+      opponent.foreach(sendMessageToUserId("OPPONENT_READY", _ ))
+      if (playersReady.size == 2) {
+        logger.info("All ready for match to start")
+        broadcast("ALL_READY")
+      }
+
     case msg => TextMessage(s"Something else arrived $msg")
   }
 
   def broadcast(message: String): Unit = participants.values.foreach(_ ! message)
 
+  def sendMessageToUserId(message: String, userId: String): Unit = {
+    participants.get(userId).foreach( _ ! message)
+  }
 }
 
 
@@ -61,7 +75,10 @@ class MatchRoom(matchId: Int, actorSystem: ActorSystem)(implicit val mat: Materi
       .map {
         case TextMessage.Strict(msg) =>
           // incoming message from ws
-          println(s"Received: $msg")
+          if (msg.contains("READY")) {
+            val userId = msg.split(":").last
+            matchRoomActor ! UserIsReady(userId)
+          }
         case _ => println(s"Received something else")
       }.to(Sink.onComplete(_ =>
       // Announce the user has left the match

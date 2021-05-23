@@ -20,4 +20,6 @@ object Events {
 
   case class UserLeftMatch(userId: String) extends MatchEvent
 
+  case class UserIsReady(userId: String) extends MatchEvent
+
 }

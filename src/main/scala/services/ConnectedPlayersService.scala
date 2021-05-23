@@ -36,7 +36,7 @@ class ConnectedPlayersActor extends Actor {
     participantsActors.values.foreach(_ ! Json.stringify(Json.toJson(usersAsStringList)))
   }
 
-  def sendMessageToUserId(message: String, userId: String) = {
+  def sendMessageToUserId(message: String, userId: String): Unit = {
     participantsActors.get(userId).foreach( _ ! message)
   }
 
@@ -59,7 +59,6 @@ class ConnectedPlayersActor extends Actor {
 
     case GenericMessageToUser(message,userId) =>
       logger.info(s"sending generic message $message to userId $userId")
-      logger.info("hola")
       sendMessageToUserId(message, userId)
 
   }
