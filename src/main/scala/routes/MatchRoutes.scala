@@ -9,7 +9,7 @@ import models.MatchRooms
 import org.slf4j.{Logger, LoggerFactory}
 import routes.Routes.{cors, matchService, settings}
 import routes.Utils.handleRequest
-import routes.inputs.MatchInputs.PostMatchDTO
+import routes.inputs.MatchInputs.{PostMatchDTO, UpdateMatchStatus}
 import serializers.Json4sSnakeCaseSupport
 import services.{ConnectedPlayersService, DeckService, MatchService}
 
@@ -42,7 +42,9 @@ object MatchRoutes extends Json4sSnakeCaseSupport {
       } ~ path("matches" / IntNumber / "status") { matchId =>
         patch {
           //BODY status = { FINISHED | IN_PROCESS | PAUSED | CANCELED}
-          complete(StatusCodes.NoContent, "Match finished")
+          entity(as[UpdateMatchStatus]) { newStatusDTO =>
+            complete(StatusCodes.NoContent, matchService.updateMatchStatus(matchId, newStatusDTO.status))
+          }
         }
       }
     )

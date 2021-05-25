@@ -4,6 +4,7 @@ import akka.http.scaladsl.marshalling.Marshal
 import akka.http.scaladsl.model.{MessageEntity, StatusCodes}
 import akka.http.scaladsl.server.Route
 import akka.http.scaladsl.testkit.ScalatestRouteTest
+import exceptions.Exceptions.DeckNotFoundException
 import models.Deck
 import org.json4s.{DefaultFormats, Formats}
 import org.scalatest.concurrent.ScalaFutures.convertScalaFuture

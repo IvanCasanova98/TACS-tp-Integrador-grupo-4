@@ -19,7 +19,6 @@ class MatchRoomActor(matchId: Int) extends Actor {
       if (matchService.isUserAuthorizedToJoinMatch(matchId, userId)) {
         participants += userId -> actorRef
         logger.info(s"User $userId joined match[$matchId]")
-        TextMessage(s"User $userId joined match $matchId")
         if (participants.size == 2){
           var msg = "IN_LOBBY"
           participants.keys.foreach(userId => msg = msg+":"+userId)
@@ -27,7 +26,7 @@ class MatchRoomActor(matchId: Int) extends Actor {
         }
       } else {
         logger.info(s"User $userId is not allowed to join match[$matchId]")
-        TextMessage(s"User $userId is not allowed to join match $matchId")
+        actorRef ! s"User $userId is not allowed to join match $matchId"
       }
 
     case UserLeftMatch(userId) =>
@@ -42,6 +41,7 @@ class MatchRoomActor(matchId: Int) extends Actor {
       opponent.foreach(sendMessageToUserId("OPPONENT_READY", _ ))
       if (playersReady.size == 2) {
         logger.info("All ready for match to start")
+        //update match
         broadcast("ALL_READY")
       }
 
