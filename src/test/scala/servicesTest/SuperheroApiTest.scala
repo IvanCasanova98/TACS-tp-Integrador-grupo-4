@@ -1,4 +1,5 @@
 package servicesTest
 
-class SuperheroApiTest{
+class SuperheroApiTest {
+
 }
