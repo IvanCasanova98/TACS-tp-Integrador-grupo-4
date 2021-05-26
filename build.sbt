@@ -27,7 +27,8 @@ libraryDependencies ++= Seq(
   "org.scala-lang.modules" %% "scala-parser-combinators" % "1.1.2",
   "com.google.api-client" % "google-api-client" % "1.31.5",
   "com.typesafe.play" %% "play-json" % "2.8.1",
-  "org.mockito" %% "mockito-scala" % "1.5.12" % Test
+  "org.mockito" %% "mockito-scala" % "1.5.12" % Test,
+  "com.github.tomakehurst" % "wiremock" % "2.18.0" % Test
 )
 
 enablePlugins(JavaAppPackaging)

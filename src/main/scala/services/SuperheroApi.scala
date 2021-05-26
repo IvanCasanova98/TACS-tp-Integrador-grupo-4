@@ -11,7 +11,7 @@ import scala.util.parsing.json.JSON
 case class SuperheroApi() {
   val httpClient: HttpClient = HttpClientBuilder.create.build
 
-  val uri = "https://superheroapi.com/api/"
+  var uri = "https://superheroapi.com/api/"
   val access_token = "103706338543731"
 
   case class AttributeNameClass(name_new: String) extends AttributeName {
