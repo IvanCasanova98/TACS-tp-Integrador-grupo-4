@@ -1,27 +1,23 @@
 package routes
-import akka.actor.ActorSystem
-import akka.http.scaladsl.model.ws.{Message, TextMessage}
+
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
-import akka.stream.scaladsl.Flow
-import routes.DeckRoutes.logger
+import models.MatchRooms
 import services.ConnectedPlayersService
 
 object PlayRoutes {
 
-  def apply(service: ConnectedPlayersService): Route = {
+  def apply(connectedPlayersService: ConnectedPlayersService, matchRooms: MatchRooms): Route = {
     concat(
       path("home") {
-        logger.info("Player joined home")
         parameter("userId") { userId =>
-          handleWebSocketMessages(service.websocketFlow(userId))
+          handleWebSocketMessages(connectedPlayersService.websocketFlow(userId))
+        }
+      } ~ path("join-match" / IntNumber) { matchId =>
+        parameter("userId") { userId =>
+          handleWebSocketMessages(matchRooms.findOrCreate(matchId).websocketFlow(userId))
         }
       }
-      /*~ path("match/join" / IntNumber) { matchId =>
-        parameter("user") { userId =>
-          handleWebSocketMessages(MatchRooms.findOrCreate(matchId).websocketFlow(userId))
-        }
-      }*/
     )
   }
 

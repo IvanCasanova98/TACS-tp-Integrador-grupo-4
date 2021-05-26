@@ -41,6 +41,6 @@ trait Json4sSnakeCaseSupport {
    * @tparam A type to encode, must be upper bounded by `AnyRef`
    * @return marshaller for any `A` value
    */
-  implicit def jsonToEntityMarshaller[A <: AnyRef](implicit formats: Formats): ToEntityMarshaller[A] =
+  implicit def jsonToEntityMarshaller[A <: Any](implicit formats: Formats): ToEntityMarshaller[A] =
     jsonStringMarshaller.compose(c => compact(render(decompose(c).snakizeKeys)))
 }

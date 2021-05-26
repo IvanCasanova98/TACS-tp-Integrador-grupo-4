@@ -25,9 +25,10 @@ libraryDependencies ++= Seq(
   "ch.megard" %% "akka-http-cors" % "1.1.1",
   "org.apache.httpcomponents" % "httpclient" % "4.5.2",
   "org.scala-lang.modules" %% "scala-parser-combinators" % "1.1.2",
-  // https://mvnrepository.com/artifact/com.google.api-client/google-api-client
   "com.google.api-client" % "google-api-client" % "1.31.5",
-  "com.typesafe.play" %% "play-json" % "2.8.1"
+  "com.typesafe.play" %% "play-json" % "2.8.1",
+  "org.mockito" %% "mockito-scala" % "1.5.12" % Test,
+  "com.github.tomakehurst" % "wiremock" % "2.18.0" % Test
 )
 
 enablePlugins(JavaAppPackaging)

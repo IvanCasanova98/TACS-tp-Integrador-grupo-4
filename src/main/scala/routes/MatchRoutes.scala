@@ -1,29 +1,34 @@
 package routes
 
 import akka.http.scaladsl.model.StatusCodes
+import akka.http.scaladsl.model.ws.TextMessage
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
 import ch.megard.akka.http.cors.scaladsl.CorsDirectives
+import models.MatchRooms
 import org.slf4j.{Logger, LoggerFactory}
 import routes.Routes.{cors, matchService, settings}
 import routes.Utils.handleRequest
-import routes.inputs.MatchInputs.PostMatchDTO
+import routes.inputs.MatchInputs.{PostMatchDTO, UpdateMatchStatus}
 import serializers.Json4sSnakeCaseSupport
-import services.{DeckService, MatchService}
+import services.{ConnectedPlayersService, DeckService, MatchService}
 
 
 object MatchRoutes extends Json4sSnakeCaseSupport {
 
   val logger: Logger = LoggerFactory.getLogger(classOf[MatchService])
 
-  def apply(matchService: MatchService): Route = {
+  def apply(matchService: MatchService,connectionsService: ConnectedPlayersService): Route = {
     concat(
       path("matches") {
         post {
           entity(as[PostMatchDTO]) { postMatchDTO =>
-            //BODY deck_id, user_ids [], status CREATED
             logger.info(s"[POST] /matches with $postMatchDTO")
-            handleRequest(() => matchService.createMatch(postMatchDTO.deckId, postMatchDTO.matchCreatorId, postMatchDTO.challengedPlayerId).toString, StatusCodes.Created)
+            handleRequest(() => {
+              val matchId = matchService.createMatch(postMatchDTO.deckId, postMatchDTO.matchCreatorId, postMatchDTO.challengedPlayerId)
+              connectionsService.sendMessageToUserId((s"INVITE:${postMatchDTO.challengedPlayerId}:${matchId}"),postMatchDTO.challengedPlayerId)
+              matchId.toString
+            }, StatusCodes.Created)
           }
         }
       } ~ path("matches" / IntNumber / "result") { matchId =>
@@ -37,7 +42,9 @@ object MatchRoutes extends Json4sSnakeCaseSupport {
       } ~ path("matches" / IntNumber / "status") { matchId =>
         patch {
           //BODY status = { FINISHED | IN_PROCESS | PAUSED | CANCELED}
-          complete(StatusCodes.NoContent, "Match finished")
+          entity(as[UpdateMatchStatus]) { newStatusDTO =>
+            complete(StatusCodes.NoContent, matchService.updateMatchStatus(matchId, newStatusDTO.status))
+          }
         }
       }
     )
