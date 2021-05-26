@@ -41,7 +41,7 @@ case class SuperheroApi() {
       val name: String = card_json("name").asInstanceOf[String]
       val imageUrl: String = card_json("image").asInstanceOf[Map[Any, Any]]("url").asInstanceOf[String]
       val powerStats: Map[Any, Any] = card_json("powerstats").asInstanceOf[Map[Any, Any]]
-      if (!json_has_all_powerstats(powerStats,card_json("appearance").asInstanceOf[Map[Any,Any]])){throw NotEnoughAttribute()}
+      if (!json_has_all_powerstats(powerStats,card_json("appearance").asInstanceOf[Map[Any,Any]])){throw NotEnoughAttributesException()}
       var powerStatsCorrect: List[Attribute] = powerStats.map(power => Attribute(AttributeNameClass(power.asInstanceOf[(String, String)]._1), if (power.asInstanceOf[(String, String)]._2 == "null"){0}else{power.asInstanceOf[(String, String)]._2.toInt})).toList
       val height: String = card_json("appearance").asInstanceOf[Map[Any,Any]]("height").asInstanceOf[List[String]](1).replace(" cm", "")
       val weight: String = card_json("appearance").asInstanceOf[Map[Any,Any]]("weight").asInstanceOf[List[String]](1).replace(" kg", "")
@@ -51,7 +51,7 @@ case class SuperheroApi() {
       {
         if (!card_json.keys.exists(x => x == "error")) {
           println(card_json)
-          throw NotEnoughAttribute()
+          throw NotEnoughAttributesException()
         } else {
           throw UnknownException(card_json("error").toString)
         }

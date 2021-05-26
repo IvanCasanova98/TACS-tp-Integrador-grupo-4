@@ -1,10 +1,11 @@
-package servicesTest
+package unitTests.servicesTest
 
 import akka.http.scaladsl.model.StatusCodes
 import com.github.tomakehurst.wiremock.WireMockServer
 import com.github.tomakehurst.wiremock.client.WireMock
 import com.github.tomakehurst.wiremock.client.WireMock._
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig
+import exceptions.ExceptionsSuperheroApi.NotEnoughAttributesException
 import models.{HEIGHT, WEIGHT}
 import org.scalatest.{BeforeAndAfterAll, Matchers, WordSpec}
 import routes.Utils.resource
@@ -29,7 +30,7 @@ class SuperheroApiTest extends WordSpec with Matchers with BeforeAndAfterAll {
 
   "Superhero api test" when {
     "Get hero by id" should {
-      "return 200 and hero info ok if hero exists" in {
+      "return card info ok if hero exists" in {
         stubFor(get(urlEqualTo("/api/103706338543731/1"))
           .willReturn(
             aResponse()
@@ -42,6 +43,28 @@ class SuperheroApiTest extends WordSpec with Matchers with BeforeAndAfterAll {
         card.powerStats.exists(a => a.name == HEIGHT)
         card.powerStats.exists(a => a.name == WEIGHT)
         card.name shouldBe "A-Bomb"
+      }
+      "Throw Not enough attributes when intelligence is not present in card" in {
+        stubFor(get(urlEqualTo("/api/103706338543731/1"))
+          .willReturn(
+            aResponse()
+              .withStatus(StatusCodes.OK.intValue)
+              .withBody(resource("responses/card_by_id_without_all_attr_response.json"))))
+
+        the[NotEnoughAttributesException] thrownBy superheroClient.get_hero_by_id(1)
+      }
+    }
+    "Search heroes by name" should {
+      "Return some heroes when searching for partial name" in {
+        stubFor(get(urlEqualTo("/api/103706338543731/search/batm"))
+          .willReturn(
+            aResponse()
+              .withStatus(StatusCodes.OK.intValue)
+              .withBody(resource("responses/cards_by_name_response.json"))))
+
+        val cards = superheroClient.search_heroes_by_name("batm")
+        cards.length shouldBe 3
+        cards.exists(c => c.name == "Batman")
       }
     }
   }

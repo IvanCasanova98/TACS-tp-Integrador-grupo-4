@@ -7,6 +7,6 @@ object Exceptions {
 }
 
 object ExceptionsSuperheroApi {
-  case class NotEnoughAttribute() extends RuntimeException()
+  case class NotEnoughAttributesException() extends RuntimeException()
   case class UnknownException(error: String) extends RuntimeException(error)
 }
