@@ -21,4 +21,8 @@ class MatchLocalDAO(db: mutable.HashMap[Int, MatchDBDTO]) extends MatchDAO {
     val matchDTO: MatchDBDTO = db.getOrElse(matchId, throw MatchNotFoundException(matchId))
     db.put(matchId, matchDTO.copy(status = MatchStatus.fromName(status)))
   }
+
+  override def getMatchesOfUser(userId: String): List[MatchDBDTO] = {
+    db.filter(entry => entry._2.challengedUserId == userId || entry._2.matchCreatorId == userId).values.toList
+  }
 }

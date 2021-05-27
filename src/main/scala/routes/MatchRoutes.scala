@@ -35,8 +35,13 @@ object MatchRoutes extends Json4sSnakeCaseSupport {
         get {
           handleRequest(() => matchService.findMatchById(matchId), StatusCodes.OK)
         }
-      }
-        ~ path("matches" / IntNumber / "result") { matchId =>
+      } ~ path("matches") {
+        get {
+          parameters("user_id") { userId =>
+            handleRequest(() => matchService.findMatchesOfUser(userId), StatusCodes.OK)
+          }
+        }
+      } ~ path("matches" / IntNumber / "result") { matchId =>
         get {
           complete(StatusCodes.OK, s"$matchId result: user1 won")
         }

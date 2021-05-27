@@ -11,10 +11,12 @@ import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, Future}
 
 class DeckService(deckRepository: DeckRepository, superheroApi: SuperheroApi) {
+
   implicit val ec: scala.concurrent.ExecutionContext = scala.concurrent.ExecutionContext.global
 
   /**
    * Returns complete deck with cards fetched from superhero api in parallel
+   *
    * @param deckId
    * @return deck
    */
@@ -50,5 +52,7 @@ class DeckService(deckRepository: DeckRepository, superheroApi: SuperheroApi) {
     logger.info(s"Deleting deck $deckId")
     deckRepository.deleteDeck(deckId)
   }
+
+  def getDeckById(deckId: Int): DeckDbDTO = deckRepository.getDeckById(deckId)
 
 }

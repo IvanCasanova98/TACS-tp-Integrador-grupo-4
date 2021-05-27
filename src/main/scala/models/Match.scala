@@ -13,6 +13,13 @@ case class Match(id: Int,
 
 case class Movement(attribute: Attribute, matchCreatorCard: Card, challengedPlayerCard: Card, winner: String)
 
+case class MatchWithoutCardsAndMovements(id: Int,
+                                         status: String,
+                                         matchCreator: Player,
+                                         challengedPlayer: Player,
+                                         deckDbDTO: DeckDbDTO,
+                                         winnerId: Option[String])
+
 object MatchStatus {
   sealed trait MatchStatus {
     def name(): String
