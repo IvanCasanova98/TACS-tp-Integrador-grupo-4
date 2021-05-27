@@ -20,7 +20,7 @@ import scala.collection.mutable
 
 class MatchServiceIntegrationTest  extends WordSpec with Matchers with ScalatestRouteTest with Json4sSnakeCaseSupport {
   val db:mutable.HashMap[Int, MatchDBDTO] = mutable.HashMap()
-  val playerDb: mutable.HashMap[String, Player] = mutable.HashMap()
+  val playerDb: mutable.HashMap[Player, Player] = mutable.HashMap()
   val matchService = new MatchService(new MatchRepository(new MatchLocalDAO(db)), mock[PlayerRepository], mock[DeckService])
   val matchRoutes: Route = MatchRoutes(matchService, mock[ConnectedPlayersService])
 

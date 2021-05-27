@@ -44,7 +44,7 @@ class LoginService(playerRepository: PlayerRepository) extends Json4sSnakeCaseSu
   }
 
   //Validate only if the token ID is valid AND belongs to given google ID
-  def validatePlayerWithGoogle(googleId: String,tokenId: String): Boolean = {
+  def validatePlayerWithGoogle(googleId: String, tokenId: String): Boolean = {
     val (googleUserInfo,isValidUser): (GoogleIdToken,Boolean) = isValidTokenId(tokenId)
 
     val googleIdFound = if (isValidUser) googleUserInfo.getPayload.getSubject else ""

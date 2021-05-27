@@ -9,9 +9,9 @@ case class Match(id: Int,
                  challengedPlayer: Player,
                  deck: Deck,
                  movements: List[Movement],
-                 winner: Option[Player])
+                 winnerId: Option[String])
 
-case class Movement(attribute: Attribute, matchCreatorCard: Card, challengedPlayerCard: Card, winner: Player)
+case class Movement(attribute: Attribute, matchCreatorCard: Card, challengedPlayerCard: Card, winner: String)
 
 object MatchStatus {
   sealed trait MatchStatus {
