@@ -1,8 +1,6 @@
 package server
 
-import akka.actor.ActorSystem
-import akka.stream.Materializer
-import models.{DeckDbDTO, Match, Player}
+import models.{DeckDbDTO, Player}
 import repositories.daos.{DeckLocalDao, MatchLocalDAO}
 import repositories.dbdtos.MatchDBDTO
 import repositories.{DeckRepository, MatchRepository, PlayerRepository}
