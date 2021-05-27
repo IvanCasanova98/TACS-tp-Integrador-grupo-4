@@ -1,11 +1,10 @@
 package models
 
 import exceptions.Exceptions.MatchStatusNotDefinedException
-import models.MatchStatus._
 import models.MatchStatus.PAUSED.matchStatus
 
 case class Match(id: Int,
-                 status: MatchStatus,
+                 status: String,
                  matchCreator: Player,
                  challengedPlayer: Player,
                  deck: Deck,

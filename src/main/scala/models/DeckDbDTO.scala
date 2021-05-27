@@ -9,5 +9,6 @@ case class Card(id: Int, name: String, powerStats: List[Attribute], imageUrl: St
   }
 }
 
-case class Deck(id: Int, name: String, cardIds: List[Int])
+case class DeckDbDTO(id: Int, name: String, cardIds: List[Int])
 
+case class Deck(id: Int, name: String, cards: List[Card])

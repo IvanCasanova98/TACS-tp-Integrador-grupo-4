@@ -4,22 +4,24 @@ import akka.http.scaladsl.marshalling.Marshal
 import akka.http.scaladsl.model.{MessageEntity, StatusCodes}
 import akka.http.scaladsl.server.Route
 import akka.http.scaladsl.testkit.ScalatestRouteTest
+import models.Player
 import org.mockito.MockitoSugar.mock
 import org.scalatest.concurrent.ScalaFutures.convertScalaFuture
 import org.scalatest.{Matchers, WordSpec}
-import repositories.MatchRepository
+import repositories.{DeckRepository, MatchRepository, PlayerRepository}
 import repositories.daos.MatchLocalDAO
 import repositories.dbdtos.MatchDBDTO
 import routes.MatchRoutes
 import routes.inputs.MatchInputs.{PostMatchDTO, UpdateMatchStatus}
 import serializers.Json4sSnakeCaseSupport
-import services.{ConnectedPlayersService, MatchService}
+import services.{ConnectedPlayersService, DeckService, MatchService}
 
 import scala.collection.mutable
 
 class MatchServiceIntegrationTest  extends WordSpec with Matchers with ScalatestRouteTest with Json4sSnakeCaseSupport {
   val db:mutable.HashMap[Int, MatchDBDTO] = mutable.HashMap()
-  val matchService = new MatchService(new MatchRepository(new MatchLocalDAO(db)))
+  val playerDb: mutable.HashMap[String, Player] = mutable.HashMap()
+  val matchService = new MatchService(new MatchRepository(new MatchLocalDAO(db)), mock[PlayerRepository], mock[DeckService])
   val matchRoutes: Route = MatchRoutes(matchService, mock[ConnectedPlayersService])
 
   def postMatchEntity(postMatchDTO: PostMatchDTO): MessageEntity = Marshal(postMatchDTO).to[MessageEntity].futureValue
