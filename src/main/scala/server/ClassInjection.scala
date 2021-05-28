@@ -1,6 +1,7 @@
 package server
 
 import models.{DeckDbDTO, Player}
+import models.MatchStatus.{FINISHED, PAUSED}
 import repositories.daos.{DeckLocalDao, MatchLocalDAO}
 import repositories.dbdtos.MatchDBDTO
 import repositories.{DeckRepository, MatchRepository, PlayerRepository}
@@ -18,7 +19,10 @@ trait ClassInjection {
   deckLocalDb.put(5, DeckDbDTO(5, "A-bomb mazo", List(1,2,3,4)))
   deckLocalDb.put(6, DeckDbDTO(6, "Batman super deck", List(1,2,4,5,3,2,2)))
 
-  val matchLocalDb: mutable.HashMap[Int, MatchDBDTO] = mutable.HashMap[Int, MatchDBDTO]()
+  val matchLocalDb: mutable.HashMap[Int, MatchDBDTO] = mutable.HashMap[Int, MatchDBDTO](
+    1 -> MatchDBDTO(1, FINISHED, "104065320855221322833", "104725077753706905086", 3, Option("104065320855221322833")),
+    2 -> MatchDBDTO(2, PAUSED, "102400486230688279463", "104065320855221322833", 1, None)
+  )
 
   val playerDb: mutable.HashMap[String, Player] = mutable.HashMap[String, Player](
     ("104725077753706905086"->Player("104725077753706905086","Franco Giannotti", "", isAdmin = true,isBlocked = false)),

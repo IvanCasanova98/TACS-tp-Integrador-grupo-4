@@ -38,6 +38,7 @@ object MatchRoutes extends Json4sSnakeCaseSupport {
       } ~ path("matches") {
         get {
           parameters("user_id") { userId =>
+            logger.info(s"[GET] /matches for user $userId")
             handleRequest(() => matchService.findMatchesOfUser(userId), StatusCodes.OK)
           }
         }
