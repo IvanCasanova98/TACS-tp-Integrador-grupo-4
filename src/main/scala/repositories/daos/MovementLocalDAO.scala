@@ -10,9 +10,9 @@ class MovementLocalDAO(db: mutable.HashMap[Int, List[Movement]]) extends Movemen
     db.getOrElse(matchId, List.empty)
   }
 
-  override def saveMovement(matchId: Int, attributeName: AttributeName, creatorCardId: Int, opponentCardId: Int, winnerCardId: Int): Unit = {
+  override def saveMovement(matchId: Int, attributeName: String, creatorCardId: Int, opponentCardId: Int, winnerCardId: Int): Unit = {
     val movements = db.getOrElse(matchId, List.empty)
-    db.put(matchId, movements :+ Movement(movementId, attributeName.name(), creatorCardId, opponentCardId, winnerCardId))
+    db.put(matchId, movements :+ Movement(movementId, attributeName, creatorCardId, opponentCardId, winnerCardId))
     movementId += 1
   }
 }
