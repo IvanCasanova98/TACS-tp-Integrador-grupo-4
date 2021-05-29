@@ -6,6 +6,7 @@ import com.github.tomakehurst.wiremock.client.WireMock
 import com.github.tomakehurst.wiremock.client.WireMock._
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig
 import exceptions.ExceptionsSuperheroApi.NotEnoughAttributesException
+import models.AttributeName.{HEIGHT, WEIGHT}
 import org.scalatest.{BeforeAndAfterAll, Matchers, WordSpec}
 import routes.Utils.resource
 import services.SuperheroApi
