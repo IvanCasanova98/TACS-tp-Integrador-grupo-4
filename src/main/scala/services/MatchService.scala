@@ -2,9 +2,9 @@ package services
 
 import models.{Match, MatchWithoutCardsAndMovements}
 import repositories.dbdtos.MatchDBDTO
-import repositories.{MatchRepository, PlayerRepository}
+import repositories.{MatchRepository, MovementRepository, PlayerRepository}
 
-class MatchService(matchRepository: MatchRepository, playersRepo: PlayerRepository, deckService: DeckService) {
+class MatchService(matchRepository: MatchRepository, playersRepo: PlayerRepository, deckService: DeckService, movementRepository: MovementRepository) {
 
   def findMatchesOfUser(userId: String): List[MatchWithoutCardsAndMovements] = {
     val matches: List[MatchDBDTO] = matchRepository.getMatchesOfUser(userId: String)
@@ -21,8 +21,9 @@ class MatchService(matchRepository: MatchRepository, playersRepo: PlayerReposito
     val matchCreator = playersRepo.getPlayerById(matchDTO.matchCreatorId)
     val challengedPlayer = playersRepo.getPlayerById(matchDTO.challengedUserId)
     val deck = deckService.getCompleteDeckById(matchDTO.deckId)
+    val movements = movementRepository.getMovementsOfMatch(matchId)
 
-    Match(matchId, matchDTO.status.name(), matchCreator, challengedPlayer, deck, List.empty, None)
+    Match(matchId, matchDTO.status.name(), matchCreator, challengedPlayer, deck, movements, matchDTO.winnerId)
   }
 
   def updateMatchStatus(matchId: Int, status: String): Unit = matchRepository.updateMatchStatus(matchId, status)

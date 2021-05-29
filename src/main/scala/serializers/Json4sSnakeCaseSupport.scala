@@ -4,6 +4,8 @@ import akka.http.scaladsl.marshalling.{Marshaller, ToEntityMarshaller}
 import akka.http.scaladsl.model._
 import akka.http.scaladsl.unmarshalling.{FromEntityUnmarshaller, Unmarshaller}
 import akka.util.ByteString
+import models.AttributeName
+import models.AttributeName.AttributeName
 import org.json4s.Extraction.decompose
 import org.json4s.{DefaultFormats, Formats}
 import org.json4s.jackson.JsonMethods.{compact, parse, render}

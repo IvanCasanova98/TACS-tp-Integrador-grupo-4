@@ -8,7 +8,7 @@ import models.Player
 import org.mockito.MockitoSugar.mock
 import org.scalatest.concurrent.ScalaFutures.convertScalaFuture
 import org.scalatest.{Matchers, WordSpec}
-import repositories.{DeckRepository, MatchRepository, PlayerRepository}
+import repositories.{DeckRepository, MatchRepository, MovementRepository, PlayerRepository}
 import repositories.daos.MatchLocalDAO
 import repositories.dbdtos.MatchDBDTO
 import routes.MatchRoutes
@@ -21,7 +21,7 @@ import scala.collection.mutable
 class MatchServiceIntegrationTest  extends WordSpec with Matchers with ScalatestRouteTest with Json4sSnakeCaseSupport {
   val db:mutable.HashMap[Int, MatchDBDTO] = mutable.HashMap()
   val playerDb: mutable.HashMap[Player, Player] = mutable.HashMap()
-  val matchService = new MatchService(new MatchRepository(new MatchLocalDAO(db)), mock[PlayerRepository], mock[DeckService])
+  val matchService = new MatchService(new MatchRepository(new MatchLocalDAO(db)), mock[PlayerRepository], mock[DeckService], mock[MovementRepository])
   val matchRoutes: Route = MatchRoutes(matchService, mock[ConnectedPlayersService])
 
   def postMatchEntity(postMatchDTO: PostMatchDTO): MessageEntity = Marshal(postMatchDTO).to[MessageEntity].futureValue

@@ -46,10 +46,6 @@ object MatchRoutes extends Json4sSnakeCaseSupport {
         get {
           complete(StatusCodes.OK, s"$matchId result: user1 won")
         }
-      } ~ path("matches" / IntNumber / "movements") { matchId =>
-        get {
-          complete(StatusCodes.OK, s"Match $matchId Movements []: attribute, cards, result")
-        }
       } ~ path("matches" / IntNumber / "status") { matchId =>
         patch {
           //BODY status = { FINISHED | IN_PROCESS | PAUSED | CANCELED}
