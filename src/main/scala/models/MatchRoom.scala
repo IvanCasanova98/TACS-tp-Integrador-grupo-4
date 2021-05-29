@@ -1,7 +1,7 @@
 package models
 
 import akka.actor.{Actor, ActorRef, ActorSystem, Props}
-import akka.http.scaladsl.model.ws.{Message, TextMessage}
+import akka.http.scaladsl.model.ws.{BinaryMessage, Message, TextMessage}
 import akka.stream.scaladsl.{Flow, Keep, Sink, Source}
 import akka.stream.{Materializer, OverflowStrategy}
 import models.Events.{UserIsReady, UserJoinedMatch, UserLeftMatch}
@@ -79,6 +79,8 @@ class MatchRoom(matchId: Int, actorSystem: ActorSystem)(implicit val mat: Materi
             val userId = msg.split(":").last
             matchRoomActor ! UserIsReady(userId)
           }
+        case keepAlive: BinaryMessage =>
+          keepAlive.dataStream.runWith(Sink.ignore)
         case _ => println(s"Received something else")
       }.to(Sink.onComplete(_ =>
       // Announce the user has left the match

@@ -2,11 +2,7 @@ package server
 
 import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
-import akka.stream.Materializer
 import routes.Routes
-
-import java.util.concurrent.Executors
-import scala.concurrent.{ExecutionContext, ExecutionContextExecutor}
 
 object HttpServer {
 

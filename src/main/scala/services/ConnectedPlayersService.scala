@@ -1,7 +1,7 @@
 package services
 
 import akka.actor.{Actor, ActorRef, ActorSystem, Props}
-import akka.http.scaladsl.model.ws.{Message, TextMessage}
+import akka.http.scaladsl.model.ws.{BinaryMessage, Message, TextMessage}
 import akka.stream.scaladsl.{Flow, _}
 import akka.stream.{Materializer, OverflowStrategy}
 import models.Events.{GenericMessageToUser, UserJoined, UserLeft}
@@ -11,7 +11,7 @@ import play.api.libs.json.{Json, Writes}
 import routes.Routes.playerRepository
 
 
-case class PlayerDTO(userId: String, userName:String)
+case class PlayerDTO(userId: String, userName: String)
 
 class ConnectedPlayersActor extends Actor {
 
@@ -37,7 +37,7 @@ class ConnectedPlayersActor extends Actor {
   }
 
   def sendMessageToUserId(message: String, userId: String): Unit = {
-    participantsActors.get(userId).foreach( _ ! message)
+    participantsActors.get(userId).foreach(_ ! message)
   }
 
   override def receive: Receive = {
@@ -57,7 +57,7 @@ class ConnectedPlayersActor extends Actor {
 
       broadcast(playersConnected.values.toList)
 
-    case GenericMessageToUser(message,userId) =>
+    case GenericMessageToUser(message, userId) =>
       logger.info(s"sending generic message $message to userId $userId")
       sendMessageToUserId(message, userId)
 
@@ -68,14 +68,14 @@ class ConnectedPlayersService(actorSystem: ActorSystem)(implicit val mat: Materi
   private[this] val connectedPlayersActor = actorSystem.actorOf(Props(classOf[ConnectedPlayersActor]))
   val logger: Logger = LoggerFactory.getLogger(classOf[ConnectedPlayersService])
 
-  def sendMessageToUserId(message: String,userId: String): Unit = connectedPlayersActor ! GenericMessageToUser(message,userId)
+  def sendMessageToUserId(message: String, userId: String): Unit = connectedPlayersActor ! GenericMessageToUser(message, userId)
 
   def websocketFlow(userId: String): Flow[Message, Message, Any] = {
     val (actorRef: ActorRef, publisher: Publisher[TextMessage.Strict]) =
       Source.actorRef[String](16, OverflowStrategy.fail)
         .map(msg =>
           // outgoing message to ws
-          TextMessage.Strict(msg)
+          TextMessage(msg)
         ).toMat(Sink.asPublisher(false))(Keep.both).run()
 
     // Announce the user has joined
@@ -86,11 +86,14 @@ class ConnectedPlayersService(actorSystem: ActorSystem)(implicit val mat: Materi
         case TextMessage.Strict(msg) =>
           // incoming message from ws
           logger.info(s"Received: $msg")
-        case _ => logger.info(s"Received something else")
-      }.to(Sink.onComplete(_ =>
+        case keepAlive: BinaryMessage =>
+          keepAlive.dataStream.runWith(Sink.ignore)
+        case _ => logger.error("Not expected message arrived")
+      }.to(Sink.onComplete { a =>
       // Announce the user has left
+      logger.error(a.get.toString)
       connectedPlayersActor ! UserLeft(userId)
-    ))
+    })
     //Factory method allows for materialization of this Source
     Flow.fromSinkAndSource(sink, Source.fromPublisher(publisher))
   }
