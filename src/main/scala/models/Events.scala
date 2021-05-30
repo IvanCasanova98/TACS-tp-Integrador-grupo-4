@@ -22,4 +22,7 @@ object Events {
 
   case class UserIsReady(userId: String) extends MatchEvent
 
+  case class MatchInit(actorRef: ActorRef) extends MatchEvent
+
+  case class ResponseMatchInit(event: String,deckCount: Int, opponent:PlayerScore, creator:PlayerScore)
 }
