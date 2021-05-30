@@ -24,5 +24,7 @@ object Events {
 
   case class MatchInit(actorRef: ActorRef) extends MatchEvent
 
+  case class MatchSetAttribute(actorRef: ActorRef,attribute: String) extends MatchEvent
+
   case class ResponseMatchInit(event: String,deckCount: Int, opponent:PlayerScore, creator:PlayerScore)
 }
