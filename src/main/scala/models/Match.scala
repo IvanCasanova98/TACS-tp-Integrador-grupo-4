@@ -11,7 +11,7 @@ case class Match(id: Int,
                  movements: List[Movement],
                  winnerId: Option[String])
 
-case class Movement(id: Int, attributeName: String, creatorCardId: Int, opponentCardId: Int, winnerCardId: Int)
+case class Movement(id: Int, attributeName: String, creatorCardId: Int, opponentCardId: Int, winnerCardId: Int, turn: String)
 
 case class MatchWithoutCardsAndMovements(id: Int,
                                          status: String,

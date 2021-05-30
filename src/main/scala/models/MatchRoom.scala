@@ -5,12 +5,11 @@ import akka.http.scaladsl.model.ws.{BinaryMessage, Message, TextMessage}
 import akka.stream.scaladsl.{Flow, Keep, Sink, Source}
 import akka.stream.{Materializer, OverflowStrategy}
 import com.google.gson.Gson
-import models.Events.{MatchInit, ResponseMatchInit, UserIsReady, UserJoinedMatch, UserLeftMatch}
+import models.Events.{MatchInit, MatchSetAttribute, ResponseMatchInit, UserIsReady, UserJoinedMatch, UserLeftMatch}
 import org.reactivestreams.Publisher
 import org.slf4j.{Logger, LoggerFactory}
-import routes.Routes.matchService
-
-import scala.util.parsing.json.JSON
+import routes.Routes.{matchService, movementRepository}
+import scala.util.Random
 
 class MatchRoomActor(matchId: Int) extends Actor {
   val logger: Logger = LoggerFactory.getLogger(classOf[MatchRoomActor])
@@ -47,6 +46,9 @@ class MatchRoomActor(matchId: Int) extends Actor {
         //update match
         broadcast("ALL_READY")
         matchInfo = Option(matchService.findMatchById(matchId))
+        val cards = matchService.nextCards(matchId)
+        val index = Random.nextInt(2)
+        movementRepository.saveMovement(matchId,null,cards._1,cards._2, null, participants.keys.toList(index))
       }
     case MatchInit(actorRef) =>
       val userId = participants.find(k=>k._2 ==actorRef).get._1
@@ -56,6 +58,17 @@ class MatchRoomActor(matchId: Int) extends Actor {
       val creator = PlayerScore(userId=matchInfo.get.matchCreator.userId,userName=matchInfo.get.matchCreator.userName,imageUrl=matchInfo.get.matchCreator.imageUrl,score= 0)
       logger.info(gson.toJson(ResponseMatchInit("INIT",deckCount,opponent,creator)))
       sendMessageToUserId(gson.toJson(ResponseMatchInit("INIT",deckCount,opponent,creator)),userId)
+
+
+
+    case MatchSetAttribute(actorRef, attribute) =>
+      val userId = participants.find(k=>k._2 ==actorRef).get._1
+      val cardWhon = matchService.whoWon(matchId,attribute)
+      movementRepository.setAttibute(matchId,attribute,cardWhon)
+
+      sendMessageToUserId("",userId)
+
+
     case msg => TextMessage(s"Something else arrived $msg")
   }
 
@@ -92,6 +105,10 @@ class MatchRoom(matchId: Int, actorSystem: ActorSystem)(implicit val mat: Materi
           }else{
             if(msg.contains("CONNECT GAME")){
               matchRoomActor ! MatchInit(actorRef)
+            }
+            if(msg.contains("SET ATTRIBUTE")){
+              val attribute = msg.split(":").last
+              matchRoomActor ! MatchSetAttribute(actorRef, attribute)
             }
           }
         case keepAlive: BinaryMessage =>

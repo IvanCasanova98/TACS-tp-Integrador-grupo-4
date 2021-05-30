@@ -33,7 +33,7 @@ trait ClassInjection {
   )
 
   val movementDb: mutable.HashMap[Int, List[Movement]] = mutable.HashMap[Int, List[Movement]](
-    1 -> List(Movement(0, "STRENGTH", 2, 4, 4), Movement(1, "INTELLIGENCE", 1, 3, 1))
+    1 -> List(Movement(0, "STRENGTH", 2, 4, 4,""), Movement(1, "INTELLIGENCE", 1, 3, 1,null))
   )
 
   val superheroApi: SuperheroApi = SuperheroApi()
@@ -49,7 +49,7 @@ trait ClassInjection {
   val movementRepository = new MovementRepository(movementDao)
 
   val deckService = new DeckService(deckRepository, superheroApi)
-  val matchService = new MatchService(matchRepository, playerRepository, deckService, movementRepository)
+  val matchService = new MatchService(matchRepository, playerRepository, deckService, movementRepository, superheroApi)
   val loginService = new LoginService(playerRepository)
 
 }
