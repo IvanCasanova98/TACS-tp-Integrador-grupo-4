@@ -2,8 +2,7 @@ package routes
 
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
-import models.MatchRooms
-import services.ConnectedPlayersService
+import services.{ConnectedPlayersService, MatchRooms}
 
 object PlayRoutes {
 

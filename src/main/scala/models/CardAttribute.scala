@@ -1,5 +1,8 @@
 package models
 
+import com.fasterxml.jackson.core.JsonGenerator
+import com.fasterxml.jackson.databind.SerializerProvider
+import com.fasterxml.jackson.databind.ser.std.StdSerializer
 import models.AttributeName.AttributeName
 
 case class Attribute(name: AttributeName, value: Int)
@@ -39,5 +42,11 @@ object AttributeName {
 
   object STRENGTH extends AttributeName {
     override def name(): String = "STRENGTH"
+  }
+}
+
+class AttributeNameSerializer(val t: Class[AttributeName]) extends StdSerializer[AttributeName](t) {
+  override def serialize(attributeName: AttributeName, jgen: JsonGenerator, sp: SerializerProvider): Unit = {
+    jgen.writeString(attributeName.name())
   }
 }

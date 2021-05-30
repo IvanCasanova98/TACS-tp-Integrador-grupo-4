@@ -1,10 +1,18 @@
 package server
 
+import com.fasterxml.jackson.annotation.JsonInclude
+import com.fasterxml.jackson.databind.{DeserializationFeature, ObjectMapper, PropertyNamingStrategy, SerializationFeature}
+import com.fasterxml.jackson.databind.module.SimpleModule
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
+import com.fasterxml.jackson.module.scala.DefaultScalaModule
+import models.AttributeName.AttributeName
 import models.MatchStatus.{FINISHED, PAUSED}
 import models._
 import repositories.daos.{DeckLocalDao, MatchLocalDAO, MovementLocalDAO}
 import repositories.dbdtos.MatchDBDTO
 import repositories.{DeckRepository, MatchRepository, MovementRepository, PlayerRepository}
+import serializers.JsonParser
 import services.{DeckService, LoginService, MatchService, SuperheroApi}
 
 import scala.collection.mutable
@@ -29,7 +37,8 @@ trait ClassInjection {
     ("104065320855221322833" -> Player("104065320855221322833", "Julieta Abuin", "https://lh3.googleusercontent.com/a-/AOh14Gh5tYvnhd0arKFn9ot7FU6D6mrnSpfuh6_hAPvMsg=s96-c", isAdmin = true, isBlocked = false)),
     ("102400486230688279463" -> Player("102400486230688279463", "FRANCO GIANNOTTI CALENS", "", isAdmin = true, isBlocked = false)),
       ("107032331312948829616" -> Player("107032331312948829616", "Chiara M", "https://lh3.googleusercontent.com/a-/AOh14Gh5tYvnhd0arKFn9ot7FU6D6mrnSpfuh6_hAPvMsg=s96-c", isAdmin = true, isBlocked = false)),
-      ("115748028387079548757" -> Player("115748028387079548757", "Ivan C", "https://lh3.googleusercontent.com/a-/AOh14Gh5tYvnhd0arKFn9ot7FU6D6mrnSpfuh6_hAPvMsg=s96-c", isAdmin = true, isBlocked = false))
+      ("115748028387079548757" -> Player("115748028387079548757", "Ivan C", "https://lh3.googleusercontent.com/a-/AOh14Gh5tYvnhd0arKFn9ot7FU6D6mrnSpfuh6_hAPvMsg=s96-c", isAdmin = true, isBlocked = false)),
+        ("107090515790711287955" -> Player("107090515790711287955", "Julieta Lucia Abuin", "https://lh3.googleusercontent.com/a-/AOh14Gh5tYvnhd0arKFn9ot7FU6D6mrnSpfuh6_hAPvMsg=s96-c", isAdmin = true, isBlocked = false))
   )
 
   val movementDb: mutable.HashMap[Int, List[Movement]] = mutable.HashMap[Int, List[Movement]](
@@ -37,6 +46,23 @@ trait ClassInjection {
   )
 
   val superheroApi: SuperheroApi = SuperheroApi()
+
+  private def defaultObjectMapper(): ObjectMapper = {
+    val customModule = new SimpleModule("CustomModule")
+    .addSerializer(classOf[AttributeName], new AttributeNameSerializer(classOf[AttributeName]))
+
+    new ObjectMapper()
+      .registerModule(DefaultScalaModule)
+      .registerModule(new Jdk8Module)
+      .registerModule(new JavaTimeModule)
+      .registerModule(customModule)
+      .disable(SerializationFeature.INDENT_OUTPUT)
+      .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
+      .setSerializationInclusion(JsonInclude.Include.NON_ABSENT)
+      .setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE)
+  }
+
+  val jsonParser = new JsonParser(defaultObjectMapper())
 
   //Local Dao for saving stuff in memory
   val deckDao = new DeckLocalDao(deckLocalDb)
@@ -49,7 +75,7 @@ trait ClassInjection {
   val movementRepository = new MovementRepository(movementDao)
 
   val deckService = new DeckService(deckRepository, superheroApi)
-  val matchService = new MatchService(matchRepository, playerRepository, deckService, movementRepository, superheroApi)
+  val matchService = new MatchService(matchRepository, playerRepository, deckService, movementRepository)
   val loginService = new LoginService(playerRepository)
 
 }

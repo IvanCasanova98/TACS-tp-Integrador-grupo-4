@@ -1,21 +1,36 @@
-package models
+package services
 
 import akka.actor.{Actor, ActorRef, ActorSystem, Props}
 import akka.http.scaladsl.model.ws.{BinaryMessage, Message, TextMessage}
 import akka.stream.scaladsl.{Flow, Keep, Sink, Source}
 import akka.stream.{Materializer, OverflowStrategy}
-import com.google.gson.Gson
-import models.Events.{MatchInit, MatchSetAttribute, ResponseMatchInit, UserIsReady, UserJoinedMatch, UserLeftMatch}
+import com.google.gson.{Gson, GsonBuilder}
+import models.AttributeName.AttributeName
+import models.Events._
+import models.{Card, Match, PlayerScore}
 import org.reactivestreams.Publisher
 import org.slf4j.{Logger, LoggerFactory}
-import routes.Routes.{matchService, movementRepository}
-import scala.util.Random
+import routes.Routes.{jsonParser, matchService}
+import serializers.AttributeNameSerializer
 
 class MatchRoomActor(matchId: Int) extends Actor {
   val logger: Logger = LoggerFactory.getLogger(classOf[MatchRoomActor])
   var participants: Map[String, ActorRef] = Map.empty[String, ActorRef]
   var playersReady: Set[String] = Set.empty
   var matchInfo: Option[Match] = None
+  var starterPlayerId: Option[String] = None
+  var playedCardIds: Set[Int] = Set.empty
+
+  def getAndSaveFirstTurn: String = {
+    starterPlayerId = Option(if (Math.random() <= 0.5) playersReady.head else playersReady.last)
+    starterPlayerId.get
+  }
+
+  def getUnusedCard: Card = {
+    val cardToPlay = matchInfo.get.deck.cards.filter(c => !playedCardIds.contains(c.id)).head
+    playedCardIds = playedCardIds + cardToPlay.id
+    cardToPlay
+  }
 
   override def receive: Receive = {
     case UserJoinedMatch(userId, actorRef) =>
@@ -44,27 +59,29 @@ class MatchRoomActor(matchId: Int) extends Actor {
       opponent.foreach(sendMessageToUserId("OPPONENT_READY", _))
       if (playersReady.size == 2) {
         logger.info("All ready for match to start")
-        //update match
+        //TODO: update match
         broadcast("ALL_READY")
         matchInfo = Option(matchService.findMatchById(matchId))
-        val cards = matchService.nextCards(matchId)
-        val index = Random.nextInt(2)
-        movementRepository.saveMovement(matchId, null, cards._1, cards._2, null, participants.keys.toList(index))
+      // val cards = matchService.nextCards(matchId)
+       // val index = Random.nextInt(2)
+      //  movementRepository.saveMovement(matchId, ???, cards._1, cards._2, 0, participants.keys.toList(index))
       }
     case MatchInit(actorRef) =>
       val userId = participants.find(k => k._2 == actorRef).get._1
       val deckCount = Math.floor(matchInfo.get.deck.cards.size / 2).toInt
-      val gson = new Gson()
       val opponent = PlayerScore(userId = matchInfo.get.challengedPlayer.userId, userName = matchInfo.get.challengedPlayer.userName, imageUrl = matchInfo.get.challengedPlayer.imageUrl, score = 0)
       val creator = PlayerScore(userId = matchInfo.get.matchCreator.userId, userName = matchInfo.get.matchCreator.userName, imageUrl = matchInfo.get.matchCreator.imageUrl, score = 0)
-      logger.info(gson.toJson(ResponseMatchInit("INIT", deckCount, opponent, creator)))
-      sendMessageToUserId(gson.toJson(ResponseMatchInit("INIT", deckCount, opponent, creator)), userId)
+      logger.info(jsonParser.writeJson(ResponseMatchInit("INIT", deckCount, opponent, creator)))
+      sendMessageToUserId(jsonParser.writeJson(ResponseMatchInit("INIT", deckCount, opponent, creator)), userId)
 
+      val firstTurnPlayerId = starterPlayerId.getOrElse(getAndSaveFirstTurn)
+      logger.info(jsonParser.writeJson(Turn("TURN", firstTurnPlayerId, getUnusedCard)), userId)
+      sendMessageToUserId(jsonParser.writeJson(Turn("TURN", firstTurnPlayerId, getUnusedCard)), userId)
 
     case MatchSetAttribute(actorRef, attribute) =>
       val userId = participants.find(k => k._2 == actorRef).get._1
-      val cardWhon = matchService.whoWon(matchId, attribute)
-      movementRepository.setAttibute(matchId, attribute, cardWhon)
+      //val cardWhon = matchService.whoWon(matchId, attribute)
+      //movementRepository.setAttribute(matchId, attribute, cardWhon)
 
       sendMessageToUserId("", userId)
 

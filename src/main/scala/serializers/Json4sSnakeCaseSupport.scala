@@ -4,7 +4,10 @@ import akka.http.scaladsl.marshalling.{Marshaller, ToEntityMarshaller}
 import akka.http.scaladsl.model._
 import akka.http.scaladsl.unmarshalling.{FromEntityUnmarshaller, Unmarshaller}
 import akka.util.ByteString
-import models.AttributeName
+import com.google.gson.{JsonElement, JsonObject, JsonPrimitive, JsonSerializationContext, JsonSerializer}
+import models.Attribute
+
+import java.lang.reflect.Type
 import models.AttributeName.AttributeName
 import org.json4s.Extraction.decompose
 import org.json4s.{DefaultFormats, Formats}
@@ -45,4 +48,15 @@ trait Json4sSnakeCaseSupport {
    */
   implicit def jsonToEntityMarshaller[A <: Any](implicit formats: Formats): ToEntityMarshaller[A] =
     jsonStringMarshaller.compose(c => compact(render(decompose(c).snakizeKeys)))
+
+}
+
+object AttributeNameSerializer extends JsonSerializer[Attribute] {
+   override def serialize(t1: Attribute, t2: Type, jsonSerializationContext: JsonSerializationContext):JsonElement = {
+    val res = new JsonObject()
+    res.add("name", new JsonPrimitive(t1.name.name()))
+    res.add("value", new JsonPrimitive(t1.value))
+    res
+  }
+
 }

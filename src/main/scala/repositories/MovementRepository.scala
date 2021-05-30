@@ -11,5 +11,5 @@ class MovementRepository(dao: MovementDAO) {
 
   def getMovementsOfMatch(matchId: Int): List[Movement] = dao.getMovementsOfMatch(matchId)
 
-  def setAttibute(matchId:Int,attribute: String,winnerCardId: Int): Unit = dao.setAttibute(matchId,attribute,winnerCardId)
+  def setAttribute(matchId:Int, attribute: String, winnerCardId: Int): Unit = dao.setAttribute(matchId,attribute,winnerCardId)
 }

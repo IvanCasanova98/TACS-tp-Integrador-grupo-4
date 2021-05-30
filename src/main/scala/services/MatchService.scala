@@ -4,7 +4,7 @@ import models.{Attribute, Match, MatchWithoutCardsAndMovements}
 import repositories.dbdtos.MatchDBDTO
 import repositories.{MatchRepository, MovementRepository, PlayerRepository}
 import scala.util.Random
-class MatchService(matchRepository: MatchRepository, playersRepo: PlayerRepository, deckService: DeckService, movementRepository: MovementRepository, superheroApi: SuperheroApi) {
+class MatchService(matchRepository: MatchRepository, playersRepo: PlayerRepository, deckService: DeckService, movementRepository: MovementRepository) {
 
   def findMatchesOfUser(userId: String): List[MatchWithoutCardsAndMovements] = {
     val matches: List[MatchDBDTO] = matchRepository.getMatchesOfUser(userId: String)
@@ -34,7 +34,7 @@ class MatchService(matchRepository: MatchRepository, playersRepo: PlayerReposito
     val matchDTO = matchRepository.getMatchById(matchId)
     Seq(matchDTO.matchCreatorId, matchDTO.challengedUserId).contains(userId)
   }
-  def whoWon(matchId: Int, attribute: String):Int= {
+ /* def whoWon(matchId: Int, attribute: String):Int= {
     val lastMovement = movementRepository.getMovementsOfMatch(matchId).last
     val scoreCreator = superheroApi.get_hero_by_id(lastMovement.creatorCardId).powerStats.find(attr=>attr.name.name()==attribute).get.value
     val cardOpponent = superheroApi.get_hero_by_id(lastMovement.opponentCardId).powerStats.find(attr=>attr.name.name()==attribute).get.value
@@ -44,8 +44,8 @@ class MatchService(matchRepository: MatchRepository, playersRepo: PlayerReposito
     if (scoreCreator<cardOpponent){
       return lastMovement.opponentCardId
     }
-    null
   }
+
   def nextCards(matchId:Int): (Int,Int) ={
     val deckId = matchRepository.getMatchById(matchId).deckId
     val cardsId = deckService.getDeckById(deckId).cardIds
@@ -61,5 +61,5 @@ class MatchService(matchRepository: MatchRepository, playersRepo: PlayerReposito
     index = random.nextInt(cardsNotUsed.size)
     val nextCardIdOpponent = cardsNotUsed(index)
     ( nextCardsIdCeator, nextCardIdOpponent)
-  }
+  }*/
 }
