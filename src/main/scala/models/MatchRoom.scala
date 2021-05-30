@@ -15,15 +15,16 @@ class MatchRoomActor(matchId: Int) extends Actor {
   val logger: Logger = LoggerFactory.getLogger(classOf[MatchRoomActor])
   var participants: Map[String, ActorRef] = Map.empty[String, ActorRef]
   var playersReady: Set[String] = Set.empty
-  var matchInfo:Option[Match] = None
-    override def receive: Receive = {
+  var matchInfo: Option[Match] = None
+
+  override def receive: Receive = {
     case UserJoinedMatch(userId, actorRef) =>
       if (matchService.isUserAuthorizedToJoinMatch(matchId, userId)) {
         participants += userId -> actorRef
         logger.info(s"User $userId joined match[$matchId]")
-        if (participants.size == 2){
+        if (participants.size == 2) {
           var msg = "IN_LOBBY"
-          participants.keys.foreach(userId => msg = msg+":"+userId)
+          participants.keys.foreach(userId => msg = msg + ":" + userId)
           broadcast(msg)
         }
       } else {
@@ -40,7 +41,7 @@ class MatchRoomActor(matchId: Int) extends Actor {
       logger.info(s"User $userId is ready to play")
       playersReady = playersReady + userId
       val opponent = participants.keys.find(k => k != userId)
-      opponent.foreach(sendMessageToUserId("OPPONENT_READY", _ ))
+      opponent.foreach(sendMessageToUserId("OPPONENT_READY", _))
       if (playersReady.size == 2) {
         logger.info("All ready for match to start")
         //update match
@@ -48,25 +49,24 @@ class MatchRoomActor(matchId: Int) extends Actor {
         matchInfo = Option(matchService.findMatchById(matchId))
         val cards = matchService.nextCards(matchId)
         val index = Random.nextInt(2)
-        movementRepository.saveMovement(matchId,null,cards._1,cards._2, null, participants.keys.toList(index))
+        movementRepository.saveMovement(matchId, null, cards._1, cards._2, null, participants.keys.toList(index))
       }
     case MatchInit(actorRef) =>
-      val userId = participants.find(k=>k._2 ==actorRef).get._1
-      val deckCount = Math.floor(matchInfo.get.deck.cards.size/2).toInt
+      val userId = participants.find(k => k._2 == actorRef).get._1
+      val deckCount = Math.floor(matchInfo.get.deck.cards.size / 2).toInt
       val gson = new Gson()
-      val opponent = PlayerScore(userId=matchInfo.get.challengedPlayer.userId,userName=matchInfo.get.challengedPlayer.userName,imageUrl=matchInfo.get.challengedPlayer.imageUrl,score= 0)
-      val creator = PlayerScore(userId=matchInfo.get.matchCreator.userId,userName=matchInfo.get.matchCreator.userName,imageUrl=matchInfo.get.matchCreator.imageUrl,score= 0)
-      logger.info(gson.toJson(ResponseMatchInit("INIT",deckCount,opponent,creator)))
-      sendMessageToUserId(gson.toJson(ResponseMatchInit("INIT",deckCount,opponent,creator)),userId)
-
+      val opponent = PlayerScore(userId = matchInfo.get.challengedPlayer.userId, userName = matchInfo.get.challengedPlayer.userName, imageUrl = matchInfo.get.challengedPlayer.imageUrl, score = 0)
+      val creator = PlayerScore(userId = matchInfo.get.matchCreator.userId, userName = matchInfo.get.matchCreator.userName, imageUrl = matchInfo.get.matchCreator.imageUrl, score = 0)
+      logger.info(gson.toJson(ResponseMatchInit("INIT", deckCount, opponent, creator)))
+      sendMessageToUserId(gson.toJson(ResponseMatchInit("INIT", deckCount, opponent, creator)), userId)
 
 
     case MatchSetAttribute(actorRef, attribute) =>
-      val userId = participants.find(k=>k._2 ==actorRef).get._1
-      val cardWhon = matchService.whoWon(matchId,attribute)
-      movementRepository.setAttibute(matchId,attribute,cardWhon)
+      val userId = participants.find(k => k._2 == actorRef).get._1
+      val cardWhon = matchService.whoWon(matchId, attribute)
+      movementRepository.setAttibute(matchId, attribute, cardWhon)
 
-      sendMessageToUserId("",userId)
+      sendMessageToUserId("", userId)
 
 
     case msg => TextMessage(s"Something else arrived $msg")
@@ -75,7 +75,7 @@ class MatchRoomActor(matchId: Int) extends Actor {
   def broadcast(message: String): Unit = participants.values.foreach(_ ! message)
 
   def sendMessageToUserId(message: String, userId: String): Unit = {
-    participants.get(userId).foreach( _ ! message)
+    participants.get(userId).foreach(_ ! message)
   }
 }
 
@@ -102,11 +102,11 @@ class MatchRoom(matchId: Int, actorSystem: ActorSystem)(implicit val mat: Materi
           if (msg.contains("READY")) {
             val userId = msg.split(":").last
             matchRoomActor ! UserIsReady(userId)
-          }else{
-            if(msg.contains("CONNECT GAME")){
+          } else {
+            if (msg.contains("CONNECT GAME")) {
               matchRoomActor ! MatchInit(actorRef)
             }
-            if(msg.contains("SET ATTRIBUTE")){
+            if (msg.contains("SET ATTRIBUTE")) {
               val attribute = msg.split(":").last
               matchRoomActor ! MatchSetAttribute(actorRef, attribute)
             }
