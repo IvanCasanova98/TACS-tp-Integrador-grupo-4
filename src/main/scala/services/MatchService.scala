@@ -1,9 +1,12 @@
 package services
 
-import models.{Attribute, Match, MatchWithoutCardsAndMovements}
+import models.AttributeName.AttributeName
+import models.{Attribute, Card, Match, MatchWithoutCardsAndMovements}
 import repositories.dbdtos.MatchDBDTO
 import repositories.{MatchRepository, MovementRepository, PlayerRepository}
+
 import scala.util.Random
+
 class MatchService(matchRepository: MatchRepository, playersRepo: PlayerRepository, deckService: DeckService, movementRepository: MovementRepository) {
 
   def findMatchesOfUser(userId: String): List[MatchWithoutCardsAndMovements] = {
@@ -34,32 +37,22 @@ class MatchService(matchRepository: MatchRepository, playersRepo: PlayerReposito
     val matchDTO = matchRepository.getMatchById(matchId)
     Seq(matchDTO.matchCreatorId, matchDTO.challengedUserId).contains(userId)
   }
- /* def whoWon(matchId: Int, attribute: String):Int= {
-    val lastMovement = movementRepository.getMovementsOfMatch(matchId).last
-    val scoreCreator = superheroApi.get_hero_by_id(lastMovement.creatorCardId).powerStats.find(attr=>attr.name.name()==attribute).get.value
-    val cardOpponent = superheroApi.get_hero_by_id(lastMovement.opponentCardId).powerStats.find(attr=>attr.name.name()==attribute).get.value
-    if(scoreCreator>cardOpponent){
-      return lastMovement.creatorCardId
-    }
-    if (scoreCreator<cardOpponent){
-      return lastMovement.opponentCardId
-    }
+
+  def getMovementResult(cards: Map[String, Card], chosenAttribute: AttributeName): String = {
+    val firstPlayer = cards.head
+    val secondPlayer = cards.last
+    val firstPlayerValue = firstPlayer._2.getValueOfAttribute(chosenAttribute)
+    val secondPlayerValue = secondPlayer._2.getValueOfAttribute(chosenAttribute)
+
+    if (firstPlayerValue > secondPlayerValue)
+      firstPlayer._1
+    else if (firstPlayerValue < secondPlayerValue)
+      secondPlayer._1
+    else
+      "TIE"
   }
 
-  def nextCards(matchId:Int): (Int,Int) ={
-    val deckId = matchRepository.getMatchById(matchId).deckId
-    val cardsId = deckService.getDeckById(deckId).cardIds
-    val movements = movementRepository.getMovementsOfMatch(matchId)
-    val cardsIdCreators = movements.map(move=>move.creatorCardId)
-    val cardsIdOpponents = movements.map(move=>move.opponentCardId)
-    val cardsIdUsed = cardsIdCreators ++ cardsIdOpponents
-    var cardsNotUsed = cardsId.diff(cardsIdUsed)
-    val random = new Random()
-    var index = random.nextInt(cardsNotUsed.size)
-    val nextCardsIdCeator = cardsNotUsed(index)
-    cardsNotUsed = cardsNotUsed.drop(index)
-    index = random.nextInt(cardsNotUsed.size)
-    val nextCardIdOpponent = cardsNotUsed(index)
-    ( nextCardsIdCeator, nextCardIdOpponent)
-  }*/
+  def saveMovement(matchId: Int, attribute: String, creatorCardId: Int, opponentCardId: Int, winnerIdOrTie: String, turn: String): Unit = {
+    movementRepository.saveMovement(matchId, attribute, creatorCardId, opponentCardId, winnerIdOrTie, turn)
+  }
 }

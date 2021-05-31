@@ -4,14 +4,13 @@ import akka.actor.{Actor, ActorRef, ActorSystem, Props}
 import akka.http.scaladsl.model.ws.{BinaryMessage, Message, TextMessage}
 import akka.stream.scaladsl.{Flow, Keep, Sink, Source}
 import akka.stream.{Materializer, OverflowStrategy}
-import com.google.gson.{Gson, GsonBuilder}
-import models.AttributeName.AttributeName
 import models.Events._
-import models.{Card, Match, PlayerScore}
+import models.{AttributeName, Card, Match, PlayerScore}
 import org.reactivestreams.Publisher
 import org.slf4j.{Logger, LoggerFactory}
 import routes.Routes.{jsonParser, matchService}
-import serializers.AttributeNameSerializer
+
+import scala.util.Random
 
 class MatchRoomActor(matchId: Int) extends Actor {
   val logger: Logger = LoggerFactory.getLogger(classOf[MatchRoomActor])
@@ -20,14 +19,23 @@ class MatchRoomActor(matchId: Int) extends Actor {
   var matchInfo: Option[Match] = None
   var starterPlayerId: Option[String] = None
   var playedCardIds: Set[Int] = Set.empty
+  var cardsBeingPlayed: Map[String, Card] = Map.empty[String, Card]
 
   def getAndSaveFirstTurn: String = {
-    starterPlayerId = Option(if (Math.random() <= 0.5) playersReady.head else playersReady.last)
+    starterPlayerId = Option(getRandomItemOfSeq(playersReady.toSeq))
     starterPlayerId.get
   }
 
+  def getTurn(playerIdTurn: String, userId: String): Turn = {
+    val selectedCardForPlayer = getUnusedCard
+    cardsBeingPlayed += userId -> selectedCardForPlayer
+    Turn("TURN", playerIdTurn, selectedCardForPlayer)
+  }
+
+  def getRandomItemOfSeq[T](collection: Seq[T]): T = collection(new Random().nextInt(collection.length))
+
   def getUnusedCard: Card = {
-    val cardToPlay = matchInfo.get.deck.cards.filter(c => !playedCardIds.contains(c.id)).head
+    val cardToPlay = getRandomItemOfSeq(matchInfo.get.deck.cards.filter(c => !playedCardIds.contains(c.id)))
     playedCardIds = playedCardIds + cardToPlay.id
     cardToPlay
   }
@@ -62,37 +70,49 @@ class MatchRoomActor(matchId: Int) extends Actor {
         //TODO: update match
         broadcast("ALL_READY")
         matchInfo = Option(matchService.findMatchById(matchId))
-      // val cards = matchService.nextCards(matchId)
-       // val index = Random.nextInt(2)
-      //  movementRepository.saveMovement(matchId, ???, cards._1, cards._2, 0, participants.keys.toList(index))
       }
     case MatchInit(actorRef) =>
       val userId = participants.find(k => k._2 == actorRef).get._1
       val deckCount = Math.floor(matchInfo.get.deck.cards.size / 2).toInt
       val opponent = PlayerScore(userId = matchInfo.get.challengedPlayer.userId, userName = matchInfo.get.challengedPlayer.userName, imageUrl = matchInfo.get.challengedPlayer.imageUrl, score = 0)
       val creator = PlayerScore(userId = matchInfo.get.matchCreator.userId, userName = matchInfo.get.matchCreator.userName, imageUrl = matchInfo.get.matchCreator.imageUrl, score = 0)
-      logger.info(jsonParser.writeJson(ResponseMatchInit("INIT", deckCount, opponent, creator)))
-      sendMessageToUserId(jsonParser.writeJson(ResponseMatchInit("INIT", deckCount, opponent, creator)), userId)
+      sendJsonToUser(ResponseMatchInit("INIT", deckCount, opponent, creator), userId)
 
       val firstTurnPlayerId = starterPlayerId.getOrElse(getAndSaveFirstTurn)
-      logger.info(jsonParser.writeJson(Turn("TURN", firstTurnPlayerId, getUnusedCard)), userId)
-      sendMessageToUserId(jsonParser.writeJson(Turn("TURN", firstTurnPlayerId, getUnusedCard)), userId)
+      sendJsonToUser(getTurn(firstTurnPlayerId, userId), userId)
 
     case MatchSetAttribute(actorRef, attribute) =>
       val userId = participants.find(k => k._2 == actorRef).get._1
-      //val cardWhon = matchService.whoWon(matchId, attribute)
-      //movementRepository.setAttribute(matchId, attribute, cardWhon)
+      val winnerId = matchService.getMovementResult(cardsBeingPlayed, AttributeName.fromName(attribute))
 
-      sendMessageToUserId("", userId)
+      broadcastJson(MovementResult("MOVEMENT_RESULT", winnerId, cardsBeingPlayed.values.toList))
 
+      //send next turn
+      //TODO check for end of match (cards run out or condition)
+      val otherPlayer = participants.find(p => p._1 != userId).get
+      val nextTurnUserId = otherPlayer._1
+      sendJsonToUser(getTurn(nextTurnUserId, userId), userId)
+      sendJsonToUser(getTurn(nextTurnUserId, otherPlayer._1), otherPlayer._1)
+
+      //save movement of match in database
+      matchService.saveMovement(matchId, attribute.toUpperCase(),
+        cardsBeingPlayed.get(matchInfo.get.matchCreator.userId).get.id,
+        cardsBeingPlayed.get(matchInfo.get.challengedPlayer.userId).get.id,
+        winnerId, userId)
 
     case msg => TextMessage(s"Something else arrived $msg")
   }
 
   def broadcast(message: String): Unit = participants.values.foreach(_ ! message)
 
+  def broadcastJson[T](event: T): Unit = broadcast(jsonParser.writeJson(event))
+
   def sendMessageToUserId(message: String, userId: String): Unit = {
     participants.get(userId).foreach(_ ! message)
+  }
+
+  def sendJsonToUser[T](message: T, userId: String): Unit = {
+    sendMessageToUserId(jsonParser.writeJson(message), userId)
   }
 }
 
@@ -123,7 +143,7 @@ class MatchRoom(matchId: Int, actorSystem: ActorSystem)(implicit val mat: Materi
             if (msg.contains("CONNECT GAME")) {
               matchRoomActor ! MatchInit(actorRef)
             }
-            if (msg.contains("SET ATTRIBUTE")) {
+            if (msg.contains("SET_ATTRIBUTE")) {
               val attribute = msg.split(":").last
               matchRoomActor ! MatchSetAttribute(actorRef, attribute)
             }

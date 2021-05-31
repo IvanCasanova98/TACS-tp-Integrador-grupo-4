@@ -29,4 +29,6 @@ object Events {
   case class ResponseMatchInit(event: String,deckCount: Int, opponent:PlayerScore, creator:PlayerScore)
 
   case class Turn(event: String, userIdTurn: String, card: Card)
+
+  case class MovementResult(event: String, winnerId: String, cards: List[Card])
 }

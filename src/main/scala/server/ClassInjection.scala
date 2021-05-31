@@ -42,7 +42,7 @@ trait ClassInjection {
   )
 
   val movementDb: mutable.HashMap[Int, List[Movement]] = mutable.HashMap[Int, List[Movement]](
-    1 -> List(Movement(0, "STRENGTH", 2, 4, 4,""), Movement(1, "INTELLIGENCE", 1, 3, 1,null))
+    1 -> List(Movement(0, "STRENGTH", 2, 4, "104065320855221322833","104065320855221322833"), Movement(1, "INTELLIGENCE", 1, 3, "104065320855221322833","104725077753706905086"))
   )
 
   val superheroApi: SuperheroApi = SuperheroApi()
