@@ -4,6 +4,7 @@ import models.AttributeName.AttributeName
 import models.{Card, Match, MatchWithoutCardsAndMovements}
 import repositories.dbdtos.MatchDBDTO
 import repositories.{MatchRepository, MovementRepository, PlayerRepository}
+import routes.DeckRoutes.logger
 
 import scala.collection.mutable
 
@@ -58,16 +59,15 @@ class MatchService(matchRepository: MatchRepository, playersRepo: PlayerReposito
     movementRepository.saveMovement(matchId, attribute, creatorCardId, opponentCardId, winnerIdOrTie, turn)
   }
 
-  def findMatchWinner(matchId: Int,playerId:String,otherPlayerId:String):String = {
+  def findMatchWinner(matchId: Int,playerId:String,otherPlayerId:String): String = {
     // user ID --> movements won
-    var winsCounter: Map[String, Int] = Map(playerId -> 0, otherPlayerId -> 0)
-
+    val winsCounter: mutable.Map[String, Int] = mutable.Map(playerId -> 0, otherPlayerId -> 0)
+    logger.info(winsCounter.toString)
     movementRepository.getMovementsOfMatch(matchId).foreach(mov => {
-      if (mov.winnerIdOrTie != "TIE"){
-        winsCounter += (mov.winnerIdOrTie -> winsCounter(mov.winnerIdOrTie).+(1))
-      }
+      if (mov.winnerIdOrTie != "TIE") winsCounter.put(mov.winnerIdOrTie,winsCounter(mov.winnerIdOrTie).+(1))
+      logger.info(winsCounter.toString)
     })
-
+    if (winsCounter(playerId) == winsCounter(otherPlayerId)) return "TIE"
     //get userId that has most wins
     winsCounter.find(userWinCount =>  userWinCount._2 == winsCounter.values.max).get._1
   }

@@ -7,7 +7,7 @@ import scala.collection.mutable
 
 
 class DeckLocalDao(db: mutable.HashMap[Int, DeckDbDTO]) extends DeckDao {
-  var deckId = 0
+  var deckId: Int = db.keys.size
 
   def createDeck(deckName: String, cardIds: List[Int]): Int = {
     deckId += 1
