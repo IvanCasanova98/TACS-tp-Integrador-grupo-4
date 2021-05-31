@@ -20,7 +20,7 @@ class MatchRoomActor(matchId: Int) extends Actor {
   var playersReady: Set[String] = Set.empty
   var matchInfo: Option[Match] = None
   var starterPlayerId: Option[String] = None
-  var playedCardIds: Set[Int] = Set.empty
+  var playedCardIds: mutable.Set[Int] = mutable.Set.empty
   var cardsBeingPlayed: mutable.HashMap[String, Card] = mutable.HashMap.empty[String, Card]
 
   def getAndSaveFirstTurn: String = {
@@ -36,6 +36,7 @@ class MatchRoomActor(matchId: Int) extends Actor {
   def getTurn(playerIdTurn: String, userId: String): Turn = {
     val selectedCardForPlayer = getUnusedCard
     cardsBeingPlayed += userId -> selectedCardForPlayer
+    logger.info("Sending turn to user" + userId + Turn("TURN", playerIdTurn, selectedCardForPlayer).toString)
     Turn("TURN", playerIdTurn, selectedCardForPlayer)
   }
 
@@ -46,16 +47,16 @@ class MatchRoomActor(matchId: Int) extends Actor {
 
   def getUnusedCard: Card = {
     val cardToPlay = getRandomItemOfSeq(matchInfo.get.deck.cards.filter(c => !playedCardIds.contains(c.id)))
-    playedCardIds = playedCardIds + cardToPlay.id
+    playedCardIds += cardToPlay.id
     cardToPlay
   }
 
   def loadPlayedCardsIfMatchWasPaused(): Unit = {
-    playedCardIds = if (matchInfo.get.status == PAUSED.name()) {
-      matchInfo.get.movements.flatMap(m => m.creatorCardId :: m.opponentCardId :: Nil).toSet
+    playedCardIds = mutable.Set.from(if (matchInfo.get.status == PAUSED.name()) {
+      matchInfo.get.movements.flatMap(m => m.creatorCardId :: m.opponentCardId :: Nil)
     } else {
-      Set.empty
-    }
+      List.empty
+    })
   }
 
   override def receive: Receive = {
