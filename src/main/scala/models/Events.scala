@@ -1,6 +1,7 @@
 package models
 
 import akka.actor.ActorRef
+import models.AttributeName.AttributeName
 
 object Events {
 
@@ -30,5 +31,7 @@ object Events {
 
   case class Turn(event: String, userIdTurn: String, card: Card)
 
-  case class MovementResult(event: String, winnerId: String, cards: List[Card])
+  case class MovementResult(event: String, winnerId: String, chosenAttribute:AttributeName, cards: List[Card])
+
+  case class MatchResult()
 }

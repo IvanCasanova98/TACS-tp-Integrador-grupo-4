@@ -8,6 +8,8 @@ class MatchRepository(dao: MatchDAO) {
 
   def updateMatchStatus(matchId: Int, status: String): Unit = dao.updateMatchStatus(matchId, status)
 
+  def updateMatchWinner(matchId: Int, winnerId: String) = dao.updateMatchWinner(matchId, winnerId)
+
   def createMatch(deckId: Int, matchCreator: String, challengedUser: String): Int = dao.createMatch(deckId, matchCreator, challengedUser)
 
   def getMatchById(matchId: Int): MatchDBDTO = dao.getMatch(matchId)

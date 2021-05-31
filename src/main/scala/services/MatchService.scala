@@ -31,6 +31,8 @@ class MatchService(matchRepository: MatchRepository, playersRepo: PlayerReposito
 
   def updateMatchStatus(matchId: Int, status: String): Unit = matchRepository.updateMatchStatus(matchId, status)
 
+  def updateMatchWinner(matchId: Int, winnerId: String): Unit = matchRepository.updateMatchWinner(matchId, winnerId)
+
   def createMatch(deckId: Int, matchCreator: String, challengedUser: String): Int = matchRepository.createMatch(deckId, matchCreator, challengedUser)
 
   def isUserAuthorizedToJoinMatch(matchId: Int, userId: String): Boolean = {
@@ -55,4 +57,19 @@ class MatchService(matchRepository: MatchRepository, playersRepo: PlayerReposito
   def saveMovement(matchId: Int, attribute: String, creatorCardId: Int, opponentCardId: Int, winnerIdOrTie: String, turn: String): Unit = {
     movementRepository.saveMovement(matchId, attribute, creatorCardId, opponentCardId, winnerIdOrTie, turn)
   }
+
+  def findMatchWinner(matchId: Int,playerId:String,otherPlayerId:String):String = {
+    // user ID --> movements won
+    var winsCounter: Map[String, Int] = Map(playerId -> 0, otherPlayerId -> 0)
+
+    movementRepository.getMovementsOfMatch(matchId).foreach(mov => {
+      if (mov.winnerIdOrTie != "TIE"){
+        winsCounter += (mov.winnerIdOrTie -> winsCounter(mov.winnerIdOrTie).+(1))
+      }
+    })
+
+    //get userId that has most wins
+    winsCounter.find(userWinCount =>  userWinCount._2 == winsCounter.values.max).get._1
+  }
+
 }

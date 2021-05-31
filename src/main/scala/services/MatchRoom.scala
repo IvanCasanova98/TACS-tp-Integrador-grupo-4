@@ -5,6 +5,7 @@ import akka.http.scaladsl.model.ws.{BinaryMessage, Message, TextMessage}
 import akka.stream.scaladsl.{Flow, Keep, Sink, Source}
 import akka.stream.{Materializer, OverflowStrategy}
 import models.Events._
+import models.MatchStatus.FINISHED
 import models.{AttributeName, Card, Match, PlayerScore}
 import org.reactivestreams.Publisher
 import org.slf4j.{Logger, LoggerFactory}
@@ -32,7 +33,10 @@ class MatchRoomActor(matchId: Int) extends Actor {
     Turn("TURN", playerIdTurn, selectedCardForPlayer)
   }
 
-  def getRandomItemOfSeq[T](collection: Seq[T]): T = collection(new Random().nextInt(collection.length))
+  def getRandomItemOfSeq[T](collection: Seq[T]): T = {
+    if (collection.length == 1) return collection.head
+    collection(new Random().nextInt(collection.length))
+  }
 
   def getUnusedCard: Card = {
     val cardToPlay = getRandomItemOfSeq(matchInfo.get.deck.cards.filter(c => !playedCardIds.contains(c.id)))
@@ -85,20 +89,35 @@ class MatchRoomActor(matchId: Int) extends Actor {
       val userId = participants.find(k => k._2 == actorRef).get._1
       val winnerId = matchService.getMovementResult(cardsBeingPlayed, AttributeName.fromName(attribute))
 
-      broadcastJson(MovementResult("MOVEMENT_RESULT", winnerId, cardsBeingPlayed.values.toList))
+      logger.info(s"Winner id $winnerId. Cards Player ${cardsBeingPlayed.toString}")
+      broadcastJson(MovementResult("MOVEMENT_RESULT", winnerId,AttributeName.fromName(attribute), cardsBeingPlayed.values.toList))
 
-      //send next turn
-      //TODO check for end of match (cards run out or condition)
-      val otherPlayer = participants.find(p => p._1 != userId).get
-      val nextTurnUserId = otherPlayer._1
-      sendJsonToUser(getTurn(nextTurnUserId, userId), userId)
-      sendJsonToUser(getTurn(nextTurnUserId, otherPlayer._1), otherPlayer._1)
-
-      //save movement of match in database
+      //save movement of match in database (we need this saved before calculating match winner)
       matchService.saveMovement(matchId, attribute.toUpperCase(),
         cardsBeingPlayed.get(matchInfo.get.matchCreator.userId).get.id,
         cardsBeingPlayed.get(matchInfo.get.challengedPlayer.userId).get.id,
         winnerId, userId)
+
+      val otherPlayer = participants.find(p => p._1 != userId).get
+      val matchOutOfCards = playedCardIds.size >= matchInfo.get.deck.cards.size
+      if (!matchOutOfCards) {
+        //send next turn
+        val nextTurnUserId = otherPlayer._1
+
+        sendJsonToUser(getTurn(nextTurnUserId, userId), userId)
+        sendJsonToUser(getTurn(nextTurnUserId, otherPlayer._1), otherPlayer._1)
+      } else {
+        //TODO send end of match event (cards run out, "abandon" condition will be another event sent from user)
+        val matchWinnerId = matchService.findMatchWinner(matchId,playerId = userId,otherPlayerId = otherPlayer._1)
+        //update DB
+        matchService.updateMatchStatus(matchId,FINISHED.name())
+        matchService.updateMatchWinner(matchId, matchWinnerId)
+        logger.info(s"Match $matchId finished. Winner id: $matchWinnerId")
+
+        //send MATCH_RESULT msg
+        // winner id supongo que es suf
+      }
+
 
     case msg => TextMessage(s"Something else arrived $msg")
   }
