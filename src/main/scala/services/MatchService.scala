@@ -1,11 +1,11 @@
 package services
 
 import models.AttributeName.AttributeName
-import models.{Attribute, Card, Match, MatchWithoutCardsAndMovements}
+import models.{Card, Match, MatchWithoutCardsAndMovements}
 import repositories.dbdtos.MatchDBDTO
 import repositories.{MatchRepository, MovementRepository, PlayerRepository}
 
-import scala.util.Random
+import scala.collection.mutable
 
 class MatchService(matchRepository: MatchRepository, playersRepo: PlayerRepository, deckService: DeckService, movementRepository: MovementRepository) {
 
@@ -40,7 +40,7 @@ class MatchService(matchRepository: MatchRepository, playersRepo: PlayerReposito
     Seq(matchDTO.matchCreatorId, matchDTO.challengedUserId).contains(userId)
   }
 
-  def getMovementResult(cards: Map[String, Card], chosenAttribute: AttributeName): String = {
+  def getMovementResult(cards: mutable.HashMap[String, Card], chosenAttribute: AttributeName): String = {
     val firstPlayer = cards.head
     val secondPlayer = cards.last
     val firstPlayerValue = firstPlayer._2.getValueOfAttribute(chosenAttribute)

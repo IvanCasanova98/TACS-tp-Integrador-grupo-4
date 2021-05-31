@@ -31,7 +31,7 @@ object Events {
 
   case class Turn(event: String, userIdTurn: String, card: Card)
 
-  case class MovementResult(event: String, winnerId: String, chosenAttribute:AttributeName, cards: List[Card])
+  case class MovementResult(event: String, winnerId: String, chosenAttribute:AttributeName, winnerCard: Option[Card], loserCard: Option[Card])
 
   case class MatchResult()
 }

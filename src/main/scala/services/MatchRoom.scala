@@ -11,6 +11,7 @@ import org.reactivestreams.Publisher
 import org.slf4j.{Logger, LoggerFactory}
 import routes.Routes.{jsonParser, matchService}
 
+import scala.collection.mutable
 import scala.util.Random
 
 class MatchRoomActor(matchId: Int) extends Actor {
@@ -20,7 +21,7 @@ class MatchRoomActor(matchId: Int) extends Actor {
   var matchInfo: Option[Match] = None
   var starterPlayerId: Option[String] = None
   var playedCardIds: Set[Int] = Set.empty
-  var cardsBeingPlayed: Map[String, Card] = Map.empty[String, Card]
+  var cardsBeingPlayed: mutable.HashMap[String, Card] = mutable.HashMap.empty[String, Card]
 
   def getAndSaveFirstTurn: String = {
     starterPlayerId = Option(getRandomItemOfSeq(playersReady.toSeq))
@@ -88,14 +89,18 @@ class MatchRoomActor(matchId: Int) extends Actor {
     case MatchSetAttribute(actorRef, attribute) =>
       val userId = participants.find(k => k._2 == actorRef).get._1
       val winnerId = matchService.getMovementResult(cardsBeingPlayed, AttributeName.fromName(attribute))
+      val loser = if (winnerId != "TIE") cardsBeingPlayed.keys.find(k => k != winnerId) else None
 
-      logger.info(s"Winner id $winnerId. Cards Player ${cardsBeingPlayed.toString}")
-      broadcastJson(MovementResult("MOVEMENT_RESULT", winnerId,AttributeName.fromName(attribute), cardsBeingPlayed.values.toList))
+      broadcastJson(
+        MovementResult("MOVEMENT_RESULT", winnerId, AttributeName.fromName(attribute),
+          cardsBeingPlayed.get(winnerId), loser.map(cardsBeingPlayed(_))))
+      logger.info(MovementResult("MOVEMENT_RESULT", winnerId, AttributeName.fromName(attribute),
+        cardsBeingPlayed.get(winnerId), loser.map(cardsBeingPlayed(_))).toString)
 
       //save movement of match in database (we need this saved before calculating match winner)
       matchService.saveMovement(matchId, attribute.toUpperCase(),
-        cardsBeingPlayed.get(matchInfo.get.matchCreator.userId).get.id,
-        cardsBeingPlayed.get(matchInfo.get.challengedPlayer.userId).get.id,
+        cardsBeingPlayed(matchInfo.get.matchCreator.userId).id,
+        cardsBeingPlayed(matchInfo.get.challengedPlayer.userId).id,
         winnerId, userId)
 
       val otherPlayer = participants.find(p => p._1 != userId).get
@@ -108,9 +113,9 @@ class MatchRoomActor(matchId: Int) extends Actor {
         sendJsonToUser(getTurn(nextTurnUserId, otherPlayer._1), otherPlayer._1)
       } else {
         //TODO send end of match event (cards run out, "abandon" condition will be another event sent from user)
-        val matchWinnerId = matchService.findMatchWinner(matchId,playerId = userId,otherPlayerId = otherPlayer._1)
+        val matchWinnerId = matchService.findMatchWinner(matchId, playerId = userId, otherPlayerId = otherPlayer._1)
         //update DB
-        matchService.updateMatchStatus(matchId,FINISHED.name())
+        matchService.updateMatchStatus(matchId, FINISHED.name())
         matchService.updateMatchWinner(matchId, matchWinnerId)
         logger.info(s"Match $matchId finished. Winner id: $matchWinnerId")
 
