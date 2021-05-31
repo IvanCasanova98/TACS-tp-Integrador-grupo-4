@@ -7,7 +7,7 @@ import repositories.dbdtos.MatchDBDTO
 import scala.collection.mutable
 
 class MatchLocalDAO(db: mutable.HashMap[Int, MatchDBDTO]) extends MatchDAO {
-  var matchId: Int = 0
+  var matchId: Int = db.keys.size
 
   override def createMatch(deckId: Int, matchCreator: String, challengedUser: String): Int = {
     matchId += 1

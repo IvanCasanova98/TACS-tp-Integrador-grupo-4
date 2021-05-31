@@ -1,13 +1,29 @@
 package services
 
 import models.AttributeName.AttributeName
-import models.{Card, Match, MatchWithoutCardsAndMovements}
+import models.MatchStatus.PAUSED
+import models.{Card, Match, MatchWithoutCardsAndMovements, Movement}
 import repositories.dbdtos.MatchDBDTO
 import repositories.{MatchRepository, MovementRepository, PlayerRepository}
 
 import scala.collection.mutable
 
 class MatchService(matchRepository: MatchRepository, playersRepo: PlayerRepository, deckService: DeckService, movementRepository: MovementRepository) {
+
+  def getDeckCountOfMatch(matchInfo: Match): Int = {
+    val cards = if (matchInfo.status == PAUSED.name()) {
+      matchInfo.deck.cards.size - (matchInfo.movements.size * 2)
+    } else matchInfo.deck.cards.size
+    Math.floor(cards / 2).toInt
+  }
+
+  def getScoreOfPlayer(matchInfo: Match, userId: String): Int = {
+    if (matchInfo.status == PAUSED.name()) {
+      countWonMovements(matchInfo.movements, userId)
+    } else 0
+  }
+
+  def countWonMovements(movements: List[Movement], userId: String): Int = movements.count(movement => movement.winnerIdOrTie == userId)
 
   def findMatchesOfUser(userId: String): List[MatchWithoutCardsAndMovements] = {
     val matches: List[MatchDBDTO] = matchRepository.getMatchesOfUser(userId: String)
@@ -58,18 +74,18 @@ class MatchService(matchRepository: MatchRepository, playersRepo: PlayerReposito
     movementRepository.saveMovement(matchId, attribute, creatorCardId, opponentCardId, winnerIdOrTie, turn)
   }
 
-  def findMatchWinner(matchId: Int,playerId:String,otherPlayerId:String):String = {
+  def findMatchWinner(matchId: Int, playerId: String, otherPlayerId: String): String = {
     // user ID --> movements won
     var winsCounter: Map[String, Int] = Map(playerId -> 0, otherPlayerId -> 0)
 
     movementRepository.getMovementsOfMatch(matchId).foreach(mov => {
-      if (mov.winnerIdOrTie != "TIE"){
+      if (mov.winnerIdOrTie != "TIE") {
         winsCounter += (mov.winnerIdOrTie -> winsCounter(mov.winnerIdOrTie).+(1))
       }
     })
 
     //get userId that has most wins
-    winsCounter.find(userWinCount =>  userWinCount._2 == winsCounter.values.max).get._1
+    winsCounter.find(userWinCount => userWinCount._2 == winsCounter.values.max).get._1
   }
 
 }

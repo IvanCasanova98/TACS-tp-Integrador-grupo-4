@@ -5,7 +5,7 @@ import models.{AttributeName, Movement}
 import scala.collection.mutable
 
 class MovementLocalDAO(db: mutable.HashMap[Int, List[Movement]]) extends MovementDAO {
-  var movementId: Int = 0
+  var movementId: Int = db.keys.size
 
   override def getMovementsOfMatch(matchId: Int): List[Movement] = {
     db.getOrElse(matchId, List.empty)

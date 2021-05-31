@@ -24,7 +24,12 @@ class MatchRoomActor(matchId: Int) extends Actor {
   var cardsBeingPlayed: mutable.HashMap[String, Card] = mutable.HashMap.empty[String, Card]
 
   def getAndSaveFirstTurn: String = {
-    starterPlayerId = Option(getRandomItemOfSeq(playersReady.toSeq))
+    starterPlayerId = if (matchInfo.get.status == PAUSED.name()) {
+      val lastPlayerTurn = matchInfo.get.movements.maxBy(_.id).turn
+      participants.keys.find(k => k != lastPlayerTurn)
+    } else {
+      Option(getRandomItemOfSeq(playersReady.toSeq))
+    }
     starterPlayerId.get
   }
 
@@ -43,6 +48,14 @@ class MatchRoomActor(matchId: Int) extends Actor {
     val cardToPlay = getRandomItemOfSeq(matchInfo.get.deck.cards.filter(c => !playedCardIds.contains(c.id)))
     playedCardIds = playedCardIds + cardToPlay.id
     cardToPlay
+  }
+
+  def loadPlayedCardsIfMatchWasPaused(): Unit = {
+    playedCardIds = if (matchInfo.get.status == PAUSED.name()) {
+      matchInfo.get.movements.flatMap(m => m.creatorCardId :: m.opponentCardId :: Nil).toSet
+    } else {
+      Set.empty
+    }
   }
 
   override def receive: Receive = {
@@ -73,16 +86,19 @@ class MatchRoomActor(matchId: Int) extends Actor {
       opponent.foreach(sendMessageToUserId("OPPONENT_READY", _))
       if (playersReady.size == 2) {
         logger.info("All ready for match to start")
+        //get match previous state
+        matchInfo = Option(matchService.findMatchById(matchId))
         matchService.updateMatchStatus(matchId, IN_PROCESS.name())
         broadcast("ALL_READY")
-        matchInfo = Option(matchService.findMatchById(matchId))
       }
     case MatchInit(actorRef) =>
       val userId = participants.find(k => k._2 == actorRef).get._1
-      val deckCount = Math.floor(matchInfo.get.deck.cards.size / 2).toInt
-      val opponent = PlayerScore(userId = matchInfo.get.challengedPlayer.userId, userName = matchInfo.get.challengedPlayer.userName, imageUrl = matchInfo.get.challengedPlayer.imageUrl, score = 0)
-      val creator = PlayerScore(userId = matchInfo.get.matchCreator.userId, userName = matchInfo.get.matchCreator.userName, imageUrl = matchInfo.get.matchCreator.imageUrl, score = 0)
+      val deckCount = matchService.getDeckCountOfMatch(matchInfo.get)
+      val opponent = PlayerScore(userId = matchInfo.get.challengedPlayer.userId, userName = matchInfo.get.challengedPlayer.userName, imageUrl = matchInfo.get.challengedPlayer.imageUrl, score = matchService.getScoreOfPlayer(matchInfo.get, matchInfo.get.challengedPlayer.userId))
+      val creator = PlayerScore(userId = matchInfo.get.matchCreator.userId, userName = matchInfo.get.matchCreator.userName, imageUrl = matchInfo.get.matchCreator.imageUrl, score = matchService.getScoreOfPlayer(matchInfo.get, matchInfo.get.matchCreator.userId))
       sendJsonToUser(ResponseMatchInit("INIT", deckCount, opponent, creator), userId)
+      //udpate played cards if match was paused
+      loadPlayedCardsIfMatchWasPaused()
 
       val firstTurnPlayerId = starterPlayerId.getOrElse(getAndSaveFirstTurn)
       sendJsonToUser(getTurn(firstTurnPlayerId, userId), userId)
@@ -90,20 +106,18 @@ class MatchRoomActor(matchId: Int) extends Actor {
     case MatchSetAttribute(actorRef, attribute) =>
       val userId = participants.find(k => k._2 == actorRef).get._1
       val winnerId = matchService.getMovementResult(cardsBeingPlayed, AttributeName.fromName(attribute))
-      //val loser = if (winnerId != "TIE") cardsBeingPlayed.keys.find(k => k != winnerId) else None
 
       broadcastJson(MovementResult("MOVEMENT_RESULT", winnerId, AttributeName.fromName(attribute), cardsBeingPlayed.values.toList))
       logger.info(MovementResult("MOVEMENT_RESULT", winnerId, AttributeName.fromName(attribute), cardsBeingPlayed.values.toList).toString)
 
-
-        //save movement of match in database (we need this saved before calculating match winner)
+      //save movement of match in database (we need this saved before calculating match winner)
       matchService.saveMovement(matchId, attribute.toUpperCase(),
         cardsBeingPlayed(matchInfo.get.matchCreator.userId).id,
         cardsBeingPlayed(matchInfo.get.challengedPlayer.userId).id,
         winnerId, userId)
 
       val otherPlayer = participants.find(p => p._1 != userId).get
-      val matchOutOfCards =  (matchInfo.get.deck.cards.size - playedCardIds.size) < 2
+      val matchOutOfCards = (matchInfo.get.deck.cards.size - playedCardIds.size) < 2
       if (!matchOutOfCards) {
         //send next turn
         val nextTurnUserId = otherPlayer._1
@@ -120,7 +134,6 @@ class MatchRoomActor(matchId: Int) extends Actor {
 
         //send MATCH_RESULT msg
         broadcastJson(MatchResult("MATCH_RESULT", matchWinnerId))
-        // winner id supongo que es suf
       }
 
 
