@@ -35,7 +35,7 @@ class MatchRoomActor(matchId: Int) extends Actor {
   }
 
   def getRandomItemOfSeq[T](collection: Seq[T]): T = {
-    if (collection.length == 1) return collection.head
+    if (collection.length <= 1) return collection.head
     collection(new Random().nextInt(collection.length))
   }
 
@@ -89,22 +89,20 @@ class MatchRoomActor(matchId: Int) extends Actor {
     case MatchSetAttribute(actorRef, attribute) =>
       val userId = participants.find(k => k._2 == actorRef).get._1
       val winnerId = matchService.getMovementResult(cardsBeingPlayed, AttributeName.fromName(attribute))
-      val loser = if (winnerId != "TIE") cardsBeingPlayed.keys.find(k => k != winnerId) else None
+      //val loser = if (winnerId != "TIE") cardsBeingPlayed.keys.find(k => k != winnerId) else None
 
-      broadcastJson(
-        MovementResult("MOVEMENT_RESULT", winnerId, AttributeName.fromName(attribute),
-          cardsBeingPlayed.get(winnerId), loser.map(cardsBeingPlayed(_))))
-      logger.info(MovementResult("MOVEMENT_RESULT", winnerId, AttributeName.fromName(attribute),
-        cardsBeingPlayed.get(winnerId), loser.map(cardsBeingPlayed(_))).toString)
+      broadcastJson(MovementResult("MOVEMENT_RESULT", winnerId, AttributeName.fromName(attribute), cardsBeingPlayed.values.toList))
+      logger.info(MovementResult("MOVEMENT_RESULT", winnerId, AttributeName.fromName(attribute), cardsBeingPlayed.values.toList).toString)
 
-      //save movement of match in database (we need this saved before calculating match winner)
+
+        //save movement of match in database (we need this saved before calculating match winner)
       matchService.saveMovement(matchId, attribute.toUpperCase(),
         cardsBeingPlayed(matchInfo.get.matchCreator.userId).id,
         cardsBeingPlayed(matchInfo.get.challengedPlayer.userId).id,
         winnerId, userId)
 
       val otherPlayer = participants.find(p => p._1 != userId).get
-      val matchOutOfCards = playedCardIds.size >= matchInfo.get.deck.cards.size
+      val matchOutOfCards =  (matchInfo.get.deck.cards.size - playedCardIds.size) < 2
       if (!matchOutOfCards) {
         //send next turn
         val nextTurnUserId = otherPlayer._1
@@ -120,6 +118,7 @@ class MatchRoomActor(matchId: Int) extends Actor {
         logger.info(s"Match $matchId finished. Winner id: $matchWinnerId")
 
         //send MATCH_RESULT msg
+        broadcastJson(MatchResult("MATCH_RESULT", matchWinnerId))
         // winner id supongo que es suf
       }
 

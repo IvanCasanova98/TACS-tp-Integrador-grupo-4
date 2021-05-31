@@ -20,7 +20,7 @@ import scala.collection.mutable
 trait ClassInjection {
 
   val deckLocalDb: mutable.HashMap[Int, DeckDbDTO] = mutable.HashMap[Int, DeckDbDTO]()
-  deckLocalDb.put(1, DeckDbDTO(1, "Primer mazo", List(1, 2, 3, 4)))
+  deckLocalDb.put(1, DeckDbDTO(1, "Primer mazo", List(10, 11, 12, 13)))
   deckLocalDb.put(2, DeckDbDTO(2, "Batman super mazo", List(1, 2, 4, 5, 3, 2, 2)))
   deckLocalDb.put(3, DeckDbDTO(3, "Mazo 3", List(1, 2, 3, 4)))
   deckLocalDb.put(4, DeckDbDTO(4, "Another deck", List(1, 2, 4, 5, 3, 2, 2)))
