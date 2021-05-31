@@ -5,7 +5,7 @@ import akka.http.scaladsl.model.ws.{BinaryMessage, Message, TextMessage}
 import akka.stream.scaladsl.{Flow, Keep, Sink, Source}
 import akka.stream.{Materializer, OverflowStrategy}
 import models.Events._
-import models.MatchStatus.FINISHED
+import models.MatchStatus.{FINISHED, IN_PROCESS, PAUSED}
 import models.{AttributeName, Card, Match, PlayerScore}
 import org.reactivestreams.Publisher
 import org.slf4j.{Logger, LoggerFactory}
@@ -64,6 +64,7 @@ class MatchRoomActor(matchId: Int) extends Actor {
       logger.info(s"User $userId left match[$matchId]")
       participants -= userId
       TextMessage(s"User $userId left match [$matchId]")
+      matchService.updateMatchStatus(matchId, PAUSED.name())
 
     case UserIsReady(userId) =>
       logger.info(s"User $userId is ready to play")
@@ -72,7 +73,7 @@ class MatchRoomActor(matchId: Int) extends Actor {
       opponent.foreach(sendMessageToUserId("OPPONENT_READY", _))
       if (playersReady.size == 2) {
         logger.info("All ready for match to start")
-        //TODO: update match
+        matchService.updateMatchStatus(matchId, IN_PROCESS.name())
         broadcast("ALL_READY")
         matchInfo = Option(matchService.findMatchById(matchId))
       }
