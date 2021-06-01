@@ -20,7 +20,7 @@ class MatchRoomActor(matchId: Int) extends Actor {
   var playersReady: Set[String] = Set.empty
   var matchInfo: Option[Match] = None
   var starterPlayerId: Option[String] = None
-  var playedCardIds: mutable.Set[Int] = mutable.Set.empty
+  var playedCardIds: Set[Int] = Set.empty
   var cardsBeingPlayed: mutable.HashMap[String, Card] = mutable.HashMap.empty[String, Card]
 
   def getAndSaveFirstTurn: String = {
@@ -52,11 +52,9 @@ class MatchRoomActor(matchId: Int) extends Actor {
   }
 
   def loadPlayedCardsIfMatchWasPaused(): Unit = {
-    playedCardIds = mutable.Set.from(if (matchInfo.get.status == PAUSED.name()) {
-      matchInfo.get.movements.flatMap(m => m.creatorCardId :: m.opponentCardId :: Nil)
-    } else {
-      List.empty
-    })
+    if (matchInfo.get.status == PAUSED.name()) {
+      playedCardIds = matchInfo.get.movements.flatMap(m => m.creatorCardId :: m.opponentCardId :: Nil).toSet
+    }
   }
 
   override def receive: Receive = {

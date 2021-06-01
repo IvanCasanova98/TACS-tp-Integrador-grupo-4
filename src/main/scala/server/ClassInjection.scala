@@ -21,11 +21,11 @@ trait ClassInjection {
 
   val deckLocalDb: mutable.HashMap[Int, DeckDbDTO] = mutable.HashMap[Int, DeckDbDTO]()
   deckLocalDb.put(1, DeckDbDTO(1, "Primer mazo", List(10, 11, 12, 13)))
-  deckLocalDb.put(2, DeckDbDTO(2, "Batman super mazo", List(1, 2, 4, 5, 3, 2, 2)))
+  deckLocalDb.put(2, DeckDbDTO(2, "Batman super mazo", List(1, 8, 4, 5, 3)))
   deckLocalDb.put(3, DeckDbDTO(3, "Mazo 3", List(1, 2, 3, 4)))
-  deckLocalDb.put(4, DeckDbDTO(4, "Another deck", List(1, 2, 4, 5, 3, 2, 2)))
+  deckLocalDb.put(4, DeckDbDTO(4, "Another deck", List(1, 2, 4, 16)))
   deckLocalDb.put(5, DeckDbDTO(5, "A-bomb mazo", List(1, 2, 3, 4)))
-  deckLocalDb.put(6, DeckDbDTO(6, "Batman super deck", List(1, 2, 4, 5, 3, 2, 2)))
+  deckLocalDb.put(6, DeckDbDTO(6, "Batman super deck", List(1, 4, 5, 3, 2)))
 
   val matchLocalDb: mutable.HashMap[Int, MatchDBDTO] = mutable.HashMap[Int, MatchDBDTO](
     1 -> MatchDBDTO(1, FINISHED, "104065320855221322833", "104725077753706905086", 3, Option("104065320855221322833")),
