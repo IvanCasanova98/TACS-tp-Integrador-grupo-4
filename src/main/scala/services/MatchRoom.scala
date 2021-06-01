@@ -79,6 +79,8 @@ class MatchRoomActor(matchId: Int) extends Actor {
       participants -= userId
       TextMessage(s"User $userId left match [$matchId]")
       matchService.updateMatchStatus(matchId, PAUSED.name())
+      val otherPlayer = participants.find(p => p._1 != userId).get
+      sendMessageToUserId("STOP_MATCH", otherPlayer._1)
 
     case UserIsReady(userId) =>
       logger.info(s"User $userId is ready to play")
