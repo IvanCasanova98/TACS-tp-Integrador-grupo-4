@@ -4,6 +4,11 @@ import akka.http.scaladsl.marshalling.{Marshaller, ToEntityMarshaller}
 import akka.http.scaladsl.model._
 import akka.http.scaladsl.unmarshalling.{FromEntityUnmarshaller, Unmarshaller}
 import akka.util.ByteString
+import com.google.gson.{JsonElement, JsonObject, JsonPrimitive, JsonSerializationContext, JsonSerializer}
+import models.Attribute
+
+import java.lang.reflect.Type
+import models.AttributeName.AttributeName
 import org.json4s.Extraction.decompose
 import org.json4s.{DefaultFormats, Formats}
 import org.json4s.jackson.JsonMethods.{compact, parse, render}
@@ -13,7 +18,7 @@ trait Json4sSnakeCaseSupport {
 
   implicit val formats: Formats = DefaultFormats
 
-  private val jsonStringUnmarshaller =
+  implicit val jsonStringUnmarshaller: FromEntityUnmarshaller[String] =
     Unmarshaller.byteStringUnmarshaller
       .forContentTypes(ContentTypeRange(ContentTypes.`application/json`))
       .mapWithCharset {
@@ -21,8 +26,9 @@ trait Json4sSnakeCaseSupport {
         case (data, charset) => data.decodeString(charset.nioCharset.name)
       }
 
-  protected val jsonStringMarshaller: ToEntityMarshaller[String] =
+  implicit val jsonStringMarshaller: ToEntityMarshaller[String] =
     Marshaller.stringMarshaller(MediaTypes.`application/json`)
+
 
   /**
    * HTTP entity => `A`
@@ -40,6 +46,17 @@ trait Json4sSnakeCaseSupport {
    * @tparam A type to encode, must be upper bounded by `AnyRef`
    * @return marshaller for any `A` value
    */
-  implicit def jsonToEntityMarshaller[A <: AnyRef](implicit formats: Formats): ToEntityMarshaller[A] =
+  implicit def jsonToEntityMarshaller[A <: Any](implicit formats: Formats): ToEntityMarshaller[A] =
     jsonStringMarshaller.compose(c => compact(render(decompose(c).snakizeKeys)))
+
+}
+
+object AttributeNameSerializer extends JsonSerializer[Attribute] {
+   override def serialize(t1: Attribute, t2: Type, jsonSerializationContext: JsonSerializationContext):JsonElement = {
+    val res = new JsonObject()
+    res.add("name", new JsonPrimitive(t1.name.name()))
+    res.add("value", new JsonPrimitive(t1.value))
+    res
+  }
+
 }

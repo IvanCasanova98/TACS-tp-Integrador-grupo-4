@@ -1,39 +1,48 @@
 package models
 
+import exceptions.Exceptions.MatchStatusNotDefinedException
+import models.MatchStatus.PAUSED.matchStatus
+
 case class Match(id: Int,
-                 status: MatchStatus,
+                 status: String,
                  matchCreator: Player,
                  challengedPlayer: Player,
                  deck: Deck,
                  movements: List[Movement],
-                 winner: Option[Player])
+                 winnerId: Option[String])
 
-case class Movement(attribute: Attribute, matchCreatorCard: Card, challengedPlayerCard: Card, winner: Player)
+case class Movement(id: Int, attributeName: String, creatorCardId: Int, opponentCardId: Int, winnerIdOrTie: String, turn: String)
 
-trait MatchStatus {
-  def name(): String
+case class MatchWithoutCardsAndMovements(id: Int,
+                                         status: String,
+                                         matchCreator: Player,
+                                         challengedPlayer: Player,
+                                         deckDbDTO: DeckDbDTO,
+                                         winnerId: Option[String])
 
-  val matchStatus = List(CREATED, PAUSED, IN_PROCESS, FINISHED, CANCELED)
+object MatchStatus {
+  sealed trait MatchStatus {
+    def name(): String
 
-  def fromName(name: String): Option[MatchStatus] = matchStatus.find(s => s.name() == name)
-}
+    val matchStatus = List(CREATED, PAUSED, IN_PROCESS, FINISHED)
+  }
 
-object CREATED extends MatchStatus {
-  override def name(): String = "CREATED"
-}
+  def fromName(name: String): MatchStatus = matchStatus.find(s => s.name() == name).getOrElse(throw MatchStatusNotDefinedException(name))
 
-object PAUSED extends MatchStatus {
-  override def name(): String = "PAUSED"
-}
+  object CREATED extends MatchStatus {
+    override def name(): String = "CREATED"
+  }
 
-object IN_PROCESS extends MatchStatus {
-  override def name(): String = "IN_PROCESS"
-}
+  object PAUSED extends MatchStatus {
+    override def name(): String = "PAUSED"
+  }
 
-object FINISHED extends MatchStatus {
-  override def name(): String = "FINISHED"
-}
+  object IN_PROCESS extends MatchStatus {
+    override def name(): String = "IN_PROCESS"
+  }
 
-object CANCELED extends MatchStatus {
-  override def name(): String = "CANCELED"
+  object FINISHED extends MatchStatus {
+    override def name(): String = "FINISHED"
+  }
+
 }

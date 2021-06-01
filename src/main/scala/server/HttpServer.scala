@@ -1,19 +1,14 @@
 package server
 
-import akka.actor.typed.ActorSystem
-import akka.actor.typed.scaladsl.Behaviors
+import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
 import routes.Routes
-
-import scala.concurrent.ExecutionContextExecutor
 
 object HttpServer {
 
   def main(args: Array[String]): Unit = {
 
-    implicit val system: ActorSystem[Nothing] = ActorSystem(Behaviors.empty, "tacs-tp")
-
-    implicit val executionContext: ExecutionContextExecutor = system.executionContext
+    implicit val system: ActorSystem = ActorSystem("tacs-tp")
 
     val route = Routes()
 
