@@ -2,6 +2,7 @@ package repositories.daos
 
 import exceptions.Exceptions.MatchNotFoundException
 import models.MatchStatus
+import models.MatchStatus.FINISHED
 import repositories.dbdtos.MatchDBDTO
 
 import scala.collection.mutable
@@ -19,7 +20,9 @@ class MatchLocalDAO(db: mutable.HashMap[Int, MatchDBDTO]) extends MatchDAO {
 
   override def updateMatchStatus(matchId: Int, status: String): Unit = {
     val matchDTO: MatchDBDTO = db.getOrElse(matchId, throw MatchNotFoundException(matchId))
-    db.put(matchId, matchDTO.copy(status = MatchStatus.fromName(status)))
+    if (matchDTO.status.name() != FINISHED.name()) {
+      db.put(matchId, matchDTO.copy(status = MatchStatus.fromName(status)))
+    }
   }
 
   override def getMatchesOfUser(userId: String): List[MatchDBDTO] = {
