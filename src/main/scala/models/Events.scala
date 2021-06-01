@@ -21,11 +21,13 @@ object Events {
 
   case class UserLeftMatch(userId: String) extends MatchEvent
 
+  case class UserAbandonMatch(userId: String) extends MatchEvent
+
   case class UserIsReady(userId: String) extends MatchEvent
 
   case class MatchInit(actorRef: ActorRef) extends MatchEvent
 
-  case class MatchSetAttribute(actorRef: ActorRef,attribute: String) extends MatchEvent
+  case class MatchSetAttribute(actorRef: ActorRef, attribute: String) extends MatchEvent
 
   case class ResponseMatchInit(event: String,deckCount: Int, opponent:PlayerScore, creator:PlayerScore)
 

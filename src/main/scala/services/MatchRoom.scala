@@ -80,6 +80,13 @@ class MatchRoomActor(matchId: Int) extends Actor {
       val otherPlayer = participants.find(p => p._1 != userId).get
       sendMessageToUserId("STOP_MATCH", otherPlayer._1)
 
+    case UserAbandonMatch(userId) =>
+      logger.info(s"User $userId abandoned match")
+      matchService.updateMatchStatus(matchId, FINISHED.name())
+      val otherPlayer = participants.find(p => p._1 != userId).get
+      matchService.updateMatchWinner(matchId, otherPlayer._1)
+      sendJsonToUser(MatchResult("MATCH_RESULT", otherPlayer._1),otherPlayer._1)
+
     case UserIsReady(userId) =>
       logger.info(s"User $userId is ready to play")
       playersReady = playersReady + userId
@@ -92,6 +99,7 @@ class MatchRoomActor(matchId: Int) extends Actor {
         matchService.updateMatchStatus(matchId, IN_PROCESS.name())
         broadcast("ALL_READY")
       }
+
     case MatchInit(actorRef) =>
       val userId = participants.find(k => k._2 == actorRef).get._1
       val deckCount = matchService.getDeckCountOfMatch(matchInfo.get)
@@ -126,14 +134,11 @@ class MatchRoomActor(matchId: Int) extends Actor {
         sendJsonToUser(getTurn(nextTurnUserId, userId), userId)
         sendJsonToUser(getTurn(nextTurnUserId, otherPlayer._1), otherPlayer._1)
       } else {
-        //TODO send end of match event (cards run out, "abandon" condition will be another event sent from user)
         val matchWinnerId = matchService.findMatchWinner(matchId, playerId = userId, otherPlayerId = otherPlayer._1)
-        //update DB
         matchService.updateMatchStatus(matchId, FINISHED.name())
         matchService.updateMatchWinner(matchId, matchWinnerId)
-        logger.info(s"Match $matchId finished. Winner id: $matchWinnerId")
 
-        //send MATCH_RESULT msg
+        logger.info(s"Match $matchId finished. Winner id: $matchWinnerId")
         broadcastJson(MatchResult("MATCH_RESULT", matchWinnerId))
       }
 
@@ -153,7 +158,6 @@ class MatchRoomActor(matchId: Int) extends Actor {
     sendMessageToUserId(jsonParser.writeJson(message), userId)
   }
 }
-
 
 class MatchRoom(matchId: Int, actorSystem: ActorSystem)(implicit val mat: Materializer) {
 
@@ -177,14 +181,17 @@ class MatchRoom(matchId: Int, actorSystem: ActorSystem)(implicit val mat: Materi
           if (msg.contains("READY")) {
             val userId = msg.split(":").last
             matchRoomActor ! UserIsReady(userId)
-          } else {
-            if (msg.contains("CONNECT GAME")) {
+          }
+          if (msg.contains("CONNECT GAME")) {
               matchRoomActor ! MatchInit(actorRef)
-            }
-            if (msg.contains("SET_ATTRIBUTE")) {
-              val attribute = msg.split(":").last
-              matchRoomActor ! MatchSetAttribute(actorRef, attribute)
-            }
+          }
+          if (msg.contains("SET_ATTRIBUTE")) {
+            val attribute = msg.split(":").last
+            matchRoomActor ! MatchSetAttribute(actorRef, attribute)
+          }
+          if (msg.contains("ABANDON")){
+            val userId = msg.split(":").last
+            matchRoomActor ! UserAbandonMatch(userId)
           }
         case keepAlive: BinaryMessage =>
           keepAlive.dataStream.runWith(Sink.ignore)

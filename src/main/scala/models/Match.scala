@@ -24,7 +24,7 @@ object MatchStatus {
   sealed trait MatchStatus {
     def name(): String
 
-    val matchStatus = List(CREATED, PAUSED, IN_PROCESS, FINISHED, CANCELED)
+    val matchStatus = List(CREATED, PAUSED, IN_PROCESS, FINISHED)
   }
 
   def fromName(name: String): MatchStatus = matchStatus.find(s => s.name() == name).getOrElse(throw MatchStatusNotDefinedException(name))
@@ -45,7 +45,4 @@ object MatchStatus {
     override def name(): String = "FINISHED"
   }
 
-  object CANCELED extends MatchStatus {
-    override def name(): String = "CANCELED"
-  }
 }
