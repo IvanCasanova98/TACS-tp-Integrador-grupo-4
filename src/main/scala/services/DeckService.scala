@@ -25,7 +25,7 @@ class DeckService(deckRepository: DeckRepository, superheroApi: SuperheroApi) {
     val fetchCardsInParallel = Future.sequence(deck.cardIds.map(id => Future {
       superheroApi.get_hero_by_id(id)
     }))
-    val cards = Await.result(fetchCardsInParallel, Duration.apply(20, TimeUnit.SECONDS))
+    val cards = Await.result(fetchCardsInParallel, Duration.apply(30, TimeUnit.SECONDS))
     Deck(deckId, deck.name, cards)
   }
 

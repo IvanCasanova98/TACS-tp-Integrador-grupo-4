@@ -1,9 +1,9 @@
 package routes
 
+import akka.http.scaladsl.model.StatusCodes
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
-import models.MatchRooms
-import services.ConnectedPlayersService
+import services.{ConnectedPlayersService, MatchRooms}
 
 object PlayRoutes {
 
@@ -17,6 +17,9 @@ object PlayRoutes {
         parameter("userId") { userId =>
           handleWebSocketMessages(matchRooms.findOrCreate(matchId).websocketFlow(userId))
         }
+      } ~ path("invite" / IntNumber / Segment) { (matchId, invitedUserId) =>
+        connectedPlayersService.sendMessageToUserId(s"INVITE:$invitedUserId:$matchId", invitedUserId)
+        complete(StatusCodes.OK, s"Invited user $invitedUserId")
       }
     )
   }

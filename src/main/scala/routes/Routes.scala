@@ -8,10 +8,9 @@ import akka.stream.Materializer
 import ch.megard.akka.http.cors.scaladsl.CorsDirectives
 import ch.megard.akka.http.cors.scaladsl.model.{HttpHeaderRange, HttpOriginMatcher}
 import ch.megard.akka.http.cors.scaladsl.settings.CorsSettings
-import models.MatchRooms
 import serializers.Json4sSnakeCaseSupport
 import server.ClassInjection
-import services.ConnectedPlayersService
+import services.{ConnectedPlayersService, MatchRooms}
 
 object Routes extends ClassInjection with Json4sSnakeCaseSupport with CorsDirectives {
 

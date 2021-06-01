@@ -11,7 +11,7 @@ case class Match(id: Int,
                  movements: List[Movement],
                  winnerId: Option[String])
 
-case class Movement(id: Int, attributeName: String, creatorCardId: Int, opponentCardId: Int, winnerCardId: Int)
+case class Movement(id: Int, attributeName: String, creatorCardId: Int, opponentCardId: Int, winnerIdOrTie: String, turn: String)
 
 case class MatchWithoutCardsAndMovements(id: Int,
                                          status: String,
@@ -24,7 +24,7 @@ object MatchStatus {
   sealed trait MatchStatus {
     def name(): String
 
-    val matchStatus = List(CREATED, PAUSED, IN_PROCESS, FINISHED, CANCELED)
+    val matchStatus = List(CREATED, PAUSED, IN_PROCESS, FINISHED)
   }
 
   def fromName(name: String): MatchStatus = matchStatus.find(s => s.name() == name).getOrElse(throw MatchStatusNotDefinedException(name))
@@ -45,7 +45,4 @@ object MatchStatus {
     override def name(): String = "FINISHED"
   }
 
-  object CANCELED extends MatchStatus {
-    override def name(): String = "CANCELED"
-  }
 }

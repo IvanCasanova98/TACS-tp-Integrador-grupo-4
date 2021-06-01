@@ -1,8 +1,9 @@
 package repositories.daos
 
-import models.{AttributeName, Movement}
+import models.Movement
 
 trait MovementDAO {
-  def saveMovement(matchId: Int, attributeName: String, creatorCardId: Int, opponentCardId: Int, winnerCardId: Int): Unit
+  def saveMovement(matchId: Int, creatorCardId: Int, opponentCardId: Int, userIdTurn: String, attributeName: String, winnerIdOrTie: String): Unit
+
   def getMovementsOfMatch(matchId: Int): List[Movement]
 }

@@ -12,8 +12,8 @@ class PlayerRepository(db: mutable.HashMap[String, Player]) {
     player match {
       case Some(player) => PlayerPermissions(isAuthenticated = true, isAuthorized = !player.isBlocked, isAdmin = player.isAdmin)
       case None => {
-        db.put(loginInput.googleId, Player(loginInput.googleId, loginInput.name, isAdmin = false, isBlocked = false, imageUrl = loginInput.imageUrl))
-        PlayerPermissions(isAuthenticated = true, isAuthorized = true, isAdmin = false)
+        db.put(loginInput.googleId, Player(loginInput.googleId, loginInput.name, isAdmin = true, isBlocked = false, imageUrl = loginInput.imageUrl))
+        PlayerPermissions(isAuthenticated = true, isAuthorized = true, isAdmin = true)
       }
     }
 

@@ -84,8 +84,8 @@ class MatchRoomActorTest extends WordSpec with Matchers with ScalatestRouteTest 
 
           wsClient1.expectMessage("OPPONENT_READY")
 
-          wsClient2.expectMessage("ALL_READY")
           wsClient1.expectMessage("ALL_READY")
+          wsClient2.expectMessage("ALL_READY")
         }
 
     }

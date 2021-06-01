@@ -5,13 +5,12 @@ import akka.http.scaladsl.model.ws.TextMessage
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
 import ch.megard.akka.http.cors.scaladsl.CorsDirectives
-import models.MatchRooms
 import org.slf4j.{Logger, LoggerFactory}
 import routes.Routes.{cors, matchService, settings}
 import routes.Utils.handleRequest
 import routes.inputs.MatchInputs.{PostMatchDTO, UpdateMatchStatus}
 import serializers.Json4sSnakeCaseSupport
-import services.{ConnectedPlayersService, DeckService, MatchService}
+import services.{ConnectedPlayersService, DeckService, MatchRooms, MatchService}
 
 
 object MatchRoutes extends Json4sSnakeCaseSupport {
