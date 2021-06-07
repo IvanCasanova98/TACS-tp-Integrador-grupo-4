@@ -7,7 +7,6 @@ class DeckRepository(dao: DeckDao) {
     dao.getDeckById(deckId)
   }
 
-
   def getDecks: List[DeckDbDTO] = dao.getDecks
 
   def createDeck(deckName: String, cardIds: List[Int]): Int = {
@@ -15,6 +14,7 @@ class DeckRepository(dao: DeckDao) {
   }
 
   def updateDeck(deck: DeckDbDTO): Unit = {
+    dao.getDeckById(deck.id)
     dao.updateDeck(deck)
   }
 

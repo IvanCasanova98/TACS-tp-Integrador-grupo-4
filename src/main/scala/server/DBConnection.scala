@@ -4,10 +4,10 @@ import java.sql.{Connection, DriverManager}
 
 object DBConnection {
 
-  val url = "jdbc:mysql://localhost:3306/localhost?useSSL=false"
+  val url = "jdbc:mysql://localhost:3306/superfriends?useSSL=false"
   val driver = "com.mysql.jdbc.Driver"
-  val username = "root"
-  val password = "adminadmin"
+  val username = "superfriends_app"
+  val password = "batman"
   var connection: Option[Connection] = None
 
   private var driverLoaded = false

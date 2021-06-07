@@ -1,5 +1,7 @@
 package db
 
+import exceptions.Exceptions.SqlConnectionException
+
 import java.sql.{Connection, DriverManager, SQLException}
 
 object H2DB {
@@ -8,17 +10,12 @@ object H2DB {
   var con: Connection = DriverManager.getConnection(url)
 
   def apply(): Connection = {
-
     try {
-      Class.forName(JDBC_DRIVER);
-      val stm = con.createStatement
-      val rs = stm.executeQuery("SELECT 1+1")
-      try if (rs.next) System.out.println(rs.getInt(1))
-      catch {
-        case ex: SQLException => println(ex.getMessage)
-      }
+      Class.forName(JDBC_DRIVER)
+      con
+    } catch {
+      case ex: SQLException => throw SqlConnectionException(ex)
     }
-    con
   }
 
   def close(): Unit = if (con != null) con.close()
