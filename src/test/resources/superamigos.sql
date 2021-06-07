@@ -16,7 +16,7 @@ CREATE TABLE `match` (
   `created_date` datetime
 );
 
-CREATE TABLE `deck` (
+CREATE TABLE `decks` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
   `name` varchar(255),
   `card_ids` varchar(255)
@@ -38,6 +38,6 @@ ALTER TABLE `match` ADD FOREIGN KEY (`challenged_user_id`) REFERENCES `players` 
 
 ALTER TABLE `match` ADD FOREIGN KEY (`winner_id`) REFERENCES `players` (`id`);
 
-ALTER TABLE `match` ADD FOREIGN KEY (`deck_id`) REFERENCES `deck` (`id`);
+ALTER TABLE `match` ADD FOREIGN KEY (`deck_id`) REFERENCES `decks` (`id`);
 
 ALTER TABLE `movements` ADD FOREIGN KEY (`match_id`) REFERENCES `match` (`id`);
