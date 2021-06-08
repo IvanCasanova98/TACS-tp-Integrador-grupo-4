@@ -15,6 +15,7 @@ import repositories.{DeckRepository, MatchRepository, MovementRepository, Player
 import serializers.JsonParser
 import services.{DeckService, LoginService, MatchService, SuperheroApi}
 
+import java.util.Date
 import scala.collection.mutable
 
 trait ClassInjection {
@@ -31,8 +32,8 @@ trait ClassInjection {
   deckLocalDb.put(6, DeckDbDTO(6, "Batman super deck", List(1, 4, 5, 3, 2)))
 
   val matchLocalDb: mutable.HashMap[Int, MatchDBDTO] = mutable.HashMap[Int, MatchDBDTO](
-    1 -> MatchDBDTO(1, FINISHED, "104065320855221322833", "104725077753706905086", 3, Option("104065320855221322833")),
-    2 -> MatchDBDTO(2, PAUSED, "102400486230688279463", "104065320855221322833", 1, None)
+    1 -> MatchDBDTO(1, FINISHED, "104065320855221322833", "104725077753706905086", 3, Option("104065320855221322833"), new Date()),
+    2 -> MatchDBDTO(2, PAUSED, "102400486230688279463", "104065320855221322833", 1, None, new Date())
   )
 
   val playerDb: mutable.HashMap[String, Player] = mutable.HashMap[String, Player](

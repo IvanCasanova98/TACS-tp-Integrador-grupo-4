@@ -6,6 +6,8 @@ import org.scalatest.{Matchers, WordSpec}
 import repositories.dbdtos.MatchDBDTO
 import routes.Routes
 
+import java.util.Date
+
 class MatchRoomActorTest extends WordSpec with Matchers with ScalatestRouteTest {
 
 
@@ -13,7 +15,7 @@ class MatchRoomActorTest extends WordSpec with Matchers with ScalatestRouteTest 
     "Allow owner player to join match" in {
       val routes = Routes()
       val wsClient: WSProbe = WSProbe()
-      Routes.matchLocalDb.put(1, MatchDBDTO(1, CREATED, "52615", "1234",1, None))
+      Routes.matchLocalDb.put(1, MatchDBDTO(1, CREATED, "52615", "1234",1, None, new Date()))
 
       WS("/join-match/1?userId=52615", wsClient.flow) ~> routes ~>
         check {
@@ -24,7 +26,7 @@ class MatchRoomActorTest extends WordSpec with Matchers with ScalatestRouteTest 
     "Allow invite to join match" in {
       val routes = Routes()
       val wsClient: WSProbe = WSProbe()
-      Routes.matchLocalDb.put(1, MatchDBDTO(1, CREATED, "52615", "1234",1, None))
+      Routes.matchLocalDb.put(1, MatchDBDTO(1, CREATED, "52615", "1234",1, None, new Date()))
 
       WS("/join-match/1?userId=1234", wsClient.flow) ~> routes ~>
         check {
@@ -34,7 +36,7 @@ class MatchRoomActorTest extends WordSpec with Matchers with ScalatestRouteTest 
     "Return player not allowed when an uninvited player tries to join match" in {
       val routes = Routes()
       val wsClient: WSProbe = WSProbe()
-      Routes.matchLocalDb.put(1, MatchDBDTO(1, CREATED, "52615", "1234",1, None))
+      Routes.matchLocalDb.put(1, MatchDBDTO(1, CREATED, "52615", "1234",1, None, new Date()))
 
       WS("/join-match/1?userId=526115", wsClient.flow) ~> routes ~>
         check {
@@ -46,7 +48,7 @@ class MatchRoomActorTest extends WordSpec with Matchers with ScalatestRouteTest 
       val routes = Routes()
       val wsClient1: WSProbe = WSProbe()
       val wsClient2: WSProbe = WSProbe()
-      Routes.matchLocalDb.put(1, MatchDBDTO(1, CREATED, "52615", "1234", 1, None))
+      Routes.matchLocalDb.put(1, MatchDBDTO(1, CREATED, "52615", "1234", 1, None, new Date()))
 
       WS("/join-match/1?userId=52615", wsClient1.flow) ~> routes ~>
         check {
@@ -66,7 +68,7 @@ class MatchRoomActorTest extends WordSpec with Matchers with ScalatestRouteTest 
       val routes = Routes()
       val wsClient1: WSProbe = WSProbe()
       val wsClient2: WSProbe = WSProbe()
-      Routes.matchLocalDb.put(1, MatchDBDTO(1, CREATED, "52615", "1234",1, None))
+      Routes.matchLocalDb.put(1, MatchDBDTO(1, CREATED, "52615", "1234",1, None, new Date()))
 
       WS("/join-match/1?userId=52615", wsClient1.flow) ~> routes ~>
         check {

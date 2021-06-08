@@ -5,6 +5,7 @@ import models.MatchStatus
 import models.MatchStatus.FINISHED
 import repositories.dbdtos.MatchDBDTO
 
+import java.util.Date
 import scala.collection.mutable
 
 class MatchLocalDAO(db: mutable.HashMap[Int, MatchDBDTO]) extends MatchDAO {
@@ -12,7 +13,7 @@ class MatchLocalDAO(db: mutable.HashMap[Int, MatchDBDTO]) extends MatchDAO {
 
   override def createMatch(deckId: Int, matchCreator: String, challengedUser: String): Int = {
     matchId += 1
-    db.put(matchId, MatchDBDTO(matchId, MatchStatus.CREATED, matchCreator, challengedUser, deckId, None))
+    db.put(matchId, MatchDBDTO(matchId, MatchStatus.CREATED, matchCreator, challengedUser, deckId, None, new Date()))
     matchId
   }
 

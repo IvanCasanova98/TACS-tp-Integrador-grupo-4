@@ -6,7 +6,7 @@ CREATE TABLE `players` (
   `is_blocked` boolean
 );
 
-CREATE TABLE `match` (
+CREATE TABLE `matches` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
   `status` varchar(255),
   `creator_id` varchar(255),
@@ -32,12 +32,10 @@ CREATE TABLE `movements` (
   `turn` varchar(255)
 );
 
-ALTER TABLE `match` ADD FOREIGN KEY (`creator_id`) REFERENCES `players` (`id`);
+//ALTER TABLE `matches` ADD FOREIGN KEY (`creator_id`) REFERENCES `players` (`id`);
 
-ALTER TABLE `match` ADD FOREIGN KEY (`challenged_user_id`) REFERENCES `players` (`id`);
+//ALTER TABLE `matches` ADD FOREIGN KEY (`challenged_user_id`) REFERENCES `players` (`id`);
 
-ALTER TABLE `match` ADD FOREIGN KEY (`winner_id`) REFERENCES `players` (`id`);
+ALTER TABLE `matches` ADD FOREIGN KEY (`deck_id`) REFERENCES `decks` (`id`);
 
-ALTER TABLE `match` ADD FOREIGN KEY (`deck_id`) REFERENCES `decks` (`id`);
-
-ALTER TABLE `movements` ADD FOREIGN KEY (`match_id`) REFERENCES `match` (`id`);
+ALTER TABLE `movements` ADD FOREIGN KEY (`match_id`) REFERENCES `matches` (`id`);
