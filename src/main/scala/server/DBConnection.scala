@@ -5,8 +5,8 @@ import java.sql.{Connection, DriverManager}
 object DBConnection {
   val url = "jdbc:mysql://database:3306/tacs?allowPublicKeyRetrieval=true&useSSL=false"
   val driver = "com.mysql.jdbc.Driver"
-  val username = "root"
-  val password = "adminadmin"
+  val username = "superfriends_app"
+  val password = "batman"
   var connection: Option[Connection] = None
 
   private var driverLoaded = false
