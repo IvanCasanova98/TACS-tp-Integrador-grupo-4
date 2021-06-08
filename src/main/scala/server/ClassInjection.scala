@@ -9,19 +9,19 @@ import com.fasterxml.jackson.module.scala.DefaultScalaModule
 import models.AttributeName.AttributeName
 import models.MatchStatus.{FINISHED, PAUSED}
 import models._
-import repositories.daos.{DeckLocalDao, MatchLocalDAO, MovementLocalDAO}
+import repositories.daos.{DeckLocalDao, DeckSQLDao, MatchLocalDAO, MovementLocalDAO}
 import repositories.dbdtos.MatchDBDTO
 import repositories.{DeckRepository, MatchRepository, MovementRepository, PlayerRepository}
 import serializers.JsonParser
 import services.{DeckService, LoginService, MatchService, SuperheroApi}
 
+import java.sql.Connection
 import scala.collection.mutable
 
 trait ClassInjection {
 
   //init connection
-  DBConnection.getConnection
-
+  val connection_database: Connection = DBConnection.getConnection
   val deckLocalDb: mutable.HashMap[Int, DeckDbDTO] = mutable.HashMap[Int, DeckDbDTO]()
   deckLocalDb.put(1, DeckDbDTO(1, "Primer mazo", List(10, 11, 12, 13)))
   deckLocalDb.put(2, DeckDbDTO(2, "Batman super mazo", List(1, 8, 4, 5, 3)))
@@ -68,7 +68,7 @@ trait ClassInjection {
   val jsonParser = new JsonParser(defaultObjectMapper())
 
   //Local Dao for saving stuff in memory
-  val deckDao = new DeckLocalDao(deckLocalDb)
+  val deckDao = new DeckSQLDao(connection_database)
   val matchDao = new MatchLocalDAO(matchLocalDb)
   val movementDao = new MovementLocalDAO(movementDb)
 
