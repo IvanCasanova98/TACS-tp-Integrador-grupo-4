@@ -5,6 +5,20 @@ services:
     ports:
       - "3000:3000"
   backend:
-    image: lolokip/tacs-tp-integrador-grupo-4
+    build: .
     ports:
       - "9000:9000"
+    depends_on:
+      - database
+  database:
+    image: mysql:8.0.25
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: adminadmin
+      MYSQL_DATABASE: tacs
+      MYSQL_USER: superfriends_app
+      MYSQL_PASSWORD: batman
+    volumes:
+        - ./mysql-script:/docker-entrypoint-initdb.d
+        - ./mysql/data:/var/lib/mysql
