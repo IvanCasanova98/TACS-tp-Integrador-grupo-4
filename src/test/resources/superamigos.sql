@@ -1,5 +1,3 @@
-CREATE DATABASE IF NOT EXISTS tacs;
-
 CREATE TABLE `players` (
   `id` varchar(255) PRIMARY KEY,
   `username` varchar(255),

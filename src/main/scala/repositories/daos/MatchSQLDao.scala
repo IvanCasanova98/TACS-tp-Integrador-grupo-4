@@ -1,14 +1,16 @@
 package repositories.daos
+
 import exceptions.Exceptions.MatchNotFoundException
 import models.MatchStatus
 import models.MatchStatus.CREATED
 import repositories.dbdtos.MatchDBDTO
 
 import java.sql.{Connection, Date, PreparedStatement, ResultSet}
+import scala.collection.mutable
 
 class MatchSQLDao(db: Connection) extends MatchDAO {
 
-  private def rowToMatchDbDto(resultSet: ResultSet):MatchDBDTO = {
+  private def rowToMatchDbDto(resultSet: ResultSet): MatchDBDTO = {
     MatchDBDTO(matchId = resultSet.getInt("id"),
       status = MatchStatus.fromName(resultSet.getString("status")),
       matchCreatorId = resultSet.getString("creator_id"),
@@ -19,7 +21,18 @@ class MatchSQLDao(db: Connection) extends MatchDAO {
     )
   }
 
-  override def getMatchesOfUser(userId: String): List[MatchDBDTO] = ???
+  override def getMatchesOfUser(userId: String): List[MatchDBDTO] = {
+    val stmt = db.prepareStatement("SELECT id, status, creator_id, challenged_user_id, deck_id, winner_id, created_date FROM matches WHERE creator_id = ? OR challenged_user_id = ?")
+    stmt.setString(1, userId)
+    stmt.setString(2, userId)
+    val result = stmt.executeQuery()
+    val resultList: mutable.Set[MatchDBDTO] = mutable.Set()
+
+    while (result.next()) {
+      resultList += rowToMatchDbDto(result)
+    }
+    resultList.toList
+  }
 
   override def updateMatchStatus(matchId: Int, status: String): Unit = {
     val stmt = db.prepareStatement("UPDATE matches set status = ? where id = ?")
