@@ -9,7 +9,7 @@ import com.fasterxml.jackson.module.scala.DefaultScalaModule
 import models.AttributeName.AttributeName
 import models.MatchStatus.{FINISHED, PAUSED}
 import models._
-import repositories.daos.{DeckLocalDao, MatchLocalDAO, MovementLocalDAO}
+import repositories.daos.{DeckLocalDao, MatchLocalDAO, MovementLocalDAO, PlayerLocalDao}
 import repositories.dbdtos.MatchDBDTO
 import repositories.{DeckRepository, MatchRepository, MovementRepository, PlayerRepository}
 import serializers.JsonParser
@@ -39,20 +39,20 @@ trait ClassInjection {
     ("104725077753706905086" -> Player("104725077753706905086", "Franco Giannotti", "https://lh3.googleusercontent.com/a-/AOh14GgjwE38QY3xY6yljKclSoVRnByF-59pAG1wdvx_=s96-c", isAdmin = true, isBlocked = false)),
     ("104065320855221322833" -> Player("104065320855221322833", "Julieta Abuin", "https://lh3.googleusercontent.com/a-/AOh14Gh5tYvnhd0arKFn9ot7FU6D6mrnSpfuh6_hAPvMsg=s96-c", isAdmin = true, isBlocked = false)),
     ("102400486230688279463" -> Player("102400486230688279463", "FRANCO GIANNOTTI CALENS", "https://lh3.googleusercontent.com/a-/AOh14GgjwE38QY3xY6yljKclSoVRnByF-59pAG1wdvx_=s96-c", isAdmin = true, isBlocked = false)),
-      ("107032331312948829616" -> Player("107032331312948829616", "Chiara M", "https://lh3.googleusercontent.com/a-/AOh14Gh5tYvnhd0arKFn9ot7FU6D6mrnSpfuh6_hAPvMsg=s96-c", isAdmin = true, isBlocked = false)),
-      ("115748028387079548757" -> Player("115748028387079548757", "Ivan C", "https://lh3.googleusercontent.com/a-/AOh14Gh5tYvnhd0arKFn9ot7FU6D6mrnSpfuh6_hAPvMsg=s96-c", isAdmin = true, isBlocked = false)),
-        ("107090515790711287955" -> Player("107090515790711287955", "Julieta Lucia Abuin", "https://lh3.googleusercontent.com/a-/AOh14Gh5tYvnhd0arKFn9ot7FU6D6mrnSpfuh6_hAPvMsg=s96-c", isAdmin = true, isBlocked = false))
+    ("107032331312948829616" -> Player("107032331312948829616", "Chiara M", "https://lh3.googleusercontent.com/a-/AOh14Gh5tYvnhd0arKFn9ot7FU6D6mrnSpfuh6_hAPvMsg=s96-c", isAdmin = true, isBlocked = false)),
+    ("115748028387079548757" -> Player("115748028387079548757", "Ivan C", "https://lh3.googleusercontent.com/a-/AOh14Gh5tYvnhd0arKFn9ot7FU6D6mrnSpfuh6_hAPvMsg=s96-c", isAdmin = true, isBlocked = false)),
+    ("107090515790711287955" -> Player("107090515790711287955", "Julieta Lucia Abuin", "https://lh3.googleusercontent.com/a-/AOh14Gh5tYvnhd0arKFn9ot7FU6D6mrnSpfuh6_hAPvMsg=s96-c", isAdmin = true, isBlocked = false))
   )
 
   val movementDb: mutable.HashMap[Int, List[Movement]] = mutable.HashMap[Int, List[Movement]](
-    1 -> List(Movement(0, "STRENGTH", 2, 4, "104065320855221322833","104065320855221322833"), Movement(1, "INTELLIGENCE", 1, 3, "104065320855221322833","104725077753706905086"))
+    1 -> List(Movement(0, "STRENGTH", 2, 4, "104065320855221322833", "104065320855221322833"), Movement(1, "INTELLIGENCE", 1, 3, "104065320855221322833", "104725077753706905086"))
   )
 
   val superheroApi: SuperheroApi = SuperheroApi()
 
   private def defaultObjectMapper(): ObjectMapper = {
     val customModule = new SimpleModule("CustomModule")
-    .addSerializer(classOf[AttributeName], new AttributeNameSerializer(classOf[AttributeName]))
+      .addSerializer(classOf[AttributeName], new AttributeNameSerializer(classOf[AttributeName]))
 
     new ObjectMapper()
       .registerModule(DefaultScalaModule)
@@ -71,10 +71,11 @@ trait ClassInjection {
   val deckDao = new DeckLocalDao(deckLocalDb)
   val matchDao = new MatchLocalDAO(matchLocalDb)
   val movementDao = new MovementLocalDAO(movementDb)
+  val playerDao = new PlayerLocalDao(playerDb)
 
   val deckRepository = new DeckRepository(deckDao)
   val matchRepository = new MatchRepository(matchDao)
-  val playerRepository = new PlayerRepository(playerDb)
+  val playerRepository = new PlayerRepository(playerDao)
   val movementRepository = new MovementRepository(movementDao)
 
   val deckService = new DeckService(deckRepository, superheroApi)

@@ -8,7 +8,7 @@ import scala.collection.mutable
 
 class DeckSQLDao(db: Connection) extends DeckDao {
 
-  def rowToDeckDbDTO(row: ResultSet): DeckDbDTO = {
+  protected def rowToDeckDbDTO(row: ResultSet): DeckDbDTO = {
     val cardIdsString = row.getString("card_ids")
     val cardIds: List[Int] = cardIdsString.split(",").map(_.toInt).toList
 
