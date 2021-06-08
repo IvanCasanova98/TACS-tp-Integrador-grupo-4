@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS `players` (
   `is_blocked` boolean
 );
 
-CREATE TABLE IF NOT EXISTS `deck` (
+CREATE TABLE IF NOT EXISTS `decks` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
   `name` varchar(255),
   `card_ids` varchar(255)
@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS `match` (
   FOREIGN KEY (`creator_id`) REFERENCES `players` (`id`),
   FOREIGN KEY (`challenged_user_id`) REFERENCES `players` (`id`),
   FOREIGN KEY (`winner_id`) REFERENCES `players` (`id`),
-  FOREIGN KEY (`deck_id`) REFERENCES `deck` (`id`)
+  FOREIGN KEY (`deck_id`) REFERENCES `decks` (`id`)
 );
 
 
@@ -40,3 +40,6 @@ CREATE TABLE IF NOT EXISTS `movements` (
   `turn` varchar(255),
   FOREIGN KEY (`match_id`) REFERENCES `match` (`id`)
 );
+
+CREATE USER 'superfriends_app'@'database' IDENTIFIED BY 'batman';
+GRANT ALL PRIVILEGES ON *.* TO superfriends_app@database;

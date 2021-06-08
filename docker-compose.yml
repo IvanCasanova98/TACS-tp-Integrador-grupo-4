@@ -15,7 +15,10 @@ services:
     ports:
       - "3306:3306"
     environment:
-      MYSQL_ROOT_PASSWORD: batman
+      MYSQL_ROOT_PASSWORD: adminadmin
       MYSQL_DATABASE: tacs
+      MYSQL_USER: superfriends_app
+      MYSQL_PASSWORD: batman
     volumes:
         - ./mysql-script:/docker-entrypoint-initdb.d
+        - ./mysql/data:/var/lib/mysql
