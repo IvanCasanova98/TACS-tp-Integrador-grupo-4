@@ -1,27 +1,24 @@
 package integrationTests
 
 import akka.http.scaladsl.marshalling.Marshal
-import akka.http.scaladsl.model.{HttpEntity, MessageEntity, StatusCodes}
+import akka.http.scaladsl.model.{MessageEntity, StatusCodes}
 import akka.http.scaladsl.server.Route
 import akka.http.scaladsl.testkit.ScalatestRouteTest
 import db.H2DB
 import models.Player
 import org.mockito.ArgumentMatchers.anyString
-import org.mockito.Mockito.{doNothing, when}
+import org.mockito.Mockito.doNothing
 import org.mockito.MockitoSugar.mock
 import org.scalatest.concurrent.ScalaFutures.convertScalaFuture
 import org.scalatest.{Matchers, WordSpec}
-import repositories.{DeckRepository, MatchRepository, MovementRepository, PlayerRepository}
-import repositories.daos.{DeckSQLDao, MatchLocalDAO, MatchSQLDao, PlayerSQLDao}
-import repositories.dbdtos.MatchDBDTO
+import repositories.daos.{DeckSQLDao, MatchSQLDao, PlayerSQLDao}
+import repositories.{MatchRepository, MovementRepository, PlayerRepository}
 import routes.MatchRoutes
-import routes.Routes.jsonParser
 import routes.inputs.MatchInputs.{PostMatchDTO, UpdateMatchStatus}
 import serializers.Json4sSnakeCaseSupport
 import services.{ConnectedPlayersService, DeckService, MatchService}
 
 import java.sql.Connection
-import scala.collection.mutable
 
 class MatchServiceIntegrationTest  extends WordSpec with Matchers with ScalatestRouteTest with Json4sSnakeCaseSupport {
   val sqlSB: Connection = H2DB()
