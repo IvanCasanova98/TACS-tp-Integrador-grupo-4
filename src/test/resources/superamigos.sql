@@ -1,3 +1,5 @@
+CREATE DATABASE IF NOT EXISTS tacs;
+
 CREATE TABLE `players` (
   `id` varchar(255) PRIMARY KEY,
   `username` varchar(255),
@@ -32,9 +34,9 @@ CREATE TABLE `movements` (
   `turn` varchar(255)
 );
 
-//ALTER TABLE `matches` ADD FOREIGN KEY (`creator_id`) REFERENCES `players` (`id`);
+ALTER TABLE `matches` ADD FOREIGN KEY (`creator_id`) REFERENCES `players` (`id`);
 
-//ALTER TABLE `matches` ADD FOREIGN KEY (`challenged_user_id`) REFERENCES `players` (`id`);
+ALTER TABLE `matches` ADD FOREIGN KEY (`challenged_user_id`) REFERENCES `players` (`id`);
 
 ALTER TABLE `matches` ADD FOREIGN KEY (`deck_id`) REFERENCES `decks` (`id`);
 
