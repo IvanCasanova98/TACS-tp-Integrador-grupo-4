@@ -9,7 +9,7 @@ import com.fasterxml.jackson.module.scala.DefaultScalaModule
 import models.AttributeName.AttributeName
 import models.MatchStatus.{FINISHED, PAUSED}
 import models._
-import repositories.daos.{DeckLocalDao, DeckSQLDao, MatchLocalDAO, MatchSQLDao, MovementLocalDAO, PlayerLocalDao, PlayerSQLDao}
+import repositories.daos.{DeckLocalDao, DeckSQLDao, MatchLocalDAO, MatchSQLDao, MovementLocalDAO, MovementSQLDao, PlayerLocalDao, PlayerSQLDao}
 import repositories.dbdtos.MatchDBDTO
 import repositories.{DeckRepository, MatchRepository, MovementRepository, PlayerRepository}
 import serializers.JsonParser
@@ -71,7 +71,7 @@ trait ClassInjection {
   //Local Dao for saving stuff in memory
   val deckDao = new DeckSQLDao(connectionDatabase)
   val matchDao = new MatchSQLDao(connectionDatabase)
-  val movementDao = new MovementLocalDAO(movementDb)
+  val movementDao = new MovementSQLDao(connectionDatabase)
   val playerDao = new PlayerSQLDao(connectionDatabase)
 
   var deckRepository = new DeckRepository(deckDao)

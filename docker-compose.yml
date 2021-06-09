@@ -10,6 +10,8 @@ services:
       - "9000:9000"
     depends_on:
       - database
+    environment:
+      - SCOPE=DOCKER
   database:
     image: mysql:8.0.25
     ports:

@@ -3,7 +3,10 @@ package server
 import java.sql.{Connection, DriverManager}
 
 object DBConnection {
-  val url = "jdbc:mysql://localhost:3306/tacs?allowPublicKeyRetrieval=true&useSSL=false"
+  var url = "jdbc:mysql://localhost:3306/tacs?allowPublicKeyRetrieval=true&useSSL=false"
+  if(sys.env.contains("SCOPE")){
+    url = "jdbc:mysql://database:3306/tacs?allowPublicKeyRetrieval=true&useSSL=false"
+  }
   val driver = "com.mysql.jdbc.Driver"
   val username = "superfriends_app"
   val password = "batman"
