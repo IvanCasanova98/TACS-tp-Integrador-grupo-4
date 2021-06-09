@@ -26,7 +26,7 @@ object MatchRoutes extends Json4sSnakeCaseSupport {
             handleRequest(() => {
               val matchId = matchService.createMatch(postMatchDTO.deckId, postMatchDTO.matchCreatorId, postMatchDTO.challengedPlayerId)
               connectionsService.sendMessageToUserId(s"INVITE:${postMatchDTO.challengedPlayerId}:$matchId",postMatchDTO.challengedPlayerId)
-              matchId.toString
+              matchId
             }, StatusCodes.Created)
           }
         }

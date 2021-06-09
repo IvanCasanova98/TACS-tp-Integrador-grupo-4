@@ -21,12 +21,12 @@ import services.{ConnectedPlayersService, DeckService, MatchService}
 import java.sql.Connection
 
 class MatchServiceIntegrationTest  extends WordSpec with Matchers with ScalatestRouteTest with Json4sSnakeCaseSupport {
-  val sqlSB: Connection = H2DB()
-  val matchRepo = new MatchRepository(new MatchSQLDao(sqlSB))
+  val sqlDB: Connection = H2DB()
+  val matchRepo = new MatchRepository(new MatchSQLDao(sqlDB))
   val matchService = new MatchService(matchRepo, mock[PlayerRepository], mock[DeckService], mock[MovementRepository])
   val connectedPlayersService: ConnectedPlayersService =  mock[ConnectedPlayersService]
   val matchRoutes: Route = MatchRoutes(matchService,connectedPlayersService)
-  val playerSQLDao = new PlayerSQLDao(sqlSB)
+  val playerSQLDao = new PlayerSQLDao(sqlDB)
 
   def postMatchEntity(postMatchDTO: PostMatchDTO): MessageEntity = Marshal(postMatchDTO).to[MessageEntity].futureValue
 
@@ -35,7 +35,7 @@ class MatchServiceIntegrationTest  extends WordSpec with Matchers with Scalatest
   "Match service" should {
     playerSQLDao.createPlayer(Player("userId", "", "", false, false))
     playerSQLDao.createPlayer(Player("anotherUserId", "", "", false, false))
-    val deckId = new DeckSQLDao(sqlSB).createDeck("deck", List(3,2,5))
+    val deckId = new DeckSQLDao(sqlDB).createDeck("deck", List(3,2,5))
 
     "Return 201 and id whe posting new match" in {
       val postMatchDTO = PostMatchDTO(deckId, "userId", "anotherUserId")
@@ -47,11 +47,13 @@ class MatchServiceIntegrationTest  extends WordSpec with Matchers with Scalatest
         }
     }
     "Return match of user" in {
-      Post("/matches").withEntity(postMatchEntity(PostMatchDTO(1, "userId", "anotherUserId"))) ~> matchRoutes
-      Patch("/matches/1/status").withEntity(patchMatchStatus(UpdateMatchStatus("IN_PROCESS")))~> matchRoutes ~>
-        check {
-          response.status shouldBe StatusCodes.NoContent
-        }
+      Post("/matches").withEntity(postMatchEntity(PostMatchDTO(1, "userId", "anotherUserId"))) ~> matchRoutes ~> check {
+        val id = responseAs[Int]
+        Patch(s"/matches/$id/status").withEntity(patchMatchStatus(UpdateMatchStatus("IN_PROCESS"))) ~> matchRoutes ~>
+          check {
+            response.status shouldBe StatusCodes.NoContent
+          }
+      }
     }
   }
 
