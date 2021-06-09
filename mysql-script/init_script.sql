@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS `decks` (
   `card_ids` varchar(255)
 );
 
-CREATE TABLE IF NOT EXISTS `match` (
+CREATE TABLE IF NOT EXISTS `matches` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
   `status` varchar(255),
   `creator_id` varchar(255),
@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS `movements` (
   `opponent_card_id` int,
   `winner_id_or_tie` varchar(255),
   `turn` varchar(255),
-  FOREIGN KEY (`match_id`) REFERENCES `match` (`id`)
+  FOREIGN KEY (`match_id`) REFERENCES `matches` (`id`)
 );
 
 CREATE USER 'superfriends_app'@'database' IDENTIFIED BY 'batman';
