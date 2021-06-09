@@ -20,13 +20,14 @@ import services.{ConnectedPlayersService, DeckService, MatchService}
 
 import java.sql.Connection
 
-class MatchServiceIntegrationTest  extends WordSpec with Matchers with ScalatestRouteTest with Json4sSnakeCaseSupport {
+class MatchServiceIntegrationTest extends WordSpec with Matchers with ScalatestRouteTest with Json4sSnakeCaseSupport {
   val sqlDB: Connection = H2DB()
   val matchRepo = new MatchRepository(new MatchSQLDao(sqlDB))
   val matchService = new MatchService(matchRepo, mock[PlayerRepository], mock[DeckService], mock[MovementRepository])
-  val connectedPlayersService: ConnectedPlayersService =  mock[ConnectedPlayersService]
-  val matchRoutes: Route = MatchRoutes(matchService,connectedPlayersService)
+  val connectedPlayersService: ConnectedPlayersService = mock[ConnectedPlayersService]
+  val matchRoutes: Route = MatchRoutes(matchService, connectedPlayersService)
   val playerSQLDao = new PlayerSQLDao(sqlDB)
+  val deckSQLDao = new DeckSQLDao(sqlDB)
 
   def postMatchEntity(postMatchDTO: PostMatchDTO): MessageEntity = Marshal(postMatchDTO).to[MessageEntity].futureValue
 
@@ -35,19 +36,19 @@ class MatchServiceIntegrationTest  extends WordSpec with Matchers with Scalatest
   "Match service" should {
     playerSQLDao.createPlayer(Player("userId", "", "", false, false))
     playerSQLDao.createPlayer(Player("anotherUserId", "", "", false, false))
-    val deckId = new DeckSQLDao(sqlDB).createDeck("deck", List(3,2,5))
 
-    "Return 201 and id whe posting new match" in {
+    "Return 201 and id when posting new match" in {
+      val deckId = deckSQLDao.createDeck("deck", List(3, 2, 5))
       val postMatchDTO = PostMatchDTO(deckId, "userId", "anotherUserId")
-      doNothing().when(connectedPlayersService).sendMessageToUserId(anyString(), anyString())
-      matchService.createMatch(postMatchDTO.deckId, postMatchDTO.matchCreatorId, postMatchDTO.challengedPlayerId)
-      Post("/matches").withEntity(postMatchEntity(postMatchDTO)) ~> matchRoutes ~>
+      Post("/matches").withEntity(postMatchEntity(postMatchDTO.copy(deckId = deckId))) ~> matchRoutes ~>
         check {
           response.status shouldBe StatusCodes.Created
         }
     }
     "Return match of user" in {
-      Post("/matches").withEntity(postMatchEntity(PostMatchDTO(1, "userId", "anotherUserId"))) ~> matchRoutes ~> check {
+      val deckId = deckSQLDao.createDeck("deck", List(3, 2, 5))
+
+      Post("/matches").withEntity(postMatchEntity(PostMatchDTO(deckId, "userId", "anotherUserId"))) ~> matchRoutes ~> check {
         val id = responseAs[Int]
         Patch(s"/matches/$id/status").withEntity(patchMatchStatus(UpdateMatchStatus("IN_PROCESS"))) ~> matchRoutes ~>
           check {
