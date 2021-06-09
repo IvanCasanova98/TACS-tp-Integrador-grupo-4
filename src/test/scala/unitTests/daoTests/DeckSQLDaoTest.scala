@@ -13,6 +13,11 @@ class DeckSQLDaoTest extends WordSpec with Matchers with ScalatestRouteTest with
   var db: Connection = H2DB()
   val deckDaoTest: DeckSQLDao = new DeckSQLDao(db)
 
+  before {
+    db.prepareStatement("DELETE FROM matches").execute()
+    db.prepareStatement("DELETE FROM decks").execute()
+  }
+
   "Deck SQL Dao" when {
     "Getting decks" should {
       "return all decks" in {

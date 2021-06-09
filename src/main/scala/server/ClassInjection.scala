@@ -22,7 +22,7 @@ import scala.collection.mutable
 trait ClassInjection {
 
   //init connection
-  val connection_database: Connection = DBConnection.getConnection
+  var connectionDatabase: Connection = DBConnection.getConnection
   val deckLocalDb: mutable.HashMap[Int, DeckDbDTO] = mutable.HashMap[Int, DeckDbDTO]()
   deckLocalDb.put(1, DeckDbDTO(1, "Primer mazo", List(10, 11, 12, 13)))
   deckLocalDb.put(2, DeckDbDTO(2, "Batman super mazo", List(1, 8, 4, 5, 3)))
@@ -37,12 +37,12 @@ trait ClassInjection {
   )
 
   val playerDb: mutable.HashMap[String, Player] = mutable.HashMap[String, Player](
-    ("104725077753706905086" -> Player("104725077753706905086", "Franco Giannotti", "https://lh3.googleusercontent.com/a-/AOh14GgjwE38QY3xY6yljKclSoVRnByF-59pAG1wdvx_=s96-c", isAdmin = true, isBlocked = false)),
-    ("104065320855221322833" -> Player("104065320855221322833", "Julieta Abuin", "https://lh3.googleusercontent.com/a-/AOh14Gh5tYvnhd0arKFn9ot7FU6D6mrnSpfuh6_hAPvMsg=s96-c", isAdmin = true, isBlocked = false)),
-    ("102400486230688279463" -> Player("102400486230688279463", "FRANCO GIANNOTTI CALENS", "https://lh3.googleusercontent.com/a-/AOh14GgjwE38QY3xY6yljKclSoVRnByF-59pAG1wdvx_=s96-c", isAdmin = true, isBlocked = false)),
-    ("107032331312948829616" -> Player("107032331312948829616", "Chiara M", "https://lh3.googleusercontent.com/a-/AOh14Gh5tYvnhd0arKFn9ot7FU6D6mrnSpfuh6_hAPvMsg=s96-c", isAdmin = true, isBlocked = false)),
-    ("115748028387079548757" -> Player("115748028387079548757", "Ivan C", "https://lh3.googleusercontent.com/a-/AOh14Gh5tYvnhd0arKFn9ot7FU6D6mrnSpfuh6_hAPvMsg=s96-c", isAdmin = true, isBlocked = false)),
-    ("107090515790711287955" -> Player("107090515790711287955", "Julieta Lucia Abuin", "https://lh3.googleusercontent.com/a-/AOh14Gh5tYvnhd0arKFn9ot7FU6D6mrnSpfuh6_hAPvMsg=s96-c", isAdmin = true, isBlocked = false))
+    "104725077753706905086" -> Player("104725077753706905086", "Franco Giannotti", "https://lh3.googleusercontent.com/a-/AOh14GgjwE38QY3xY6yljKclSoVRnByF-59pAG1wdvx_=s96-c", isAdmin = true, isBlocked = false),
+    "104065320855221322833" -> Player("104065320855221322833", "Julieta Abuin", "https://lh3.googleusercontent.com/a-/AOh14Gh5tYvnhd0arKFn9ot7FU6D6mrnSpfuh6_hAPvMsg=s96-c", isAdmin = true, isBlocked = false),
+    "102400486230688279463" -> Player("102400486230688279463", "FRANCO GIANNOTTI CALENS", "https://lh3.googleusercontent.com/a-/AOh14GgjwE38QY3xY6yljKclSoVRnByF-59pAG1wdvx_=s96-c", isAdmin = true, isBlocked = false),
+    "107032331312948829616" -> Player("107032331312948829616", "Chiara M", "https://lh3.googleusercontent.com/a-/AOh14Gh5tYvnhd0arKFn9ot7FU6D6mrnSpfuh6_hAPvMsg=s96-c", isAdmin = true, isBlocked = false),
+    "115748028387079548757" -> Player("115748028387079548757", "Ivan C", "https://lh3.googleusercontent.com/a-/AOh14Gh5tYvnhd0arKFn9ot7FU6D6mrnSpfuh6_hAPvMsg=s96-c", isAdmin = true, isBlocked = false),
+    "107090515790711287955" -> Player("107090515790711287955", "Julieta Lucia Abuin", "https://lh3.googleusercontent.com/a-/AOh14Gh5tYvnhd0arKFn9ot7FU6D6mrnSpfuh6_hAPvMsg=s96-c", isAdmin = true, isBlocked = false)
   )
 
   val movementDb: mutable.HashMap[Int, List[Movement]] = mutable.HashMap[Int, List[Movement]](
@@ -69,12 +69,12 @@ trait ClassInjection {
   val jsonParser = new JsonParser(defaultObjectMapper())
 
   //Local Dao for saving stuff in memory
-  val deckDao = new DeckSQLDao(connection_database)
-  val matchDao = new MatchLocalDAO(matchLocalDb)
+  val deckDao = new DeckSQLDao(connectionDatabase)
+  val matchDao = new MatchSQLDao(connectionDatabase)
   val movementDao = new MovementLocalDAO(movementDb)
-  val playerDao = new PlayerSQLDao(connection_database)
+  val playerDao = new PlayerSQLDao(connectionDatabase)
 
-  val deckRepository = new DeckRepository(deckDao)
+  var deckRepository = new DeckRepository(deckDao)
   val matchRepository = new MatchRepository(matchDao)
   val playerRepository = new PlayerRepository(playerDao)
   val movementRepository = new MovementRepository(movementDao)
