@@ -8,6 +8,8 @@ import routes.Utils.handleRequest
 import serializers.Json4sSnakeCaseSupport
 import services.{DeckService, StatisticsService}
 
+import java.sql.Date
+
 object StatisticsRoutes extends Json4sSnakeCaseSupport {
 
   val logger: Logger = LoggerFactory.getLogger(classOf[DeckService])
@@ -19,6 +21,7 @@ object StatisticsRoutes extends Json4sSnakeCaseSupport {
     }
     ~ path("statistics") {
       parameters("user_id".optional, "from_date".optional, "to_date".optional) { (userId, fromDate, toDate) =>
+        statisticsService.getMatchesStatistics(userId, fromDate.map(Date.valueOf), toDate.map(Date.valueOf))
         complete(StatusCodes.OK, "")
       }
     }
