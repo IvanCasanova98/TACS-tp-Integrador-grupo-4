@@ -19,6 +19,7 @@ class MatchSQLDaoTest extends WordSpec with Matchers with BeforeAndAfter {
   var deckId: Int = -1
 
   before {
+    sqlDB.prepareStatement("DELETE FROM movements").execute()
     sqlDB.prepareStatement("DELETE FROM matches").execute()
     sqlDB.prepareStatement("DELETE FROM decks").execute()
     sqlDB.prepareStatement("DELETE FROM players").execute()

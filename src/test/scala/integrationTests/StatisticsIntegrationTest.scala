@@ -5,7 +5,7 @@ import akka.http.scaladsl.server.Route
 import akka.http.scaladsl.testkit.ScalatestRouteTest
 import db.H2DB
 import models.{MatchesStatistics, Player, PlayerStatistics}
-import org.scalatest.{BeforeAndAfterAll, Matchers, WordSpec}
+import org.scalatest.{BeforeAndAfter, BeforeAndAfterAll, Matchers, WordSpec}
 import repositories.StatisticsRepository
 import repositories.daos.{DeckSQLDao, MatchSQLDao, PlayerSQLDao}
 import routes.StatisticsRoutes
@@ -14,7 +14,7 @@ import services.StatisticsService
 
 import java.sql.Date
 
-class StatisticsIntegrationTest extends WordSpec with Matchers with ScalatestRouteTest with Json4sSnakeCaseSupport with BeforeAndAfterAll {
+class StatisticsIntegrationTest extends WordSpec with Matchers with ScalatestRouteTest with Json4sSnakeCaseSupport with BeforeAndAfter {
   val statisticsRepository = new StatisticsRepository(H2DB())
   val statisticsService = new StatisticsService(statisticsRepository)
   val statisticsRoute: Route = StatisticsRoutes(statisticsService)
@@ -22,31 +22,31 @@ class StatisticsIntegrationTest extends WordSpec with Matchers with ScalatestRou
   val playersDao = new PlayerSQLDao(H2DB())
   val decksDao = new DeckSQLDao(H2DB())
 
-  override def afterAll(): Unit = {
+  before {
+    H2DB().prepareStatement("DELETE FROM matches").execute()
     H2DB().prepareStatement("DELETE FROM decks").execute()
     H2DB().prepareStatement("DELETE FROM players").execute()
-    H2DB().prepareStatement("DELETE FROM matches").execute()
-  }
-
-  "Statistics reports" when {
     playersDao.createPlayer(Player("user1", "username1", "", false, false))
     playersDao.createPlayer(Player("user2", "username2", "", false, false))
     playersDao.createPlayer(Player("user3", "username3", "", false, false))
-    decksDao.createDeck("deckName", List(1, 3, 5, 7, 4))
-    val matchIdUser1vUser2 = matchSqlDao.createMatch(1, "user1", "user2")
+    val deckId = decksDao.createDeck("deckName", List(1, 3, 5, 7, 4))
+    val matchIdUser1vUser2 = matchSqlDao.createMatch(deckId, "user1", "user2")
     matchSqlDao.updateMatchStatus(matchIdUser1vUser2, "FINISHED")
     matchSqlDao.updateMatchWinner(matchIdUser1vUser2, "user2")
-    val secondMatchIdUser1vUser2 = matchSqlDao.createMatch(1, "user2", "user1")
+    val secondMatchIdUser1vUser2 = matchSqlDao.createMatch(deckId, "user2", "user1")
     matchSqlDao.updateMatchStatus(secondMatchIdUser1vUser2, "IN_PROCESS")
-    val matchIdUser2vUser3 = matchSqlDao.createMatch(1, "user2", "user3")
+    val matchIdUser2vUser3 = matchSqlDao.createMatch(deckId, "user2", "user3")
     matchSqlDao.updateMatchStatus(matchIdUser2vUser3, "FINISHED")
     matchSqlDao.updateMatchWinner(matchIdUser2vUser3, "user2")
-    val matchIdUser1vUser3 = matchSqlDao.createMatch(1, "user3", "user1")
+    val matchIdUser1vUser3 = matchSqlDao.createMatch(deckId, "user3", "user1")
     matchSqlDao.updateMatchStatus(matchIdUser1vUser3, "FINISHED")
     matchSqlDao.updateMatchWinner(matchIdUser1vUser3, "TIE")
-    val secondMatchIdUser1vUser3 = matchSqlDao.createMatch(1, "user1", "user3")
+    val secondMatchIdUser1vUser3 = matchSqlDao.createMatch(deckId, "user1", "user3")
     matchSqlDao.updateMatchStatus(secondMatchIdUser1vUser3, "FINISHED")
     matchSqlDao.updateMatchWinner(secondMatchIdUser1vUser3, "user3")
+  }
+
+  "Statistics reports" when {
 
     "Get scoreboard ranking" should {
       "Return players statistics" in {

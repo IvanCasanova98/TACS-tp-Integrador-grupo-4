@@ -14,7 +14,10 @@ class DeckSQLDaoTest extends WordSpec with Matchers with ScalatestRouteTest with
   val deckDaoTest: DeckSQLDao = new DeckSQLDao(db)
 
   before {
+    db.prepareStatement("DELETE FROM movements").execute()
+    db.prepareStatement("DELETE FROM matches").execute()
     db.prepareStatement("DELETE FROM decks").execute()
+    db.prepareStatement("DELETE FROM players").execute()
   }
 
   "Deck SQL Dao" when {
