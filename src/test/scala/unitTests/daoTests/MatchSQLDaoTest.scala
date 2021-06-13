@@ -19,11 +19,7 @@ class MatchSQLDaoTest extends WordSpec with Matchers with BeforeAndAfter {
   var deckId: Int = -1
 
   before {
-    sqlDB.prepareStatement("DELETE FROM movements").execute()
-    sqlDB.prepareStatement("DELETE FROM matches").execute()
-    sqlDB.prepareStatement("DELETE FROM decks").execute()
-    sqlDB.prepareStatement("DELETE FROM players").execute()
-
+    H2DB.resetTables(sqlDB)
     playerRepository.getOrCreatePlayerPermissions(basicPlayer)
     playerRepository.getOrCreatePlayerPermissions(basicPlayer.copy(googleId = "challengedId"))
     deckId = deckRepository.createDeck("someDeck", List(33, 4, 1, 5, 6, 7))

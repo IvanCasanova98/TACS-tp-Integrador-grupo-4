@@ -12,20 +12,20 @@ import routes.StatisticsRoutes
 import serializers.Json4sSnakeCaseSupport
 import services.StatisticsService
 
-import java.sql.Date
+import java.sql.{Connection, Date}
 
 class StatisticsIntegrationTest extends WordSpec with Matchers with ScalatestRouteTest with Json4sSnakeCaseSupport with BeforeAndAfter {
-  val statisticsRepository = new StatisticsRepository(H2DB())
+  val db: Connection = H2DB()
+  val statisticsRepository = new StatisticsRepository(db)
   val statisticsService = new StatisticsService(statisticsRepository)
   val statisticsRoute: Route = StatisticsRoutes(statisticsService)
-  val matchSqlDao = new MatchSQLDao(H2DB())
-  val playersDao = new PlayerSQLDao(H2DB())
-  val decksDao = new DeckSQLDao(H2DB())
+  val matchSqlDao = new MatchSQLDao(db)
+  val playersDao = new PlayerSQLDao(db)
+  val decksDao = new DeckSQLDao(db)
 
   before {
-    H2DB().prepareStatement("DELETE FROM matches").execute()
-    H2DB().prepareStatement("DELETE FROM decks").execute()
-    H2DB().prepareStatement("DELETE FROM players").execute()
+    H2DB.resetTables(db)
+
     playersDao.createPlayer(Player("user1", "username1", "", false, false))
     playersDao.createPlayer(Player("user2", "username2", "", false, false))
     playersDao.createPlayer(Player("user3", "username3", "", false, false))

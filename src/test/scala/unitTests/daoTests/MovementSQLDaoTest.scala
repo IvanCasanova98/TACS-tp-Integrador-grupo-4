@@ -20,11 +20,7 @@ class MovementSQLDaoTest extends WordSpec with Matchers with ScalatestRouteTest 
   var matchId2: Int = -1
 
   before {
-    db.prepareStatement("DELETE FROM movements").execute()
-    db.prepareStatement("DELETE FROM matches").execute()
-    db.prepareStatement("DELETE FROM decks").execute()
-    db.prepareStatement("DELETE FROM players").execute()
-
+    H2DB.resetTables(db)
     playerRepository.getOrCreatePlayerPermissions(basicPlayer)
     playerRepository.getOrCreatePlayerPermissions(basicPlayer.copy(googleId = "challengedId"))
     val deckId = deckRepository.createDeck("someDeck", List(33, 4, 1, 5, 6, 7))

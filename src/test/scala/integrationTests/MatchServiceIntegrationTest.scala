@@ -34,16 +34,12 @@ class MatchServiceIntegrationTest extends WordSpec with Matchers with ScalatestR
   def patchMatchStatus(patchMatchStatus: UpdateMatchStatus): MessageEntity = Marshal(patchMatchStatus).to[MessageEntity].futureValue
 
   before {
-    sqlDB.prepareStatement("DELETE FROM movements").execute()
-    sqlDB.prepareStatement("DELETE FROM matches").execute()
-    sqlDB.prepareStatement("DELETE FROM decks").execute()
-    sqlDB.prepareStatement("DELETE FROM players").execute()
+    H2DB.resetTables(sqlDB)
     playerSQLDao.createPlayer(Player("userId", "", "", false, false))
     playerSQLDao.createPlayer(Player("anotherUserId", "", "", false, false))
   }
 
   "Match service" should {
-
 
     "Return 201 and id when posting new match" in {
       val deckId = deckSQLDao.createDeck("deck", List(3, 2, 5))
