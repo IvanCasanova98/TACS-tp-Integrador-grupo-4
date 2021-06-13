@@ -14,7 +14,6 @@ class DeckSQLDaoTest extends WordSpec with Matchers with ScalatestRouteTest with
   val deckDaoTest: DeckSQLDao = new DeckSQLDao(db)
 
   before {
-    db.prepareStatement("DELETE FROM matches").execute()
     db.prepareStatement("DELETE FROM decks").execute()
   }
 
@@ -23,8 +22,6 @@ class DeckSQLDaoTest extends WordSpec with Matchers with ScalatestRouteTest with
       "return all decks" in {
         val deckId1 = deckDaoTest.createDeck("firstDeck", List(1, 2, 3))
         val deckId2 = deckDaoTest.createDeck("secondDeck", List(4, 5, 6, 7, 8))
-
-        print(deckId1, deckId2)
 
         val decksInDb = deckDaoTest.getDecks
         decksInDb.size shouldBe 2
