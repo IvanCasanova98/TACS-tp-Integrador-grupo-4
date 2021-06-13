@@ -13,7 +13,6 @@ object HttpServer {
     val route = Routes()
 
     Http().newServerAt("0.0.0.0", 9000).bind(route)
-
     println(s"Server online at http://localhost:9000/")
 
   }

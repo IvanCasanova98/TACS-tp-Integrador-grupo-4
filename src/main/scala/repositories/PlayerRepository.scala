@@ -1,25 +1,14 @@
 package repositories
 
 import models.{Player, PlayerPermissions}
+import repositories.daos.PlayerDao
 import routes.inputs.LoginInputs.LoginInput
 
 import scala.collection.mutable
 
-class PlayerRepository(db: mutable.HashMap[String, Player]) {
+class PlayerRepository(dao: PlayerDao) {
 
-  def getOrCreatePlayerPermissions(loginInput: LoginInput): PlayerPermissions = {
-    val player = db.get(loginInput.googleId)
-    player match {
-      case Some(player) => PlayerPermissions(isAuthenticated = true, isAuthorized = !player.isBlocked, isAdmin = player.isAdmin)
-      case None => {
-        db.put(loginInput.googleId, Player(loginInput.googleId, loginInput.name, isAdmin = true, isBlocked = false, imageUrl = loginInput.imageUrl))
-        PlayerPermissions(isAuthenticated = true, isAuthorized = true, isAdmin = true)
-      }
-    }
+  def getOrCreatePlayerPermissions(loginInput: LoginInput): PlayerPermissions = dao.getOrCreatePlayerPermissions(loginInput)
 
-  }
-
-  def getPlayerById(userId: String): Player = {
-    db.getOrElse(userId, Player(userId, "NOT-FOUND","", false, false))
-  }
+  def getPlayerById(userId: String): Player = dao.getPlayerById(userId)
 }

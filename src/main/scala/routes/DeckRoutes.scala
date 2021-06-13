@@ -25,7 +25,7 @@ object DeckRoutes extends Json4sSnakeCaseSupport {
           entity(as[PartialDeckInput]) { deck =>
             logger.info("[POST] /decks")
             val deckId: Int = deckService.createDeck(deck)
-            handleRequest(() => s"Deck created with id: $deckId", StatusCodes.Created)
+            handleRequest(() => deckId, StatusCodes.Created)
           }
         }
       } ~ path("decks" / IntNumber) { deckId =>

@@ -1,4 +1,4 @@
-FROM hseeberger/scala-sbt:8u222_1.3.5_2.13.1
+FROM hseeberger/scala-sbt:8u282_1.5.3_2.12.13
 
 WORKDIR /root/build
 ADD . /root/build
