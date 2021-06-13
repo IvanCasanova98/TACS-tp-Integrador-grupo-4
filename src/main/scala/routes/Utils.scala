@@ -3,7 +3,7 @@ package routes
 import akka.http.scaladsl.model.{StatusCode, StatusCodes}
 import akka.http.scaladsl.server.Directives.complete
 import akka.http.scaladsl.server.StandardRoute
-import exceptions.Exceptions.DeckNotFoundException
+import exceptions.Exceptions.{DeckNotFoundException, InvalidQueryParamsException}
 import serializers.Json4sSnakeCaseSupport
 
 import scala.io.Source
@@ -25,6 +25,7 @@ object Utils extends Json4sSnakeCaseSupport {
       complete(successCode, result)
     } catch {
       case e: DeckNotFoundException => complete(StatusCodes.NotFound, e.getMessage)
+      case e: InvalidQueryParamsException => complete(StatusCodes.BadRequest, e.getMessage)
       case e: Exception => complete(StatusCodes.InternalServerError, e.getMessage)
     }
   }

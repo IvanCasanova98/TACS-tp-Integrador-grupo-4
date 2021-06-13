@@ -33,9 +33,12 @@ class StatisticsRepository(dbConnection: Connection) {
   }
 
   private def resultToMatchesStatistics(result: ResultSet): MatchesStatistics = {
-    MatchesStatistics(total = result.getInt("total"),
+    if (result.first())
+      MatchesStatistics(total = result.getInt("total"),
       inProcess = result.getInt("in_process"),
       finished = result.getInt("finished"))
+    else
+      MatchesStatistics(0, 0, 0)
   }
 
   def getMatchesStatisticsByUserId(userId: String): MatchesStatistics = {
@@ -47,7 +50,7 @@ class StatisticsRepository(dbConnection: Connection) {
   }
 
   def getMatchesStatisticsByDate(fromDate: Date, toDate: Date): MatchesStatistics = {
-    val filterByDate = " WHERE matches.created_date >= ? AND matches.created_date <= ?"
+    val filterByDate = " WHERE m.created_date >= ? AND m.created_date <= ?"
     val statement = dbConnection.prepareStatement(matchesStatisticsQuery + filterByDate)
     statement.setDate(1, fromDate)
     statement.setDate(2, toDate)
