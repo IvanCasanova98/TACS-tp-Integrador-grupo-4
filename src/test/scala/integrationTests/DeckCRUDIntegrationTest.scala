@@ -23,7 +23,8 @@ class DeckCRUDIntegrationTest extends WordSpec with Matchers with ScalatestRoute
   val postDeck: PartialDeckInput = PartialDeckInput("deckName", List(1, 2, 3, 4))
   val db: Connection = H2DB()
   val deckDaoTest: DeckSQLDao = new DeckSQLDao(db)
-  var deckRoutes: Route = DeckRoutes(new DeckService(new DeckRepository(deckDaoTest), SuperheroApi()))
+  val deckRepo = new DeckRepository(deckDaoTest)
+  var deckRoutes: Route = DeckRoutes(new DeckService(deckRepo, SuperheroApi()))
 
   def postDeckEntity(partialDeckInput: PartialDeckInput): MessageEntity = Marshal(partialDeckInput).to[MessageEntity].futureValue
 
@@ -32,7 +33,7 @@ class DeckCRUDIntegrationTest extends WordSpec with Matchers with ScalatestRoute
       "Return 201 created" in {
         Post("/decks").withEntity(postDeckEntity(postDeck)) ~> deckRoutes ~> check {
           val id = responseAs[Int]
-          deckDaoTest.getDeckById(id).name shouldBe "deckName"
+          deckRepo.getDeckById(id).name shouldBe "deckName"
           response.status shouldBe StatusCodes.Created
         }
       }
@@ -42,7 +43,7 @@ class DeckCRUDIntegrationTest extends WordSpec with Matchers with ScalatestRoute
         Post("/decks").withEntity(postDeckEntity(postDeck)) ~> deckRoutes ~> check {
           val id = responseAs[Int]
           Put(s"/decks/$id").withEntity(postDeckEntity(postDeck.copy(name = "MyDeck"))) ~> deckRoutes ~> check {
-            deckDaoTest.getDeckById(id).name shouldBe "MyDeck"
+            deckRepo.getDeckById(id).name shouldBe "MyDeck"
             response.status shouldBe StatusCodes.NoContent
           }
         }
