@@ -134,6 +134,8 @@ class MatchRoomActorTest extends AnyWordSpecLike with ScalatestRouteTest with Ma
           val movementResult = wsClient1.expectMessage().toString
           assert(movementResult.contains("MOVEMENT_RESULT"))
           assert(movementResult.contains("\"winner_id\":\"12345\""))
+          wsClient1.sendMessage("ABANDON")
+          wsClient2.expectMessage().toString.contains("MATCH_RESULT")
         }
     }
   }
