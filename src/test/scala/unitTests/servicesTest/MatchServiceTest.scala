@@ -1,21 +1,25 @@
 package unitTests.servicesTest
 
 import models.AttributeName.{HEIGHT, INTELLIGENCE, POWER, STRENGTH}
-import models.{Attribute, Card, Deck, Match, Movement, Player}
+import models.{Attribute, Card, Deck, DeckDbDTO, Match, MatchStatus, Movement, Player}
 import org.mockito.Mockito.when
 import org.mockito.MockitoSugar.mock
-import org.scalatest.{Matchers, WordSpec}
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpecLike
 import repositories.daos.MatchLocalDAO
 import repositories.dbdtos.MatchDBDTO
 import repositories.{MatchRepository, MovementRepository, PlayerRepository}
 import services.{DeckService, MatchService}
 
+import java.sql.Date
 import scala.collection.mutable
 
-class MatchServiceTest extends WordSpec with Matchers {
+class MatchServiceTest extends AnyWordSpecLike with Matchers {
   val db: mutable.HashMap[Int, MatchDBDTO] = mutable.HashMap()
   val movementRepositoryMock: MovementRepository = mock[MovementRepository]
-  val matchService = new MatchService(new MatchRepository(new MatchLocalDAO(db)), mock[PlayerRepository], mock[DeckService], movementRepositoryMock)
+  val playersRepoMock: PlayerRepository = mock[PlayerRepository]
+  val deckServiceMock: DeckService = mock[DeckService]
+  val matchService = new MatchService(new MatchRepository(new MatchLocalDAO(db)), playersRepoMock, deckServiceMock, movementRepositoryMock)
   val aBombCard: Card = Card(1, "A-bomb", List(Attribute(STRENGTH, 300), Attribute(HEIGHT, 200)), "")
   val deck: Deck = Deck(7, "deck",
     List(aBombCard, aBombCard.copy(id=399), aBombCard.copy(id=3423), aBombCard.copy(id=45363),
@@ -57,17 +61,48 @@ class MatchServiceTest extends WordSpec with Matchers {
     "Get deck count when match is not paused" in {
       matchService.getDeckCountOfMatch(matchInfo.copy(status = "IN_PROCESS")) shouldBe 3
     }
+    "Get match score when match is not paused" in {
+      val score = matchService.getScoreOfPlayer(matchInfo.copy(status = "IN_PROCESS"), "1222")
+      score shouldBe 0
+    }
     "Get match winner" should {
       "Return winner" in {
         when(movementRepositoryMock.getMovementsOfMatch(matchInfo.id)).thenReturn(matchInfo.movements)
         val matchWinner = matchService.findMatchWinner(matchInfo.id, matchInfo.matchCreator.userId, matchInfo.challengedPlayer.userId)
         matchWinner shouldBe "1222"
       }
-
       "Return tie" in {
         when(movementRepositoryMock.getMovementsOfMatch(tiedMatch.id)).thenReturn(tiedMatch.movements)
         val matchResult = matchService.findMatchWinner(tiedMatch.id, matchInfo.matchCreator.userId, matchInfo.challengedPlayer.userId)
         matchResult shouldBe "TIE"
+      }
+    }
+    "Find matches of user" should {
+      "return matches where user is creator and matches where it is challenged" in {
+        db.put(matchInfo.id,
+          MatchDBDTO(matchInfo.id,
+            MatchStatus.fromName(matchInfo.status),
+            matchCreatorId = matchInfo.matchCreator.userId,
+            challengedUserId = matchInfo.challengedPlayer.userId,
+            deckId = matchInfo.deck.id,
+            winnerId = matchInfo.winnerId,
+            createdDate = new Date(System.currentTimeMillis())))
+        db.put(tiedMatch.id,
+          MatchDBDTO(tiedMatch.id,
+            MatchStatus.fromName(tiedMatch.status),
+            matchCreatorId = tiedMatch.challengedPlayer.userId,
+            challengedUserId = tiedMatch.matchCreator.userId,
+            deckId = tiedMatch.deck.id,
+            winnerId = tiedMatch.winnerId,
+            createdDate = new Date(System.currentTimeMillis())))
+        when(playersRepoMock.getPlayerById("1222")).thenReturn(matchInfo.challengedPlayer)
+        when(playersRepoMock.getPlayerById("1333")).thenReturn(matchInfo.matchCreator)
+        when(deckServiceMock.getDeckById(matchInfo.deck.id)).thenReturn(DeckDbDTO(deck.id, deck.name, deck.cards.map(_.id)))
+
+        val matches = matchService.findMatchesOfUser("1222")
+        matches.size shouldBe 2
+
+        db.clear()
       }
     }
     "Reload match stats if it was paused" should {

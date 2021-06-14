@@ -3,14 +3,16 @@ package unitTests.daoTests
 import db.H2DB
 import models.MatchStatus.{CREATED, IN_PROCESS}
 import org.h2.jdbc.JdbcSQLIntegrityConstraintViolationException
-import org.scalatest.{BeforeAndAfter, BeforeAndAfterAll, Matchers, WordSpec}
+import org.scalatest.BeforeAndAfter
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpecLike
 import repositories.daos.{DeckSQLDao, MatchSQLDao, PlayerSQLDao}
 import repositories.{DeckRepository, MatchRepository, PlayerRepository}
 import routes.inputs.LoginInputs.LoginInput
 
 import java.sql.Connection
 
-class MatchSQLDaoTest extends WordSpec with Matchers with BeforeAndAfter {
+class MatchSQLDaoTest extends AnyWordSpecLike with Matchers with BeforeAndAfter {
   val sqlDB: Connection = H2DB()
   val deckRepository = new DeckRepository(new DeckSQLDao(sqlDB))
   val matchRepository = new MatchRepository(new MatchSQLDao(sqlDB))

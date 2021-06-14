@@ -4,12 +4,14 @@ import akka.http.scaladsl.testkit.ScalatestRouteTest
 import db.H2DB
 import exceptions.Exceptions.DeckNotFoundException
 import models.DeckDbDTO
-import org.scalatest.{BeforeAndAfter, Matchers, WordSpec}
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpecLike
+import org.scalatest.BeforeAndAfter
 import repositories.daos._
 
 import java.sql.Connection
 
-class DeckSQLDaoTest extends WordSpec with Matchers with ScalatestRouteTest with BeforeAndAfter {
+class DeckSQLDaoTest extends AnyWordSpecLike with Matchers with ScalatestRouteTest with BeforeAndAfter {
   var db: Connection = H2DB()
   val deckDaoTest: DeckSQLDao = new DeckSQLDao(db)
 

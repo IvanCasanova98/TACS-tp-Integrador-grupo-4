@@ -1,42 +1,39 @@
 package integrationTests
 
 import akka.http.scaladsl.testkit.{ScalatestRouteTest, WSProbe}
-import models.MatchStatus.CREATED
-import org.scalatest.{Matchers, WordSpec}
-import repositories.dbdtos.MatchDBDTO
-import routes.Routes
+import org.mockito.Mockito.when
+import org.mockito.MockitoSugar.mock
+import org.scalatest.BeforeAndAfter
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpecLike
+import routes.PlayRoutes
+import services.{ConnectedPlayersService, MatchRooms, MatchService}
 
-import java.util.Date
+class MatchRoomActorTest extends AnyWordSpecLike with ScalatestRouteTest with Matchers with BeforeAndAfter {
+  val matchServiceMock: MatchService = mock[MatchService]
+  var matchRooms = new MatchRooms(system, matchServiceMock)
 
-class MatchRoomActorTest extends WordSpec with Matchers with ScalatestRouteTest {
-
+  before {
+    matchRooms = new MatchRooms(system, matchServiceMock)
+  }
 
   "Match rooms actor" should {
     "Allow owner player to join match" in {
-      val routes = Routes()
+      val routes = PlayRoutes(mock[ConnectedPlayersService], matchRooms)
       val wsClient: WSProbe = WSProbe()
-      Routes.matchLocalDb.put(1, MatchDBDTO(1, CREATED, "52615", "1234",1, None, new Date()))
+      when(matchServiceMock.isUserAuthorizedToJoinMatch(1, "52615")).thenReturn(true)
 
       WS("/join-match/1?userId=52615", wsClient.flow) ~> routes ~>
         check {
-          isWebSocketUpgrade shouldEqual true
+          isWebSocketUpgrade shouldBe true
         }
     }
 
-    "Allow invite to join match" in {
-      val routes = Routes()
-      val wsClient: WSProbe = WSProbe()
-      Routes.matchLocalDb.put(1, MatchDBDTO(1, CREATED, "52615", "1234",1, None, new Date()))
-
-      WS("/join-match/1?userId=1234", wsClient.flow) ~> routes ~>
-        check {
-          isWebSocketUpgrade shouldEqual true
-        }
-    }
     "Return player not allowed when an uninvited player tries to join match" in {
-      val routes = Routes()
+      val routes = PlayRoutes(mock[ConnectedPlayersService], matchRooms)
       val wsClient: WSProbe = WSProbe()
-      Routes.matchLocalDb.put(1, MatchDBDTO(1, CREATED, "52615", "1234",1, None, new Date()))
+
+      when(matchServiceMock.isUserAuthorizedToJoinMatch(1, "526115")).thenReturn(false)
 
       WS("/join-match/1?userId=526115", wsClient.flow) ~> routes ~>
         check {
@@ -45,10 +42,12 @@ class MatchRoomActorTest extends WordSpec with Matchers with ScalatestRouteTest 
         }
     }
     "Return IN_LOBBY event when both players have joined match" in {
-      val routes = Routes()
+      val routes = PlayRoutes(mock[ConnectedPlayersService], matchRooms)
       val wsClient1: WSProbe = WSProbe()
       val wsClient2: WSProbe = WSProbe()
-      Routes.matchLocalDb.put(1, MatchDBDTO(1, CREATED, "52615", "1234", 1, None, new Date()))
+
+      when(matchServiceMock.isUserAuthorizedToJoinMatch(1, "52615")).thenReturn(true)
+      when(matchServiceMock.isUserAuthorizedToJoinMatch(1, "1234")).thenReturn(true)
 
       WS("/join-match/1?userId=52615", wsClient1.flow) ~> routes ~>
         check {
@@ -65,27 +64,27 @@ class MatchRoomActorTest extends WordSpec with Matchers with ScalatestRouteTest 
     }
 
     "Return ALL_READY event when both players are ready to play" in {
-      val routes = Routes()
+      val routes = PlayRoutes(mock[ConnectedPlayersService], matchRooms)
       val wsClient1: WSProbe = WSProbe()
       val wsClient2: WSProbe = WSProbe()
-      Routes.matchLocalDb.put(1, MatchDBDTO(1, CREATED, "52615", "1234",1, None, new Date()))
+      when(matchServiceMock.isUserAuthorizedToJoinMatch(1, "526151")).thenReturn(true)
+      when(matchServiceMock.isUserAuthorizedToJoinMatch(1, "12345")).thenReturn(true)
 
-      WS("/join-match/1?userId=52615", wsClient1.flow) ~> routes ~>
+      WS("/join-match/1?userId=526151", wsClient1.flow) ~> routes ~>
         check {
           isWebSocketUpgrade shouldEqual true
-          wsClient1.sendMessage("READY:52615")
+          wsClient1.sendMessage("READY:526151")
         }
 
-      WS("/join-match/1?userId=1234", wsClient2.flow) ~> routes ~>
+      WS("/join-match/1?userId=12345", wsClient2.flow) ~> routes ~>
         check {
           isWebSocketUpgrade shouldEqual true
-          wsClient2.expectMessage("IN_LOBBY:52615:1234")
-          wsClient1.expectMessage("IN_LOBBY:52615:1234")
+          wsClient2.expectMessage("IN_LOBBY:526151:12345")
+          wsClient1.expectMessage("IN_LOBBY:526151:12345")
 
-          wsClient2.sendMessage("READY:1234")
+          wsClient2.sendMessage("READY:12345")
 
           wsClient1.expectMessage("OPPONENT_READY")
-
           wsClient1.expectMessage("ALL_READY")
           wsClient2.expectMessage("ALL_READY")
         }

@@ -7,11 +7,13 @@ import com.github.tomakehurst.wiremock.client.WireMock._
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig
 import exceptions.ExceptionsSuperheroApi.NotEnoughAttributesException
 import models.AttributeName.{HEIGHT, WEIGHT}
-import org.scalatest.{BeforeAndAfterAll, Matchers, WordSpec}
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpecLike
+import org.scalatest.BeforeAndAfterAll
 import routes.Utils.resource
 import services.SuperheroApi
 
-class SuperheroApiTest extends WordSpec with Matchers with BeforeAndAfterAll {
+class SuperheroApiTest extends AnyWordSpecLike with Matchers with BeforeAndAfterAll {
   val port = 9290
   val wireMockServer = new WireMockServer(wireMockConfig().port(port))
 

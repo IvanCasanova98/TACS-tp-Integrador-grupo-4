@@ -6,8 +6,10 @@ import akka.http.scaladsl.server.Route
 import akka.http.scaladsl.testkit.ScalatestRouteTest
 import db.H2DB
 import org.json4s.{DefaultFormats, Formats}
+import org.scalatest.BeforeAndAfter
 import org.scalatest.concurrent.ScalaFutures.convertScalaFuture
-import org.scalatest.{BeforeAndAfter, Matchers, WordSpec}
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpecLike
 import repositories.DeckRepository
 import repositories.daos.DeckSQLDao
 import routes.DeckRoutes
@@ -17,7 +19,7 @@ import services.{DeckService, SuperheroApi}
 
 import java.sql.Connection
 
-class DeckCRUDIntegrationTest extends WordSpec with Matchers with ScalatestRouteTest with Json4sSnakeCaseSupport with BeforeAndAfter {
+class DeckCRUDIntegrationTest extends AnyWordSpecLike with Matchers with ScalatestRouteTest with Json4sSnakeCaseSupport with BeforeAndAfter {
 
   implicit val fm: Formats = DefaultFormats
   val postDeck: PartialDeckInput = PartialDeckInput("deckName", List(1, 2, 3, 4))
@@ -33,8 +35,8 @@ class DeckCRUDIntegrationTest extends WordSpec with Matchers with ScalatestRoute
       "Return 201 created" in {
         Post("/decks").withEntity(postDeckEntity(postDeck)) ~> deckRoutes ~> check {
           val id = responseAs[Int]
-          deckRepo.getDeckById(id).name shouldBe "deckName"
-          response.status shouldBe StatusCodes.Created
+          deckRepo.getDeckById(id).name shouldEqual "deckName"
+          response.status shouldEqual StatusCodes.Created
         }
       }
     }
@@ -43,14 +45,14 @@ class DeckCRUDIntegrationTest extends WordSpec with Matchers with ScalatestRoute
         Post("/decks").withEntity(postDeckEntity(postDeck)) ~> deckRoutes ~> check {
           val id = responseAs[Int]
           Put(s"/decks/$id").withEntity(postDeckEntity(postDeck.copy(name = "MyDeck"))) ~> deckRoutes ~> check {
-            deckRepo.getDeckById(id).name shouldBe "MyDeck"
-            response.status shouldBe StatusCodes.NoContent
+            deckRepo.getDeckById(id).name shouldEqual "MyDeck"
+            response.status shouldEqual StatusCodes.NoContent
           }
         }
       }
       "Return 404" in {
         Put("/decks/14").withEntity(postDeckEntity(postDeck)) ~> deckRoutes ~> check {
-          response.status shouldBe StatusCodes.NotFound
+          response.status shouldEqual StatusCodes.NotFound
         }
       }
     }
@@ -59,13 +61,13 @@ class DeckCRUDIntegrationTest extends WordSpec with Matchers with ScalatestRoute
         Post("/decks").withEntity(postDeckEntity(postDeck)) ~> deckRoutes ~> check {
           val id = responseAs[Int]
           Delete(s"/decks/$id") ~> deckRoutes ~> check {
-            response.status shouldBe StatusCodes.NoContent
+            response.status shouldEqual StatusCodes.NoContent
           }
         }
       }
       "Return 404" in {
         Delete("/decks/1879685465") ~> deckRoutes ~> check {
-          response.status shouldBe StatusCodes.NotFound
+          response.status shouldEqual StatusCodes.NotFound
         }
       }
     }

@@ -5,7 +5,9 @@ import akka.http.scaladsl.server.Route
 import akka.http.scaladsl.testkit.ScalatestRouteTest
 import db.H2DB
 import models.{MatchesStatistics, Player, PlayerStatistics}
-import org.scalatest.{BeforeAndAfter, BeforeAndAfterAll, Matchers, WordSpec}
+import org.scalatest.BeforeAndAfter
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpecLike
 import repositories.StatisticsRepository
 import repositories.daos.{DeckSQLDao, MatchSQLDao, PlayerSQLDao}
 import routes.StatisticsRoutes
@@ -14,7 +16,7 @@ import services.StatisticsService
 
 import java.sql.{Connection, Date}
 
-class StatisticsIntegrationTest extends WordSpec with Matchers with ScalatestRouteTest with Json4sSnakeCaseSupport with BeforeAndAfter {
+class StatisticsIntegrationTest extends AnyWordSpecLike with Matchers with ScalatestRouteTest with Json4sSnakeCaseSupport with BeforeAndAfter {
   val db: Connection = H2DB()
   val statisticsRepository = new StatisticsRepository(db)
   val statisticsService = new StatisticsService(statisticsRepository)
