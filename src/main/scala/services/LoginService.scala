@@ -12,11 +12,12 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier.Builde
 import com.google.api.client.http.HttpTransport
 import com.google.api.client.json.JsonFactory
 import serializers.Json4sSnakeCaseSupport
-import com.google.api.client.http.javanet.NetHttpTransport;
-import com.google.api.client.json.gson.GsonFactory;
-
+import com.google.api.client.http.javanet.NetHttpTransport
+import com.google.api.client.json.gson.GsonFactory
+import services.JWTUtils
 
 import java.util.Collections
+import scala.collection.mutable
 
 
 class LoginService(playerRepository: PlayerRepository) extends Json4sSnakeCaseSupport {
@@ -31,16 +32,19 @@ class LoginService(playerRepository: PlayerRepository) extends Json4sSnakeCaseSu
 
   val logger: Logger = LoggerFactory.getLogger(classOf[LoginService])
 
-  def getPlayerPermissions(loginInput: LoginInput): PlayerPermissions = {
-
+  def getPlayerPermissions(loginInput: LoginInput): mutable.HashMap[String, String] = {
+    var jwt = ""
     val isValidGoogleUser = validatePlayerWithGoogle(loginInput.googleId,loginInput.tokenId)
     if (!isValidGoogleUser){
-      return PlayerPermissions(isAuthenticated = false,isAuthorized = false,isAdmin = false)
-    }
+      val result = PlayerPermissions(isAuthenticated = false,isAuthorized = false,isAdmin = false)
+      jwt = JWTUtils().getJWT(loginInput.googleId, loginInput.tokenId, result.isAuthenticated, result.isAuthorized, result.isAdmin)
+    }else {
 
-    val result = playerRepository.getOrCreatePlayerPermissions(loginInput)
-    logger.info(s"Found player permissions for playerId '${loginInput.googleId}': $result")
-    result
+      val result = playerRepository.getOrCreatePlayerPermissions(loginInput)
+      logger.info(s"Found player permissions for playerId '${loginInput.googleId}': $result")
+      jwt = JWTUtils().getJWT(loginInput.googleId, loginInput.tokenId, result.isAuthenticated, result.isAuthorized, result.isAdmin)
+    }
+    mutable.HashMap("access_token" -> jwt)
   }
 
   //Validate only if the token ID is valid AND belongs to given google ID
