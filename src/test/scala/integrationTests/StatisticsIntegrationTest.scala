@@ -100,6 +100,15 @@ class StatisticsIntegrationTest extends AnyWordSpecLike with Matchers with Scala
           user1Matches.inProcess shouldBe 0
         }
       }
+      "Return user statistics by date" in {
+        val currentDate = new Date(System.currentTimeMillis())
+        Get(s"/statistics?user_id=user3&from_date=$currentDate&to_date=$currentDate") ~> statisticsRoute ~> check {
+          val user1Matches = responseAs[MatchesStatistics]
+          user1Matches.total shouldBe 3
+          user1Matches.finished shouldBe 3
+          user1Matches.inProcess shouldBe 0
+        }
+      }
       "Return general statistics" in {
         Get("/statistics") ~> statisticsRoute ~> check {
           val matchesStatistics = responseAs[MatchesStatistics]

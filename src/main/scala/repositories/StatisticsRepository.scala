@@ -5,6 +5,8 @@ import models.{MatchesStatistics, PlayerStatistics}
 import java.sql.{Connection, Date, ResultSet}
 
 class StatisticsRepository(dbConnection: Connection) {
+  val filterByDate = " WHERE m.created_date >= ? AND m.created_date <= ?"
+  val filterByUserId = " join players p on m.creator_id = p.id or m.challenged_user_id = p.id WHERE p.id = ?"
 
   def getRankings: Set[PlayerStatistics] = {
     val statement = dbConnection.prepareStatement("SELECT players.id, players.username," +
@@ -35,14 +37,13 @@ class StatisticsRepository(dbConnection: Connection) {
   private def resultToMatchesStatistics(result: ResultSet): MatchesStatistics = {
     if (result.first())
       MatchesStatistics(total = result.getInt("total"),
-      inProcess = result.getInt("in_process"),
-      finished = result.getInt("finished"))
+        inProcess = result.getInt("in_process"),
+        finished = result.getInt("finished"))
     else
       MatchesStatistics(0, 0, 0)
   }
 
   def getMatchesStatisticsByUserId(userId: String): MatchesStatistics = {
-    val filterByUserId = " join players p on m.creator_id = p.id or m.challenged_user_id = p.id WHERE p.id = ?"
     val statement = dbConnection.prepareStatement(matchesStatisticsQuery + filterByUserId)
     statement.setString(1, userId)
     val result = statement.executeQuery()
@@ -50,11 +51,20 @@ class StatisticsRepository(dbConnection: Connection) {
   }
 
   def getMatchesStatisticsByDate(fromDate: Date, toDate: Date): MatchesStatistics = {
-    val filterByDate = " WHERE m.created_date >= ? AND m.created_date <= ?"
     val statement = dbConnection.prepareStatement(matchesStatisticsQuery + filterByDate)
     statement.setDate(1, fromDate)
     statement.setDate(2, toDate)
     val result = statement.executeQuery()
     resultToMatchesStatistics(result)
   }
+
+  def getMatchesStatisticsByUserIdAndDate(id: String, fromDate: Date, toDate: Date): MatchesStatistics = {
+    val statement = dbConnection.prepareStatement(matchesStatisticsQuery + filterByUserId + filterByDate.replace("WHERE", "AND"))
+    statement.setString(1, id)
+    statement.setDate(2, fromDate)
+    statement.setDate(3, toDate)
+    val result = statement.executeQuery()
+    resultToMatchesStatistics(result)
+  }
+
 }

@@ -13,6 +13,7 @@ class StatisticsService(statisticsRepository: StatisticsRepository) {
       case (None, None, None) => statisticsRepository.getMatchesStatistics
       case (Some(id), None, None) => statisticsRepository.getMatchesStatisticsByUserId(id)
       case (None, Some(fromDate), Some(toDate)) => statisticsRepository.getMatchesStatisticsByDate(fromDate, toDate)
+      case (Some(id), Some(fromDate), Some(toDate)) => statisticsRepository.getMatchesStatisticsByUserIdAndDate(id, fromDate, toDate)
       case _ => throw InvalidQueryParamsException()
     }
   }
