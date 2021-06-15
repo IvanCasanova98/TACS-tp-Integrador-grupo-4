@@ -5,7 +5,7 @@ services:
     ports:
       - "3000:3000"
   backend:
-    build: .
+    image: lolokip/tacs-tp-integrador-grupo-4
     ports:
       - "9000:9000"
     depends_on:
