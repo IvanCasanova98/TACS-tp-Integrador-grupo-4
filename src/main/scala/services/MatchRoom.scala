@@ -6,7 +6,7 @@ import akka.stream.scaladsl.{Flow, Keep, Sink, Source}
 import akka.stream.{Materializer, OverflowStrategy}
 import models.Events._
 import models.MatchStatus.{FINISHED, IN_PROCESS, PAUSED}
-import models.{AttributeName, Card, Match, PlayerScore}
+import models.{AttributeName, AutomatedPlayer, Card, Match, PlayerScore}
 import org.reactivestreams.Publisher
 import org.slf4j.{Logger, LoggerFactory}
 import routes.Routes.jsonParser
@@ -216,6 +216,12 @@ class MatchRooms(actorSystem: ActorSystem, matchService: MatchService) {
   var matchRooms: Map[Int, MatchRoom] = Map.empty[Int, MatchRoom]
 
   def findOrCreate(number: Int): MatchRoom = matchRooms.getOrElse(number, createNewMatchRoom(number)(actorSystem, matchService))
+
+  def findOrCreateAutomatedRoom(matchId: Int): MatchRoom = {
+    val room = findOrCreate(matchId)
+    new AutomatedPlayer(matchId)
+    room
+  }
 
   private def createNewMatchRoom(number: Int)(implicit actorSystem: ActorSystem, matchService: MatchService): MatchRoom = {
     val matchRoom = MatchRoom(number)
