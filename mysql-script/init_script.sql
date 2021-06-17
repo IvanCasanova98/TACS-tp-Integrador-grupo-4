@@ -56,6 +56,7 @@ INSERT INTO players(id,username,image_url,is_admin,is_blocked) values ("10240048
 INSERT INTO players(id,username,image_url,is_admin,is_blocked) values ("107032331312948829616", "Chiara M", "https://lh3.googleusercontent.com/a-/AOh14Gh5tYvnhd0arKFn9ot7FU6D6mrnSpfuh6_hAPvMsg=s96-c", true, false);
 INSERT INTO players(id,username,image_url,is_admin,is_blocked) values ("115748028387079548757", "Ivan C", "https://lh3.googleusercontent.com/a-/AOh14Gh5tYvnhd0arKFn9ot7FU6D6mrnSpfuh6_hAPvMsg=s96-c", true, false);
 INSERT INTO players(id, username, image_url, is_admin, is_blocked) values ("107090515790711287955", "Julieta Lucia Abuin", "https://lh3.googleusercontent.com/a-/AOh14Gh5tYvnhd0arKFn9ot7FU6D6mrnSpfuh6_hAPvMsg=s96-c", true, false);
+INSERT INTO players(id, username, image_url, is_admin, is_blocked) values ("automatedPlayer", "Batman", "https://findicons.com/files/icons/1293/the_batman_vol_1/256/batman.png", true, false);
 
 INSERT INTO matches(id, status, creator_id, challenged_user_id, deck_id, winner_id, created_date) values (1, "FINISHED", "104065320855221322833", "104725077753706905086", 3, "104065320855221322833", CURRENT_DATE);
 INSERT INTO matches(id, status, creator_id, challenged_user_id, deck_id, winner_id, created_date) values (2, "PAUSED", "102400486230688279463", "104065320855221322833", 1, null, CURRENT_DATE);
