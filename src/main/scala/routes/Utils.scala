@@ -4,6 +4,7 @@ import akka.http.scaladsl.model.{StatusCode, StatusCodes}
 import akka.http.scaladsl.server.Directives.complete
 import akka.http.scaladsl.server.StandardRoute
 import exceptions.Exceptions.{DeckNotFoundException, InvalidQueryParamsException}
+import org.joda.time.Seconds
 import serializers.Json4sSnakeCaseSupport
 
 import scala.io.Source
@@ -40,6 +41,8 @@ object Utils extends Json4sSnakeCaseSupport {
     if (collection.length <= 1) return collection.head
     collection(new Random().nextInt(collection.length))
   }
+
+  def delayExecution(seconds: Int): Unit = Thread.sleep(seconds * 1000)
 
   /**
    * Method to read file from resources

@@ -98,7 +98,7 @@ class MatchRoomActor(matchId: Int, matchService: MatchService) extends Actor {
       val opponent = PlayerScore(userId = matchInfo.get.challengedPlayer.userId, userName = matchInfo.get.challengedPlayer.userName, imageUrl = matchInfo.get.challengedPlayer.imageUrl, score = matchService.getScoreOfPlayer(matchInfo.get, matchInfo.get.challengedPlayer.userId))
       val creator = PlayerScore(userId = matchInfo.get.matchCreator.userId, userName = matchInfo.get.matchCreator.userName, imageUrl = matchInfo.get.matchCreator.imageUrl, score = matchService.getScoreOfPlayer(matchInfo.get, matchInfo.get.matchCreator.userId))
       sendJsonToUser(ResponseMatchInit("INIT", deckCount, opponent, creator), userId)
-      //udpate played cards if match was paused
+      //update played cards if match was paused
       loadPlayedCardsIfMatchWasPaused()
 
       val firstTurnPlayerId = starterPlayerId.getOrElse(getAndSaveFirstTurn)

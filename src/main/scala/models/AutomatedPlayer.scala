@@ -7,10 +7,11 @@ import akka.http.scaladsl.model.StatusCodes
 import akka.http.scaladsl.model.ws.{Message, TextMessage, WebSocketRequest}
 import akka.stream.OverflowStrategy
 import akka.stream.scaladsl.{Flow, Keep, Sink, Source}
+import javafx.concurrent.Task
 import models.Events.Turn
 import org.reactivestreams.Publisher
 import org.slf4j.{Logger, LoggerFactory}
-import routes.Utils.getRandomItemOfSeq
+import routes.Utils.{delayExecution, getRandomItemOfSeq}
 import serializers.JsonParser
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -20,6 +21,7 @@ import scala.concurrent.duration.DurationInt
 class AutomatedPlayer(matchId: Int)(implicit jsonParser: JsonParser) {
   implicit val system: ActorSystem = ActorSystem("tacs-tp-client")
   val logger: Logger = LoggerFactory.getLogger(classOf[AutomatedPlayer])
+  var task: Option[Cancellable] = None
 
   val (actorRef: ActorRef, publisher: Publisher[TextMessage.Strict]) =
     Source.actorRef[String](16, OverflowStrategy.fail)
@@ -42,10 +44,14 @@ class AutomatedPlayer(matchId: Int)(implicit jsonParser: JsonParser) {
         if (msg.contains("TURN")) {
           val turnEvent = jsonParser.readJson(msg)(classOf[Turn])
           if (turnEvent.userIdTurn == "automatedPlayer") {
+            delayExecution(4)
             val chosenAttribute: String = getRandomItemOfSeq(turnEvent.card.powerStats.filter(p => p.name != null).map(_.name.name()))
             logger.info(s"sending chosen attribute $chosenAttribute")
             actorRef ! s"SET_ATTRIBUTE:$chosenAttribute"
           }
+        }
+        if(msg.contains("MATCH_RESULT")) {
+          task.map(_.cancel())
         }
       case smt => logger.info(s"Something else arrived $smt")
     }.to(Sink.onComplete(_ =>
@@ -60,7 +66,7 @@ class AutomatedPlayer(matchId: Int)(implicit jsonParser: JsonParser) {
 
   val connected: Future[Unit] = upgradeResponse.map { upgrade =>
     if (upgrade.response.status == StatusCodes.SwitchingProtocols) {
-      sendKeepAlive()
+      task = Option(sendKeepAlive())
     } else {
       throw new RuntimeException(s"Connection failed: ${upgrade.response.status}")
     }
@@ -68,6 +74,7 @@ class AutomatedPlayer(matchId: Int)(implicit jsonParser: JsonParser) {
   def sendKeepAlive(): Cancellable =
   system.scheduler.schedule(0.seconds, 30.second, new Runnable {
     override def run(): Unit = {
+      println("IM ALIVEEEEEEEEE")
       actorRef ! ""
     }
   })

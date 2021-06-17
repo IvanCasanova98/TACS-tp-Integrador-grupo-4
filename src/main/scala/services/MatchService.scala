@@ -78,10 +78,8 @@ class MatchService(matchRepository: MatchRepository, playersRepo: PlayerReposito
   def findMatchWinner(matchId: Int, playerId: String, otherPlayerId: String): String = {
     // user ID --> movements won
     val winsCounter: mutable.Map[String, Int] = mutable.Map(playerId -> 0, otherPlayerId -> 0)
-    logger.info(winsCounter.toString)
     movementRepository.getMovementsOfMatch(matchId).foreach(mov => {
       if (mov.winnerIdOrTie != "TIE")  winsCounter.put(mov.winnerIdOrTie,winsCounter(mov.winnerIdOrTie).+(1))
-      logger.info(winsCounter.toString)
     })
     if (winsCounter(playerId) == winsCounter(otherPlayerId)) return "TIE"
     //get userId that has most wins
