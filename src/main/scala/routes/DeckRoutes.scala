@@ -17,11 +17,15 @@ object DeckRoutes extends Json4sSnakeCaseSupport {
     concat(
       path("decks") {
         get {
-          logger.info("[GET] /decks")
-          complete(StatusCodes.OK, deckService.getAll)
+          Utils.authenticated {data =>
+            logger.info(data.toString())
+            logger.info("[GET] /decks")
+            complete(StatusCodes.OK, deckService.getAll)
+          }
         }
       } ~ path("decks") {
         post {
+
           entity(as[PartialDeckInput]) { deck =>
             logger.info("[POST] /decks")
             val deckId: Int = deckService.createDeck(deck)
