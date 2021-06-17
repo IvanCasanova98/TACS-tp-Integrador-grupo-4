@@ -9,7 +9,7 @@ import com.fasterxml.jackson.module.scala.DefaultScalaModule
 import models.AttributeName.AttributeName
 import models.MatchStatus.{FINISHED, PAUSED}
 import models._
-import repositories.daos.{DeckLocalDao, DeckSQLDao, MatchLocalDAO, MatchSQLDao, MovementLocalDAO, MovementSQLDao, PlayerLocalDao, PlayerSQLDao}
+import repositories.daos.{DeckLocalDao, DeckSQLDao, MatchLocalDAO, MatchSQLDao, MovementSQLDao, PlayerSQLDao}
 import repositories.dbdtos.MatchDBDTO
 import repositories.{DeckRepository, MatchRepository, MovementRepository, PlayerRepository, StatisticsRepository}
 import serializers.JsonParser

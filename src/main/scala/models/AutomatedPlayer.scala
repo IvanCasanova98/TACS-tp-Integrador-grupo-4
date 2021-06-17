@@ -74,7 +74,6 @@ class AutomatedPlayer(matchId: Int)(implicit jsonParser: JsonParser) {
   def sendKeepAlive(): Cancellable =
   system.scheduler.schedule(0.seconds, 30.second, new Runnable {
     override def run(): Unit = {
-      println("IM ALIVEEEEEEEEE")
       actorRef ! ""
     }
   })
