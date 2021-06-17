@@ -7,6 +7,7 @@ import exceptions.Exceptions.{DeckNotFoundException, InvalidQueryParamsException
 import serializers.Json4sSnakeCaseSupport
 
 import scala.io.Source
+import scala.util.Random
 
 
 object Utils extends Json4sSnakeCaseSupport {
@@ -30,6 +31,15 @@ object Utils extends Json4sSnakeCaseSupport {
     }
   }
 
+  /**
+   * Method to get random item of collection
+   * @param collection of type T
+   * @return random element of type T
+   * */
+  def getRandomItemOfSeq[T](collection: Seq[T]): T = {
+    if (collection.length <= 1) return collection.head
+    collection(new Random().nextInt(collection.length))
+  }
 
   /**
    * Method to read file from resources

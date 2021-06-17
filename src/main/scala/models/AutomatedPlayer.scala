@@ -7,13 +7,17 @@ import akka.http.scaladsl.model.StatusCodes
 import akka.http.scaladsl.model.ws.{Message, TextMessage, WebSocketRequest}
 import akka.stream.OverflowStrategy
 import akka.stream.scaladsl.{Flow, Keep, Sink, Source}
+import models.Events.Turn
 import org.reactivestreams.Publisher
 import org.slf4j.{Logger, LoggerFactory}
+import routes.Utils.getRandomItemOfSeq
+import serializers.JsonParser
+
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.concurrent.duration.DurationInt
 
-class AutomatedPlayer(matchId: Int) {
+class AutomatedPlayer(matchId: Int)(implicit jsonParser: JsonParser) {
   implicit val system: ActorSystem = ActorSystem("tacs-tp-client")
   val logger: Logger = LoggerFactory.getLogger(classOf[AutomatedPlayer])
 
@@ -34,6 +38,14 @@ class AutomatedPlayer(matchId: Int) {
         }
         if (msg.contains("ALL_READY")) {
           actorRef ! "CONNECT GAME"
+        }
+        if (msg.contains("TURN")) {
+          val turnEvent = jsonParser.readJson(msg)(classOf[Turn])
+          if (turnEvent.userIdTurn == "automatedPlayer") {
+            val chosenAttribute: String = getRandomItemOfSeq(turnEvent.card.powerStats.filter(p => p.name != null).map(_.name.name()))
+            logger.info(s"sending chosen attribute $chosenAttribute")
+            actorRef ! s"SET_ATTRIBUTE:$chosenAttribute"
+          }
         }
       case smt => logger.info(s"Something else arrived $smt")
     }.to(Sink.onComplete(_ =>

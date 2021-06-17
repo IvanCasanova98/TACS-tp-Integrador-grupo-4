@@ -54,6 +54,7 @@ trait ClassInjection {
   private def defaultObjectMapper(): ObjectMapper = {
     val customModule = new SimpleModule("CustomModule")
       .addSerializer(classOf[AttributeName], new AttributeNameSerializer(classOf[AttributeName]))
+      .addDeserializer(classOf[AttributeName], new AttributeNameDeserializer(classOf[AttributeName]))
 
     new ObjectMapper()
       .registerModule(DefaultScalaModule)
