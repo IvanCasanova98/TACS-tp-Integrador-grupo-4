@@ -5,13 +5,15 @@ import akka.http.scaladsl.server.Directives.{complete, optionalHeaderValueByName
 import akka.http.scaladsl.server.{Directive1, StandardRoute}
 import exceptions.Exceptions.DeckNotFoundException
 import io.really.jwt.{JWT, JWTResult}
+import play.api.libs.json.JsObject
+import routes.DeckRoutes.logger
 import serializers.Json4sSnakeCaseSupport
 
+import java.time.Instant
 import scala.io.Source
 
 
 object Utils extends Json4sSnakeCaseSupport {
-
   /**
    * Method to avoid exception handling in routes and status codes
    * @param tryCatchable function that resolves the request
@@ -39,13 +41,18 @@ object Utils extends Json4sSnakeCaseSupport {
   def resource(name: String): String =
     Source.fromInputStream(getClass.getClassLoader.getResourceAsStream(name), "UTF-8").mkString
 
-  private def isTokenExpired(jwt: String): Boolean =
-    getClaims(jwt).get("exp").exists(_.toLong < System.currentTimeMillis())
+  private def isTokenExpired(jwt: String): Boolean = {
+    logger.info(getClaims(jwt)("exp").as[Long].toString)
+    logger.info(System.currentTimeMillis().toString)
+    getClaims(jwt)("exp").as[Long] < Instant.now.getEpochSecond
+  }
 
-  private def getClaims(jwt: String): Map[String, String] =
-    JWT.decode(jwt, Some("secret-key")).asInstanceOf[JWTResult.JWT].payload.as[Map[String, String]]
+  private def getClaims(jwt: String): JsObject = {
+    logger.info(JWT.decode(jwt, Some("secret-key")).asInstanceOf[JWTResult.JWT].payload.toString())
+    JWT.decode(jwt, Some("secret-key")).asInstanceOf[JWTResult.JWT].payload
+  }
 
-  def authenticated: Directive1[Map[String, Any]] = {
+  def authenticated(authorizationStrategy: JsObject => Directive1[JsObject]): Directive1[JsObject] = {
 
     optionalHeaderValueByName("Authorization").flatMap { tokenFromUser =>
       if (tokenFromUser.isEmpty){ complete(StatusCodes.Unauthorized ->"Invalid Token")}
@@ -59,10 +66,17 @@ object Utils extends Json4sSnakeCaseSupport {
         case token if isTokenExpired(token) =>
           complete(StatusCodes.Unauthorized -> "Session expired.")
         case token if token_decode.isInstanceOf[JWTResult.JWT] && !correct=>
-          provide(getClaims(token))
+          authorizationStrategy(getClaims(token))
 
         case _ =>  complete(StatusCodes.Unauthorized ->"Invalid Token")
       }
+    }
+  }
+  def admincheck(json: JsObject): Directive1[JsObject] = {
+    if(!json("isAdmin").as[Boolean]){
+         complete(StatusCodes.Forbidden ->"Unauthorized")
+    }else{
+      provide(json)
     }
   }
 }
