@@ -20,4 +20,11 @@ object H2DB {
 
   def close(): Unit = if (con != null) con.close()
 
+  def resetTables(db: Connection): Unit = {
+    db.prepareStatement("DELETE FROM movements").execute()
+    db.prepareStatement("DELETE FROM matches").execute()
+    db.prepareStatement("DELETE FROM decks").execute()
+    db.prepareStatement("DELETE FROM players").execute()
+  }
+
 }

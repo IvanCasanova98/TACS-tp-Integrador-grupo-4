@@ -13,11 +13,11 @@ object CardRoutes extends Json4sSnakeCaseSupport {
       pathPrefix("cards") {
         path(IntNumber / "id") { matchId =>
           get {
-            complete(StatusCodes.OK, SuperheroApi().get_hero_by_id(matchId).to_json())
+            complete(StatusCodes.OK, SuperheroApi().getHeroById(matchId).to_json())
           }
         } ~ path(Segment / "name") { matchString =>
           get {
-            complete(StatusCodes.OK, SuperheroApi().search_heroes_by_name(matchString).map(card => card.to_json()))
+            complete(StatusCodes.OK, SuperheroApi().searchHeroesByName(matchString).map(card => card.to_json()))
           }
         }
       }

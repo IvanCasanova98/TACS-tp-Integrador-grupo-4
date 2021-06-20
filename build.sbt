@@ -19,7 +19,7 @@ libraryDependencies ++= Seq(
   "com.typesafe.akka" %% "akka-http-testkit" % AkkaHttpVersion,
   "org.slf4j" % "slf4j-api" % "1.7.5",
   "org.slf4j" % "slf4j-simple" % "1.7.5",
-  "org.scalatest" %% "scalatest" % "3.0.8" % Test,
+  "org.scalatest" %% "scalatest" % "3.2.9" % Test,
   "com.fasterxml.jackson.datatype" % "jackson-datatype-jsr310" % "2.9.6",
   "org.json4s" %% "json4s-jackson" % vJson4s,
   "org.json4s" %% "json4s-native" % vJson4s,
@@ -32,7 +32,8 @@ libraryDependencies ++= Seq(
   "com.github.tomakehurst" % "wiremock" % "2.18.0" % Test,
   "com.h2database" % "h2" % "1.4.200" % Test,
   "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.12.3",
-  "mysql" % "mysql-connector-java" % "8.0.12"
+  "mysql" % "mysql-connector-java" % "8.0.12",
+  "com.typesafe.akka" %% "akka-actor-testkit-typed" % "2.6.8" % Test
 )
 
 enablePlugins(JavaAppPackaging)

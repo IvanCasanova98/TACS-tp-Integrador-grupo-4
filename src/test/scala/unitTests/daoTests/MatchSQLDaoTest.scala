@@ -3,28 +3,31 @@ package unitTests.daoTests
 import db.H2DB
 import models.MatchStatus.{CREATED, IN_PROCESS}
 import org.h2.jdbc.JdbcSQLIntegrityConstraintViolationException
-import org.scalatest.{BeforeAndAfter, Matchers, WordSpec}
+import org.scalatest.BeforeAndAfter
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpecLike
 import repositories.daos.{DeckSQLDao, MatchSQLDao, PlayerSQLDao}
 import repositories.{DeckRepository, MatchRepository, PlayerRepository}
 import routes.inputs.LoginInputs.LoginInput
 
 import java.sql.Connection
 
-class MatchSQLDaoTest extends WordSpec with Matchers with BeforeAndAfter {
+class MatchSQLDaoTest extends AnyWordSpecLike with Matchers with BeforeAndAfter {
   val sqlDB: Connection = H2DB()
   val deckRepository = new DeckRepository(new DeckSQLDao(sqlDB))
   val matchRepository = new MatchRepository(new MatchSQLDao(sqlDB))
   val playerRepository = new PlayerRepository(new PlayerSQLDao(sqlDB))
   val basicPlayer: LoginInput = LoginInput("user", "", "", "creatorId", "")
+  var deckId: Int = -1
 
   before {
-    sqlDB.prepareStatement("DELETE FROM matches").execute()
+    H2DB.resetTables(sqlDB)
+    playerRepository.getOrCreatePlayerPermissions(basicPlayer)
+    playerRepository.getOrCreatePlayerPermissions(basicPlayer.copy(googleId = "challengedId"))
+    deckId = deckRepository.createDeck("someDeck", List(33, 4, 1, 5, 6, 7))
   }
 
   "MatchSQLDao test" when {
-    playerRepository.getOrCreatePlayerPermissions(basicPlayer)
-    playerRepository.getOrCreatePlayerPermissions(basicPlayer.copy(googleId = "challengedId"))
-    val deckId = deckRepository.createDeck("someDeck", List(33, 4, 1, 5, 6, 7))
 
     "creating match" should {
       "Create a match with specified values" in {

@@ -6,11 +6,11 @@ import akka.http.scaladsl.server.Route
 import akka.http.scaladsl.testkit.ScalatestRouteTest
 import db.H2DB
 import models.Player
-import org.mockito.ArgumentMatchers.anyString
-import org.mockito.Mockito.doNothing
 import org.mockito.MockitoSugar.mock
 import org.scalatest.concurrent.ScalaFutures.convertScalaFuture
-import org.scalatest.{Matchers, WordSpec}
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpecLike
+import org.scalatest.BeforeAndAfter
 import repositories.daos.{DeckSQLDao, MatchSQLDao, PlayerSQLDao}
 import repositories.{MatchRepository, MovementRepository, PlayerRepository}
 import routes.MatchRoutes
@@ -20,7 +20,7 @@ import services.{ConnectedPlayersService, DeckService, MatchService}
 
 import java.sql.Connection
 
-class MatchServiceIntegrationTest extends WordSpec with Matchers with ScalatestRouteTest with Json4sSnakeCaseSupport {
+class MatchServiceIntegrationTest extends AnyWordSpecLike with Matchers with ScalatestRouteTest with Json4sSnakeCaseSupport with BeforeAndAfter {
   val sqlDB: Connection = H2DB()
   val matchRepo = new MatchRepository(new MatchSQLDao(sqlDB))
   val matchService = new MatchService(matchRepo, mock[PlayerRepository], mock[DeckService], mock[MovementRepository])
@@ -33,9 +33,13 @@ class MatchServiceIntegrationTest extends WordSpec with Matchers with ScalatestR
 
   def patchMatchStatus(patchMatchStatus: UpdateMatchStatus): MessageEntity = Marshal(patchMatchStatus).to[MessageEntity].futureValue
 
-  "Match service" should {
+  before {
+    H2DB.resetTables(sqlDB)
     playerSQLDao.createPlayer(Player("userId", "", "", false, false))
     playerSQLDao.createPlayer(Player("anotherUserId", "", "", false, false))
+  }
+
+  "Match service" should {
 
     "Return 201 and id when posting new match" in {
       val deckId = deckSQLDao.createDeck("deck", List(3, 2, 5))

@@ -9,12 +9,12 @@ import models.MatchStatus.{FINISHED, IN_PROCESS, PAUSED}
 import models.{AttributeName, Card, Match, PlayerScore}
 import org.reactivestreams.Publisher
 import org.slf4j.{Logger, LoggerFactory}
-import routes.Routes.{jsonParser, matchService}
+import routes.Routes.jsonParser
 
 import scala.collection.mutable
 import scala.util.Random
 
-class MatchRoomActor(matchId: Int) extends Actor {
+class MatchRoomActor(matchId: Int, matchService: MatchService) extends Actor {
   val logger: Logger = LoggerFactory.getLogger(classOf[MatchRoomActor])
   var participants: Map[String, ActorRef] = Map.empty[String, ActorRef]
   var playersReady: Set[String] = Set.empty
@@ -159,9 +159,9 @@ class MatchRoomActor(matchId: Int) extends Actor {
   }
 }
 
-class MatchRoom(matchId: Int, actorSystem: ActorSystem)(implicit val mat: Materializer) {
+class MatchRoom(matchId: Int, actorSystem: ActorSystem, matchService: MatchService)(implicit val mat: Materializer) {
 
-  private[this] val matchRoomActor = actorSystem.actorOf(Props(classOf[MatchRoomActor], matchId))
+  private[this] val matchRoomActor = actorSystem.actorOf(Props(classOf[MatchRoomActor], matchId, matchService))
 
   def websocketFlow(userId: String): Flow[Message, Message, Any] = {
     val (actorRef: ActorRef, publisher: Publisher[TextMessage.Strict]) =
@@ -209,15 +209,15 @@ class MatchRoom(matchId: Int, actorSystem: ActorSystem)(implicit val mat: Materi
 }
 
 object MatchRoom {
-  def apply(roomId: Int)(implicit actorSystem: ActorSystem) = new MatchRoom(roomId, actorSystem)
+  def apply(roomId: Int)(implicit actorSystem: ActorSystem, matchService: MatchService) = new MatchRoom(roomId, actorSystem, matchService)
 }
 
-class MatchRooms(actorSystem: ActorSystem) {
+class MatchRooms(actorSystem: ActorSystem, matchService: MatchService) {
   var matchRooms: Map[Int, MatchRoom] = Map.empty[Int, MatchRoom]
 
-  def findOrCreate(number: Int): MatchRoom = matchRooms.getOrElse(number, createNewMatchRoom(number)(actorSystem))
+  def findOrCreate(number: Int): MatchRoom = matchRooms.getOrElse(number, createNewMatchRoom(number)(actorSystem, matchService))
 
-  private def createNewMatchRoom(number: Int)(implicit actorSystem: ActorSystem): MatchRoom = {
+  private def createNewMatchRoom(number: Int)(implicit actorSystem: ActorSystem, matchService: MatchService): MatchRoom = {
     val matchRoom = MatchRoom(number)
     matchRooms += number -> matchRoom
     matchRoom

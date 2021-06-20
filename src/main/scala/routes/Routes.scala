@@ -22,7 +22,7 @@ object Routes extends ClassInjection with Json4sSnakeCaseSupport with CorsDirect
   def apply()(implicit actorSystem: ActorSystem): Route = {
     implicit val materializer: Materializer = Materializer.matFromSystem
     val connectionsService = new ConnectedPlayersService(actorSystem)
-    val matchRooms = new MatchRooms(actorSystem)
+    val matchRooms = new MatchRooms(actorSystem, matchService)
 
     handleRejections(CorsDirectives.corsRejectionHandler) {
       cors(settings) {
@@ -31,7 +31,7 @@ object Routes extends ClassInjection with Json4sSnakeCaseSupport with CorsDirect
           ~ MatchRoutes(matchService,connectionsService)
           ~ LoginRoute()
           ~ CardRoutes()
-          ~ StatisticsRoutes()
+          ~ StatisticsRoutes(statisticsService)
           ~ PlayerRoutes(playerRepository)
         )
       }

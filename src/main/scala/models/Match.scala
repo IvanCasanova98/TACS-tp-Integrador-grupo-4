@@ -20,6 +20,10 @@ case class MatchWithoutCardsAndMovements(id: Int,
                                          deckDbDTO: DeckDbDTO,
                                          winnerId: Option[String])
 
+case class MatchesStatistics(total: Int,
+                             inProcess: Int,
+                             finished: Int)
+
 object MatchStatus {
   sealed trait MatchStatus {
     def name(): String

@@ -11,9 +11,9 @@ import models.MatchStatus.{FINISHED, PAUSED}
 import models._
 import repositories.daos.{DeckLocalDao, DeckSQLDao, MatchLocalDAO, MatchSQLDao, MovementLocalDAO, MovementSQLDao, PlayerLocalDao, PlayerSQLDao}
 import repositories.dbdtos.MatchDBDTO
-import repositories.{DeckRepository, MatchRepository, MovementRepository, PlayerRepository}
+import repositories.{DeckRepository, MatchRepository, MovementRepository, PlayerRepository, StatisticsRepository}
 import serializers.JsonParser
-import services.{DeckService, LoginService, MatchService, SuperheroApi}
+import services.{DeckService, LoginService, MatchService, StatisticsService, SuperheroApi}
 
 import java.util.Date
 import java.sql.Connection
@@ -78,7 +78,9 @@ trait ClassInjection {
   val matchRepository = new MatchRepository(matchDao)
   val playerRepository = new PlayerRepository(playerDao)
   val movementRepository = new MovementRepository(movementDao)
+  val statisticsRepository = new StatisticsRepository(connectionDatabase)
 
+  val statisticsService = new StatisticsService(statisticsRepository)
   val deckService = new DeckService(deckRepository, superheroApi)
   val matchService = new MatchService(matchRepository, playerRepository, deckService, movementRepository)
   val loginService = new LoginService(playerRepository)

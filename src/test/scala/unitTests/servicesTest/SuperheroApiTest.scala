@@ -7,11 +7,13 @@ import com.github.tomakehurst.wiremock.client.WireMock._
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig
 import exceptions.ExceptionsSuperheroApi.NotEnoughAttributesException
 import models.AttributeName.{HEIGHT, WEIGHT}
-import org.scalatest.{BeforeAndAfterAll, Matchers, WordSpec}
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpecLike
+import org.scalatest.BeforeAndAfterAll
 import routes.Utils.resource
 import services.SuperheroApi
 
-class SuperheroApiTest extends WordSpec with Matchers with BeforeAndAfterAll {
+class SuperheroApiTest extends AnyWordSpecLike with Matchers with BeforeAndAfterAll {
   val port = 9290
   val wireMockServer = new WireMockServer(wireMockConfig().port(port))
 
@@ -37,7 +39,7 @@ class SuperheroApiTest extends WordSpec with Matchers with BeforeAndAfterAll {
               .withStatus(StatusCodes.OK.intValue)
               .withBody(resource("responses/card_by_id_response.json"))))
 
-        val card = superheroClient.get_hero_by_id(1)
+        val card = superheroClient.getHeroById(1)
         card.id shouldBe 1
         card.powerStats.length shouldBe 8
         card.powerStats.exists(a => a.name == HEIGHT)
@@ -51,7 +53,7 @@ class SuperheroApiTest extends WordSpec with Matchers with BeforeAndAfterAll {
               .withStatus(StatusCodes.OK.intValue)
               .withBody(resource("responses/card_by_id_without_all_attr_response.json"))))
 
-        the[NotEnoughAttributesException] thrownBy superheroClient.get_hero_by_id(1)
+        the[NotEnoughAttributesException] thrownBy superheroClient.getHeroById(1)
       }
     }
     "Search heroes by name" should {
@@ -62,7 +64,7 @@ class SuperheroApiTest extends WordSpec with Matchers with BeforeAndAfterAll {
               .withStatus(StatusCodes.OK.intValue)
               .withBody(resource("responses/cards_by_name_response.json"))))
 
-        val cards = superheroClient.search_heroes_by_name("batm")
+        val cards = superheroClient.searchHeroesByName("batm")
         cards.length shouldBe 3
         cards.exists(c => c.name == "Batman")
       }

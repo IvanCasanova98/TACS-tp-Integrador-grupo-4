@@ -3,10 +3,10 @@ package routes
 import akka.http.scaladsl.model.{StatusCode, StatusCodes}
 import akka.http.scaladsl.server.Directives.{complete, optionalHeaderValueByName, provide}
 import akka.http.scaladsl.server.{Directive1, StandardRoute}
-import exceptions.Exceptions.DeckNotFoundException
 import io.really.jwt.{JWT, JWTResult}
 import play.api.libs.json.JsObject
 import routes.DeckRoutes.logger
+import exceptions.Exceptions.{DeckNotFoundException, InvalidQueryParamsException}
 import serializers.Json4sSnakeCaseSupport
 
 import java.time.Instant
@@ -28,6 +28,7 @@ object Utils extends Json4sSnakeCaseSupport {
       complete(successCode, result)
     } catch {
       case e: DeckNotFoundException => complete(StatusCodes.NotFound, e.getMessage)
+      case e: InvalidQueryParamsException => complete(StatusCodes.BadRequest, e.getMessage)
       case e: Exception => complete(StatusCodes.InternalServerError, e.getMessage)
     }
   }

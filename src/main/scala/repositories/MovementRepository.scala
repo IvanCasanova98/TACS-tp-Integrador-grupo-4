@@ -1,7 +1,6 @@
 package repositories
 
-import models.AttributeName.AttributeName
-import models.{Attribute, AttributeName, Movement}
+import models.Movement
 import repositories.daos.MovementDAO
 
 class MovementRepository(dao: MovementDAO) {

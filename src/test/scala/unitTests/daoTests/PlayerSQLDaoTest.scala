@@ -3,13 +3,15 @@ package unitTests.daoTests
 import akka.http.scaladsl.testkit.ScalatestRouteTest
 import db.H2DB
 import models.{Player, PlayerPermissions}
-import org.scalatest.{BeforeAndAfter, Matchers, WordSpec}
-import repositories.daos.{DeckSQLDao, PlayerSQLDao}
+import org.scalatest.BeforeAndAfter
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpecLike
+import repositories.daos.PlayerSQLDao
 import routes.inputs.LoginInputs.LoginInput
 
 import java.sql.Connection
 
-class PlayerSQLDaoTest extends WordSpec with Matchers with ScalatestRouteTest with BeforeAndAfter {
+class PlayerSQLDaoTest extends AnyWordSpecLike with Matchers with ScalatestRouteTest with BeforeAndAfter {
   var db: Connection = H2DB()
   val playerDao: PlayerSQLDao = new PlayerSQLDao(db)
 

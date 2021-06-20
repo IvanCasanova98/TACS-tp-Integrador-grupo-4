@@ -4,27 +4,26 @@ import akka.http.scaladsl.testkit.ScalatestRouteTest
 import db.H2DB
 import exceptions.Exceptions.DeckNotFoundException
 import models.DeckDbDTO
-import org.scalatest.{BeforeAndAfter, Matchers, WordSpec}
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpecLike
+import org.scalatest.BeforeAndAfter
 import repositories.daos._
 
 import java.sql.Connection
 
-class DeckSQLDaoTest extends WordSpec with Matchers with ScalatestRouteTest with BeforeAndAfter {
+class DeckSQLDaoTest extends AnyWordSpecLike with Matchers with ScalatestRouteTest with BeforeAndAfter {
   var db: Connection = H2DB()
   val deckDaoTest: DeckSQLDao = new DeckSQLDao(db)
 
   before {
-    db.prepareStatement("DELETE FROM matches").execute()
-    db.prepareStatement("DELETE FROM decks").execute()
+    H2DB.resetTables(db)
   }
 
   "Deck SQL Dao" when {
     "Getting decks" should {
       "return all decks" in {
-        val deckId1 = deckDaoTest.createDeck("firstDeck", List(1, 2, 3))
-        val deckId2 = deckDaoTest.createDeck("secondDeck", List(4, 5, 6, 7, 8))
-
-        print(deckId1, deckId2)
+        deckDaoTest.createDeck("firstDeck", List(1, 2, 3))
+        deckDaoTest.createDeck("secondDeck", List(4, 5, 6, 7, 8))
 
         val decksInDb = deckDaoTest.getDecks
         decksInDb.size shouldBe 2
