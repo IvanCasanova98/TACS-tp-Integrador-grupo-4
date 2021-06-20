@@ -7,11 +7,10 @@ import akka.http.scaladsl.model.StatusCodes
 import akka.http.scaladsl.model.ws.{Message, TextMessage, WebSocketRequest}
 import akka.stream.OverflowStrategy
 import akka.stream.scaladsl.{Flow, Keep, Sink, Source}
-import javafx.concurrent.Task
 import models.Events.Turn
 import org.reactivestreams.Publisher
 import org.slf4j.{Logger, LoggerFactory}
-import routes.Utils.{delayExecution, getRandomItemOfSeq}
+import routes.Utils.delayExecution
 import serializers.JsonParser
 
 import scala.concurrent.ExecutionContext.Implicits.global
