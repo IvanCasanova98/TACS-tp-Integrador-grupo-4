@@ -45,7 +45,7 @@ class AutomatedPlayer(matchId: Int)(implicit jsonParser: JsonParser) {
           val turnEvent = jsonParser.readJson(msg)(classOf[Turn])
           if (turnEvent.userIdTurn == "automatedPlayer") {
             delayExecution(4)
-            val chosenAttribute: String = getRandomItemOfSeq(turnEvent.card.powerStats.filter(p => p.name != null).map(_.name.name()))
+            val chosenAttribute = turnEvent.card.powerStats.filter(p => p.name != null).maxBy(_.value).name.name()
             logger.info(s"sending chosen attribute $chosenAttribute")
             actorRef ! s"SET_ATTRIBUTE:$chosenAttribute"
           }
