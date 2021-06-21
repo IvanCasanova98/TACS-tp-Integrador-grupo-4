@@ -1,7 +1,7 @@
 version: "3.3"
 services:
   frontend:
-    image: front
+    image: fgiannotti/tacs-tp-integrador-grupo-4-front
     ports:
       - "3000:3000"
   backend:
