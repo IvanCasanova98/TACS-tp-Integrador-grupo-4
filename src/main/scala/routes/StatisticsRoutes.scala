@@ -17,13 +17,17 @@ object StatisticsRoutes extends Json4sSnakeCaseSupport {
   def apply(statisticsService: StatisticsService): Route = {
     concat(
       path("statistics" / "rankings") {
-        logger.info("[GET] /statistics/rankings")
-        handleRequest(() => statisticsService.getRanking, StatusCodes.OK)
+        Utils.authenticated(Utils.adminCheck) { data =>
+          logger.info("[GET] /statistics/rankings")
+          handleRequest(() => statisticsService.getRanking, StatusCodes.OK)
+        }
       }
         ~ path("statistics") {
-        parameters("user_id".optional, "from_date".optional, "to_date".optional) { (userId, fromDate, toDate) =>
-          logger.info(s"[GET] /statistics $userId, $fromDate, $toDate")
-          handleRequest(() => statisticsService.getMatchesStatistics(userId, fromDate.map(Date.valueOf), toDate.map(Date.valueOf)), StatusCodes.OK)
+        Utils.authenticated(Utils.adminCheck) { data =>
+          parameters("user_id".optional, "from_date".optional, "to_date".optional) { (userId, fromDate, toDate) =>
+            logger.info(s"[GET] /statistics $userId, $fromDate, $toDate")
+            handleRequest(() => statisticsService.getMatchesStatistics(userId, fromDate.map(Date.valueOf), toDate.map(Date.valueOf)), StatusCodes.OK)
+          }
         }
       }
     )

@@ -21,7 +21,7 @@ object DeckRoutes extends Json4sSnakeCaseSupport {
         }
       } ~ path("decks") {
         post {
-          Utils.authenticated(Utils.admincheck) { data =>
+          Utils.authenticated(Utils.adminCheck) { data =>
             logger.info(data.toString())
             entity(as[PartialDeckInput]) { deck =>
               logger.info("[POST] /decks")
@@ -32,7 +32,7 @@ object DeckRoutes extends Json4sSnakeCaseSupport {
         }
       } ~ path("decks" / IntNumber) { deckId =>
         put {
-          Utils.authenticated(Utils.admincheck) { data =>
+          Utils.authenticated(Utils.adminCheck) { data =>
             entity(as[PartialDeckInput]) { deck =>
               logger.info(s"[PUT] /decks/$deckId")
               handleRequest(() => deckService.updateDeck(deckId, deck))
@@ -42,7 +42,7 @@ object DeckRoutes extends Json4sSnakeCaseSupport {
       }
         ~ path("decks" / IntNumber) { deckId =>
         delete {
-          Utils.authenticated(Utils.admincheck) { data =>
+          Utils.authenticated(Utils.adminCheck) { data =>
             logger.info(s"[DELETE] /decks/$deckId")
             handleRequest(() => deckService.deleteDeck(deckId))
           }

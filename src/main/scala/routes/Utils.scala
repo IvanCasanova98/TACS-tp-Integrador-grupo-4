@@ -7,6 +7,7 @@ import io.really.jwt.{JWT, JWTResult}
 import play.api.libs.json.JsObject
 import routes.DeckRoutes.logger
 import exceptions.Exceptions.{DeckNotFoundException, InvalidQueryParamsException}
+import routes.Routes.matchRepository
 import serializers.Json4sSnakeCaseSupport
 
 import java.time.Instant
@@ -73,9 +74,32 @@ object Utils extends Json4sSnakeCaseSupport {
       }
     }
   }
-  def admincheck(json: JsObject): Directive1[JsObject] = {
+  def adminCheck(json: JsObject): Directive1[JsObject] = {
     if(!json("isAdmin").as[Boolean]){
          complete(StatusCodes.Forbidden ->"Unauthorized")
+    }else{
+      provide(json)
+    }
+  }
+  def matchIdCheck(matchID: Int)(json: JsObject): Directive1[JsObject] = {
+    if(!json("isAdmin").as[Boolean]){
+      val matchData = matchRepository.getMatchById(matchID)
+      if (json("googleId").as[String] == matchData.matchCreatorId || json("googleId").as[String] == matchData.challengedUserId){
+        provide(json)
+      }else {
+        complete(StatusCodes.Forbidden -> "Unauthorized")
+      }
+    }else{
+      provide(json)
+    }
+  }
+  def userIdCheck(userID:String) (json: JsObject): Directive1[JsObject] = {
+    if(!json("isAdmin").as[Boolean]){
+      if (json("googleId").as[String] == userID){
+        provide(json)
+      }else {
+        complete(StatusCodes.Forbidden -> "Unauthorized")
+      }
     }else{
       provide(json)
     }

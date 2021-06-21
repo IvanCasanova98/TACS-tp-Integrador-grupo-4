@@ -10,7 +10,7 @@ class DeckSQLDao(db: Connection) extends DeckDao {
 
   protected def rowToDeckDbDTO(row: ResultSet): DeckDbDTO = {
     val cardIdsString = row.getString("card_ids")
-    val cardIds: List[Int] = cardIdsString.split(",").map(_.toInt).toList
+    val cardIds: List[Int] = cardIdsString.split(",").map(_.strip().toInt).toList
 
     DeckDbDTO(id = row.getInt("id"),
       name = row.getString("name"),
