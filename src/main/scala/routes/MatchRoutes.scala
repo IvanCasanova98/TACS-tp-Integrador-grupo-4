@@ -32,24 +32,32 @@ object MatchRoutes extends Json4sSnakeCaseSupport {
         }
       } ~ path("matches" / IntNumber) { matchId =>
         get {
-          handleRequest(() => matchService.findMatchById(matchId), StatusCodes.OK)
+          Utils.authenticated(Utils.matchIdCheck(matchId)) { data =>
+            handleRequest(() => matchService.findMatchById(matchId), StatusCodes.OK)
+          }
         }
       } ~ path("matches") {
         get {
-          parameters("user_id") { userId =>
-            logger.info(s"[GET] /matches for user $userId")
-            handleRequest(() => matchService.findMatchesOfUser(userId), StatusCodes.OK)
+            parameters("user_id") { userId =>
+              Utils.authenticated(Utils.userIdCheck(userId)) { data =>
+              logger.info(s"[GET] /matches for user $userId")
+              handleRequest(() => matchService.findMatchesOfUser(userId), StatusCodes.OK)
+            }
           }
         }
       } ~ path("matches" / IntNumber / "result") { matchId =>
         get {
-          complete(StatusCodes.OK, s"$matchId result: user1 won")
+          Utils.authenticated(Utils.matchIdCheck(matchId)) { data =>
+            complete(StatusCodes.OK, s"$matchId result: user1 won")
+          }
         }
       } ~ path("matches" / IntNumber / "status") { matchId =>
         patch {
           //BODY status = { FINISHED | IN_PROCESS | PAUSED | CANCELED}
-          entity(as[UpdateMatchStatus]) { newStatusDTO =>
-            complete(StatusCodes.NoContent, matchService.updateMatchStatus(matchId, newStatusDTO.status))
+          Utils.authenticated(Utils.matchIdCheck(matchId)) { data =>
+            entity(as[UpdateMatchStatus]) { newStatusDTO =>
+              complete(StatusCodes.NoContent, matchService.updateMatchStatus(matchId, newStatusDTO.status))
+            }
           }
         }
       }
