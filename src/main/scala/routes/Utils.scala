@@ -7,7 +7,6 @@ import io.really.jwt.{JWT, JWTResult}
 import play.api.libs.json.JsObject
 import routes.DeckRoutes.logger
 import exceptions.Exceptions.{DeckNotFoundException, InvalidQueryParamsException}
-import org.joda.time.Seconds
 import routes.Routes.matchRepository
 import serializers.Json4sSnakeCaseSupport
 
@@ -19,13 +18,14 @@ import scala.util.Random
 object Utils extends Json4sSnakeCaseSupport {
   /**
    * Method to avoid exception handling in routes and status codes
+   *
    * @param tryCatchable function that resolves the request
-   * @param successCode success code that should be in the response (200, 201)
+   * @param successCode  success code that should be in the response (200, 201)
    * @tparam T function that can be try catched
    * @tparam S status code from StatusCodes
    * @return
    */
-  def handleRequest[T <:Any, S <: StatusCode](tryCatchable: () => T, successCode: S = StatusCodes.NoContent ): StandardRoute = {
+  def handleRequest[T <: Any, S <: StatusCode](tryCatchable: () => T, successCode: S = StatusCodes.NoContent): StandardRoute = {
     try {
       val result = tryCatchable.apply
       complete(successCode, result)
@@ -38,6 +38,7 @@ object Utils extends Json4sSnakeCaseSupport {
 
   /**
    * Method to get random item of collection
+   *
    * @param collection of type T
    * @return random element of type T
    * */
@@ -50,7 +51,8 @@ object Utils extends Json4sSnakeCaseSupport {
 
   /**
    * Method to read file from resources
-   * @param name: name of file to read from resources
+   *
+   * @param name : name of file to read from resources
    * @return
    */
   def resource(name: String): String =
@@ -70,50 +72,57 @@ object Utils extends Json4sSnakeCaseSupport {
   def authenticated(authorizationStrategy: JsObject => Directive1[JsObject]): Directive1[JsObject] = {
 
     optionalHeaderValueByName("Authorization").flatMap { tokenFromUser =>
-      if (tokenFromUser.isEmpty){ complete(StatusCodes.Unauthorized ->"Invalid Token")}
+      if (tokenFromUser.isEmpty) {
+        complete(StatusCodes.Unauthorized -> "Invalid Token")
+      }
       val jwtToken = tokenFromUser.get.split(" ")
-      if (jwtToken.size<1){complete(StatusCodes.Unauthorized ->"Invalid Token")}
+      if (jwtToken.size < 1) {
+        complete(StatusCodes.Unauthorized -> "Invalid Token")
+      }
       val token_decode = JWT.decode(jwtToken(1), Some("secret-key"))
-      val correct = (token_decode == JWTResult.EmptyJWT || token_decode == JWTResult.InvalidSignature ||token_decode == JWTResult.InvalidHeader || token_decode == JWTResult.TooManySegments || token_decode == JWTResult.NotEnoughSegments)
+      val correct = (token_decode == JWTResult.EmptyJWT || token_decode == JWTResult.InvalidSignature || token_decode == JWTResult.InvalidHeader || token_decode == JWTResult.TooManySegments || token_decode == JWTResult.NotEnoughSegments)
       jwtToken(1) match {
         case token if correct =>
-          complete(StatusCodes.Unauthorized ->"Invalid Token")
+          complete(StatusCodes.Unauthorized -> "Invalid Token")
         case token if isTokenExpired(token) =>
           complete(StatusCodes.Unauthorized -> "Session expired.")
-        case token if token_decode.isInstanceOf[JWTResult.JWT] && !correct=>
+        case token if token_decode.isInstanceOf[JWTResult.JWT] && !correct =>
           authorizationStrategy(getClaims(token))
 
-        case _ =>  complete(StatusCodes.Unauthorized ->"Invalid Token")
+        case _ => complete(StatusCodes.Unauthorized -> "Invalid Token")
       }
     }
   }
+
   def adminCheck(json: JsObject): Directive1[JsObject] = {
-    if(!json("isAdmin").as[Boolean]){
-         complete(StatusCodes.Forbidden ->"Unauthorized")
-    }else{
+    if (!json("isAdmin").as[Boolean]) {
+      complete(StatusCodes.Forbidden -> "Unauthorized")
+    } else {
       provide(json)
     }
   }
+
   def matchIdCheck(matchID: Int)(json: JsObject): Directive1[JsObject] = {
-    if(!json("isAdmin").as[Boolean]){
+    if (!json("isAdmin").as[Boolean]) {
       val matchData = matchRepository.getMatchById(matchID)
-      if (json("googleId").as[String] == matchData.matchCreatorId || json("googleId").as[String] == matchData.challengedUserId){
+      if (json("googleId").as[String] == matchData.matchCreatorId || json("googleId").as[String] == matchData.challengedUserId) {
         provide(json)
-      }else {
+      } else {
         complete(StatusCodes.Forbidden -> "Unauthorized")
       }
-    }else{
+    } else {
       provide(json)
     }
   }
-  def userIdCheck(userID:String) (json: JsObject): Directive1[JsObject] = {
-    if(!json("isAdmin").as[Boolean]){
-      if (json("googleId").as[String] == userID){
+
+  def userIdCheck(userID: String)(json: JsObject): Directive1[JsObject] = {
+    if (!json("isAdmin").as[Boolean]) {
+      if (json("googleId").as[String] == userID) {
         provide(json)
-      }else {
+      } else {
         complete(StatusCodes.Forbidden -> "Unauthorized")
       }
-    }else{
+    } else {
       provide(json)
     }
   }
