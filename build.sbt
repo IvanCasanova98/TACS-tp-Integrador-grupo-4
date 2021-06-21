@@ -11,6 +11,7 @@ val AkkaHttpVersion = "10.2.2"
 val vJson4s = "3.7.0-M16"
 
 libraryDependencies ++= Seq(
+  "com.github.xuwei-k" %% "jwt-scala" % "1.7.0",
   "com.typesafe.akka" %% "akka-actor-typed" % AkkaVersion,
   "com.typesafe.akka" %% "akka-stream" % AkkaVersion,
   "com.typesafe.akka" %% "akka-stream-testkit" % AkkaVersion,

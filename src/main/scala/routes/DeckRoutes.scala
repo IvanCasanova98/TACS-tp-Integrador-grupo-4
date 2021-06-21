@@ -17,29 +17,35 @@ object DeckRoutes extends Json4sSnakeCaseSupport {
     concat(
       path("decks") {
         get {
-          logger.info("[GET] /decks")
-          complete(StatusCodes.OK, deckService.getAll)
+            complete(StatusCodes.OK, deckService.getAll)
         }
       } ~ path("decks") {
         post {
-          entity(as[PartialDeckInput]) { deck =>
-            logger.info("[POST] /decks")
-            val deckId: Int = deckService.createDeck(deck)
-            handleRequest(() => deckId, StatusCodes.Created)
+          Utils.authenticated(Utils.adminCheck) { data =>
+            logger.info(data.toString())
+            entity(as[PartialDeckInput]) { deck =>
+              logger.info("[POST] /decks")
+              val deckId: Int = deckService.createDeck(deck)
+              handleRequest(() => deckId, StatusCodes.Created)
+            }
           }
         }
       } ~ path("decks" / IntNumber) { deckId =>
         put {
-          entity(as[PartialDeckInput]) { deck =>
-            logger.info(s"[PUT] /decks/$deckId")
-            handleRequest(() => deckService.updateDeck(deckId, deck))
+          Utils.authenticated(Utils.adminCheck) { data =>
+            entity(as[PartialDeckInput]) { deck =>
+              logger.info(s"[PUT] /decks/$deckId")
+              handleRequest(() => deckService.updateDeck(deckId, deck))
+            }
           }
         }
       }
         ~ path("decks" / IntNumber) { deckId =>
         delete {
-          logger.info(s"[DELETE] /decks/$deckId")
-          handleRequest(() => deckService.deleteDeck(deckId))
+          Utils.authenticated(Utils.adminCheck) { data =>
+            logger.info(s"[DELETE] /decks/$deckId")
+            handleRequest(() => deckService.deleteDeck(deckId))
+          }
         }
       }
     )
