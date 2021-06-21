@@ -9,7 +9,7 @@ import com.fasterxml.jackson.module.scala.DefaultScalaModule
 import models.AttributeName.AttributeName
 import models.MatchStatus.{FINISHED, PAUSED}
 import models._
-import repositories.daos.{DeckLocalDao, DeckSQLDao, MatchLocalDAO, MatchSQLDao, MovementLocalDAO, MovementSQLDao, PlayerLocalDao, PlayerSQLDao}
+import repositories.daos.{DeckLocalDao, DeckSQLDao, MatchLocalDAO, MatchSQLDao, MovementSQLDao, PlayerSQLDao}
 import repositories.dbdtos.MatchDBDTO
 import repositories.{DeckRepository, MatchRepository, MovementRepository, PlayerRepository, StatisticsRepository}
 import serializers.JsonParser
@@ -54,6 +54,7 @@ trait ClassInjection {
   private def defaultObjectMapper(): ObjectMapper = {
     val customModule = new SimpleModule("CustomModule")
       .addSerializer(classOf[AttributeName], new AttributeNameSerializer(classOf[AttributeName]))
+      .addDeserializer(classOf[AttributeName], new AttributeNameDeserializer(classOf[AttributeName]))
 
     new ObjectMapper()
       .registerModule(DefaultScalaModule)

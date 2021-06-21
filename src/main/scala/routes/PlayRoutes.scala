@@ -17,6 +17,10 @@ object PlayRoutes {
         parameter("userId") { userId =>
           handleWebSocketMessages(matchRooms.findOrCreate(matchId).websocketFlow(userId))
         }
+      } ~ path("join-match" / IntNumber / "automated") { matchId =>
+        parameter("userId") { userId =>
+          handleWebSocketMessages(matchRooms.findOrCreateAutomatedRoom(matchId).websocketFlow(userId))
+        }
       } ~ path("invite" / IntNumber / Segment) { (matchId, invitedUserId) =>
         connectedPlayersService.sendMessageToUserId(s"INVITE:$invitedUserId:$matchId", invitedUserId)
         complete(StatusCodes.OK, s"Invited user $invitedUserId")

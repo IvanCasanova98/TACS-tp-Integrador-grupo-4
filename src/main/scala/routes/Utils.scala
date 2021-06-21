@@ -7,11 +7,13 @@ import io.really.jwt.{JWT, JWTResult}
 import play.api.libs.json.JsObject
 import routes.DeckRoutes.logger
 import exceptions.Exceptions.{DeckNotFoundException, InvalidQueryParamsException}
+import org.joda.time.Seconds
 import routes.Routes.matchRepository
 import serializers.Json4sSnakeCaseSupport
 
 import java.time.Instant
 import scala.io.Source
+import scala.util.Random
 
 
 object Utils extends Json4sSnakeCaseSupport {
@@ -34,6 +36,17 @@ object Utils extends Json4sSnakeCaseSupport {
     }
   }
 
+  /**
+   * Method to get random item of collection
+   * @param collection of type T
+   * @return random element of type T
+   * */
+  def getRandomItemOfSeq[T](collection: Seq[T]): T = {
+    if (collection.length <= 1) return collection.head
+    collection(new Random().nextInt(collection.length))
+  }
+
+  def delayExecution(seconds: Int): Unit = Thread.sleep(seconds * 1000)
 
   /**
    * Method to read file from resources

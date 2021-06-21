@@ -1,10 +1,11 @@
 package models
 
-import com.fasterxml.jackson.core.JsonGenerator
-import com.fasterxml.jackson.databind.SerializerProvider
+import com.fasterxml.jackson.core.{JsonGenerator, JsonParser}
+import com.fasterxml.jackson.databind.{DeserializationContext, JsonNode, SerializerProvider}
+import com.fasterxml.jackson.databind.deser.std.StdDeserializer
 import com.fasterxml.jackson.databind.ser.std.StdSerializer
 import exceptions.Exceptions.AttributeNotFoundException
-import models.AttributeName.AttributeName
+import models.AttributeName.{AttributeName, fromName}
 
 case class Attribute(name: AttributeName, value: Int)
 
@@ -49,5 +50,16 @@ object AttributeName {
 class AttributeNameSerializer(val t: Class[AttributeName]) extends StdSerializer[AttributeName](t) {
   override def serialize(attributeName: AttributeName, jgen: JsonGenerator, sp: SerializerProvider): Unit = {
     jgen.writeString(attributeName.name())
+  }
+}
+
+class AttributeNameDeserializer(val t: Class[AttributeName]) extends StdDeserializer[AttributeName](t) {
+  override def deserialize(p: JsonParser, ctxt: DeserializationContext): AttributeName = {
+    val node: JsonNode = p.getCodec.readTree(p)
+    try {
+      fromName(node.asText)
+    } catch {
+      case _: AttributeNotFoundException => null
+    }
   }
 }
