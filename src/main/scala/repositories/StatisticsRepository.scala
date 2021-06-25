@@ -10,9 +10,10 @@ class StatisticsRepository(dbConnection: Connection) {
 
   def getRankings: Set[PlayerStatistics] = {
     val statement = dbConnection.prepareStatement("SELECT players.id, players.username," +
-      " sum(case when (m.winner_id = players.id) then 1 else 0 end) as won_matches, count(*) as total_matches " +
-      "FROM players join matches m on players.id = m.challenged_user_id or players.id = m.creator_id" +
-      " group by players.id, players.username")
+      " SUM(case when (m.winner_id = players.id) then 1 else 0 end) as won_matches, COUNT(*) as total_matches " +
+      " FROM players join matches m on players.id = m.challenged_user_id or players.id = m.creator_id" +
+      " WHERE players.id <> 'automatedPlayer'" +
+      " GROUP BY players.id, players.username")
     val queryResult = statement.executeQuery()
     var resultList: Set[PlayerStatistics] = Set()
 

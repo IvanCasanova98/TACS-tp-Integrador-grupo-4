@@ -13,6 +13,7 @@ import scala.concurrent.{Await, Future}
 class DeckService(deckRepository: DeckRepository, superheroApi: SuperheroApi) {
 
   implicit val ec: scala.concurrent.ExecutionContext = scala.concurrent.ExecutionContext.global
+  val logger: Logger = LoggerFactory.getLogger(classOf[DeckService])
 
   /**
    * Returns complete deck with cards fetched from superhero api in parallel
@@ -28,9 +29,6 @@ class DeckService(deckRepository: DeckRepository, superheroApi: SuperheroApi) {
     val cards = Await.result(fetchCardsInParallel, Duration.apply(30, TimeUnit.SECONDS))
     Deck(deckId, deck.name, cards)
   }
-
-  val logger: Logger = LoggerFactory.getLogger(classOf[DeckService])
-
 
   def getAll: List[DeckDbDTO] = {
     logger.info(s"Listing all decks")

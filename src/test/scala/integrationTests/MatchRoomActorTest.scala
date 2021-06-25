@@ -10,11 +10,12 @@ import org.scalatest.BeforeAndAfter
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpecLike
 import routes.PlayRoutes
+import serializers.JsonParser
 import services.{ConnectedPlayersService, MatchRooms, MatchService}
 
 class MatchRoomActorTest extends AnyWordSpecLike with ScalatestRouteTest with Matchers with BeforeAndAfter {
   val matchServiceMock: MatchService = mock[MatchService]
-  var matchRooms = new MatchRooms(system, matchServiceMock)
+  var matchRooms = new MatchRooms(system, matchServiceMock, mock[JsonParser])
   val aBombCard: Card = Card(1, "A-bomb", List(Attribute(STRENGTH, 300), Attribute(HEIGHT, 200)), "")
   val deck: Deck = Deck(7, "deck",
     List(aBombCard, aBombCard.copy(id=399), aBombCard.copy(id=3423), aBombCard.copy(id=45363),
@@ -25,7 +26,7 @@ class MatchRoomActorTest extends AnyWordSpecLike with ScalatestRouteTest with Ma
     Player("12345", "user2", "", false, false), deck, List(), None)
 
   before {
-    matchRooms = new MatchRooms(system, matchServiceMock)
+    matchRooms = new MatchRooms(system, matchServiceMock, mock[JsonParser])
   }
 
   "Match rooms actor" should {
