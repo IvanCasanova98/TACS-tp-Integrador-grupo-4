@@ -1,0 +1,123 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<Tag plugin="workflow-support@3.8">
+  <node class="cps.n.StepEndNode" plugin="workflow-cps@2.90">
+    <parentIds>
+      <string>36</string>
+    </parentIds>
+    <id>37</id>
+    <startId>13</startId>
+  </node>
+  <actions>
+    <wf.a.BodyInvocationAction plugin="workflow-api@2.42"/>
+    <wf.a.TimingAction plugin="workflow-api@2.42">
+      <startTime>1619490612320</startTime>
+    </wf.a.TimingAction>
+    <wf.a.ErrorAction plugin="workflow-api@2.42">
+      <error class="hudson.remoting.ProxyException">
+        <detailMessage>java.io.IOException: Could not retrieve GitHub repository named IvanCasanova98/TACS-tp-Integrador-grupo-4 (Do you have properly set &apos;GitHub project&apos; field in job configuration?)</detailMessage>
+        <cause class="hudson.remoting.ProxyException">
+          <detailMessage>org.kohsuke.github.GHFileNotFoundException: https://api.github.com/repos/IvanCasanova98/TACS-tp-Integrador-grupo-4 {&quot;message&quot;:&quot;Not Found&quot;,&quot;documentation_url&quot;:&quot;https://docs.github.com/rest/reference/repos#get-a-repository&quot;}</detailMessage>
+          <cause class="hudson.remoting.ProxyException">
+            <detailMessage>java.io.FileNotFoundException: https://api.github.com/repos/IvanCasanova98/TACS-tp-Integrador-grupo-4</detailMessage>
+            <cause class="hudson.remoting.ProxyException">
+              <detailMessage>java.io.FileNotFoundException: https://api.github.com/repos/IvanCasanova98/TACS-tp-Integrador-grupo-4</detailMessage>
+              <stackTrace>
+                <trace>java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1920)</trace>
+                <trace>java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1520)</trace>
+                <trace>java.base/java.net.HttpURLConnection.getResponseCode(HttpURLConnection.java:527)</trace>
+                <trace>java.base/sun.net.www.protocol.https.HttpsURLConnectionImpl.getResponseCode(HttpsURLConnectionImpl.java:334)</trace>
+                <trace>org.kohsuke.github.GitHubHttpUrlConnectionClient.getResponseInfo(GitHubHttpUrlConnectionClient.java:64)</trace>
+                <trace>org.kohsuke.github.GitHubClient.sendRequest(GitHubClient.java:394)</trace>
+                <trace>org.kohsuke.github.GitHubClient.sendRequest(GitHubClient.java:358)</trace>
+                <trace>org.kohsuke.github.Requester.fetch(Requester.java:76)</trace>
+                <trace>org.kohsuke.github.GHRepository.read(GHRepository.java:119)</trace>
+                <trace>org.kohsuke.github.GitHub.getRepository(GitHub.java:624)</trace>
+                <trace>com.github.terma.jenkins.githubprcoveragestatus.GitHubPullRequestRepository.getGitHubRepository(GitHubPullRequestRepository.java:54)</trace>
+                <trace>com.github.terma.jenkins.githubprcoveragestatus.CompareCoverageAction.perform(CompareCoverageAction.java:137)</trace>
+                <trace>jenkins.tasks.SimpleBuildStep.perform(SimpleBuildStep.java:123)</trace>
+                <trace>org.jenkinsci.plugins.workflow.steps.CoreStep$Execution.run(CoreStep.java:99)</trace>
+                <trace>org.jenkinsci.plugins.workflow.steps.CoreStep$Execution.run(CoreStep.java:69)</trace>
+                <trace>org.jenkinsci.plugins.workflow.steps.SynchronousNonBlockingStepExecution.lambda$start$0(SynchronousNonBlockingStepExecution.java:47)</trace>
+                <trace>java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:515)</trace>
+                <trace>java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)</trace>
+                <trace>java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)</trace>
+                <trace>java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)</trace>
+                <trace>java.base/java.lang.Thread.run(Thread.java:829)</trace>
+              </stackTrace>
+              <suppressedExceptions class="empty-list"/>
+            </cause>
+            <stackTrace>
+              <trace>java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)</trace>
+              <trace>java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)</trace>
+              <trace>java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)</trace>
+              <trace>java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:490)</trace>
+              <trace>java.base/sun.net.www.protocol.http.HttpURLConnection$10.run(HttpURLConnection.java:1974)</trace>
+              <trace>java.base/sun.net.www.protocol.http.HttpURLConnection$10.run(HttpURLConnection.java:1969)</trace>
+              <trace>java.base/java.security.AccessController.doPrivileged(Native Method)</trace>
+              <trace>java.base/sun.net.www.protocol.http.HttpURLConnection.getChainedException(HttpURLConnection.java:1968)</trace>
+              <trace>java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1536)</trace>
+              <trace>java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1520)</trace>
+              <trace>java.base/sun.net.www.protocol.https.HttpsURLConnectionImpl.getInputStream(HttpsURLConnectionImpl.java:250)</trace>
+              <trace>org.kohsuke.github.GitHubHttpUrlConnectionClient$HttpURLConnectionResponseInfo.bodyStream(GitHubHttpUrlConnectionClient.java:196)</trace>
+              <trace>org.kohsuke.github.GitHubResponse$ResponseInfo.getBodyAsString(GitHubResponse.java:314)</trace>
+              <trace>org.kohsuke.github.GitHubResponse.parseBody(GitHubResponse.java:92)</trace>
+              <trace>org.kohsuke.github.Requester.lambda$fetch$1(Requester.java:76)</trace>
+              <trace>org.kohsuke.github.GitHubClient.createResponse(GitHubClient.java:455)</trace>
+              <trace>org.kohsuke.github.GitHubClient.sendRequest(GitHubClient.java:406)</trace>
+              <trace>org.kohsuke.github.GitHubClient.sendRequest(GitHubClient.java:358)</trace>
+              <trace>org.kohsuke.github.Requester.fetch(Requester.java:76)</trace>
+              <trace>org.kohsuke.github.GHRepository.read(GHRepository.java:119)</trace>
+              <trace>org.kohsuke.github.GitHub.getRepository(GitHub.java:624)</trace>
+              <trace>com.github.terma.jenkins.githubprcoveragestatus.GitHubPullRequestRepository.getGitHubRepository(GitHubPullRequestRepository.java:54)</trace>
+              <trace>com.github.terma.jenkins.githubprcoveragestatus.CompareCoverageAction.perform(CompareCoverageAction.java:137)</trace>
+              <trace>jenkins.tasks.SimpleBuildStep.perform(SimpleBuildStep.java:123)</trace>
+              <trace>org.jenkinsci.plugins.workflow.steps.CoreStep$Execution.run(CoreStep.java:99)</trace>
+              <trace>org.jenkinsci.plugins.workflow.steps.CoreStep$Execution.run(CoreStep.java:69)</trace>
+              <trace>org.jenkinsci.plugins.workflow.steps.SynchronousNonBlockingStepExecution.lambda$start$0(SynchronousNonBlockingStepExecution.java:47)</trace>
+              <trace>java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:515)</trace>
+              <trace>java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)</trace>
+              <trace>java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)</trace>
+              <trace>java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)</trace>
+              <trace>java.base/java.lang.Thread.run(Thread.java:829)</trace>
+            </stackTrace>
+            <suppressedExceptions class="empty-list"/>
+          </cause>
+          <stackTrace>
+            <trace>org.kohsuke.github.GitHubClient.interpretApiError(GitHubClient.java:486)</trace>
+            <trace>org.kohsuke.github.GitHubClient.sendRequest(GitHubClient.java:414)</trace>
+            <trace>org.kohsuke.github.GitHubClient.sendRequest(GitHubClient.java:358)</trace>
+            <trace>org.kohsuke.github.Requester.fetch(Requester.java:76)</trace>
+            <trace>org.kohsuke.github.GHRepository.read(GHRepository.java:119)</trace>
+            <trace>org.kohsuke.github.GitHub.getRepository(GitHub.java:624)</trace>
+            <trace>com.github.terma.jenkins.githubprcoveragestatus.GitHubPullRequestRepository.getGitHubRepository(GitHubPullRequestRepository.java:54)</trace>
+            <trace>com.github.terma.jenkins.githubprcoveragestatus.CompareCoverageAction.perform(CompareCoverageAction.java:137)</trace>
+            <trace>jenkins.tasks.SimpleBuildStep.perform(SimpleBuildStep.java:123)</trace>
+            <trace>org.jenkinsci.plugins.workflow.steps.CoreStep$Execution.run(CoreStep.java:99)</trace>
+            <trace>org.jenkinsci.plugins.workflow.steps.CoreStep$Execution.run(CoreStep.java:69)</trace>
+            <trace>org.jenkinsci.plugins.workflow.steps.SynchronousNonBlockingStepExecution.lambda$start$0(SynchronousNonBlockingStepExecution.java:47)</trace>
+            <trace>java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:515)</trace>
+            <trace>java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)</trace>
+            <trace>java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)</trace>
+            <trace>java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)</trace>
+            <trace>java.base/java.lang.Thread.run(Thread.java:829)</trace>
+          </stackTrace>
+          <suppressedExceptions class="empty-list"/>
+        </cause>
+        <stackTrace>
+          <trace>com.github.terma.jenkins.githubprcoveragestatus.GitHubPullRequestRepository.getGitHubRepository(GitHubPullRequestRepository.java:56)</trace>
+          <trace>com.github.terma.jenkins.githubprcoveragestatus.CompareCoverageAction.perform(CompareCoverageAction.java:137)</trace>
+          <trace>jenkins.tasks.SimpleBuildStep.perform(SimpleBuildStep.java:123)</trace>
+          <trace>org.jenkinsci.plugins.workflow.steps.CoreStep$Execution.run(CoreStep.java:99)</trace>
+          <trace>org.jenkinsci.plugins.workflow.steps.CoreStep$Execution.run(CoreStep.java:69)</trace>
+          <trace>org.jenkinsci.plugins.workflow.steps.SynchronousNonBlockingStepExecution.lambda$start$0(SynchronousNonBlockingStepExecution.java:47)</trace>
+          <trace>java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:515)</trace>
+          <trace>java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)</trace>
+          <trace>java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)</trace>
+          <trace>java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)</trace>
+          <trace>java.base/java.lang.Thread.run(Thread.java:829)</trace>
+        </stackTrace>
+        <suppressedExceptions class="empty-list"/>
+      </error>
+    </wf.a.ErrorAction>
+  </actions>
+</Tag>

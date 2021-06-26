@@ -1,0 +1,10 @@
+Pull request #5 updated
+Running with default Jenkinsfile ID: Jenkinsfile
+org.jenkinsci.plugins.scriptsecurity.scripts.UnapprovedUsageException: script not yet approved for use
+	at org.jenkinsci.plugins.scriptsecurity.scripts.ScriptApproval.using(ScriptApproval.java:474)
+	at org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition.create(CpsFlowDefinition.java:120)
+	at org.jenkinsci.plugins.pipeline.multibranch.defaults.DefaultsBinder.create(DefaultsBinder.java:84)
+	at org.jenkinsci.plugins.workflow.job.WorkflowRun.run(WorkflowRun.java:309)
+	at hudson.model.ResourceController.execute(ResourceController.java:97)
+	at hudson.model.Executor.run(Executor.java:429)
+Finished: FAILURE

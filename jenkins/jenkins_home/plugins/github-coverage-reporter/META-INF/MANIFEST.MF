@@ -1,0 +1,19 @@
+Manifest-Version: 1.0
+Archiver-Version: Plexus Archiver
+Created-By: Apache Maven
+Built-By: jack
+Build-Jdk: 1.8.0_161
+Extension-Name: github-coverage-reporter
+Specification-Title: Reports code coverage stats as a github status ch
+ eck
+Implementation-Title: github-coverage-reporter
+Implementation-Version: 1.9
+Group-Id: io.jenkins.plugins
+Short-Name: github-coverage-reporter
+Long-Name: GitHub Coverage Reporter
+Plugin-Version: 1.9
+Hudson-Version: 2.150.2
+Jenkins-Version: 2.150.2
+Plugin-Dependencies: workflow-step-api:2.12,github-api:1.71,structs:1.7
+Plugin-Developers: 
+

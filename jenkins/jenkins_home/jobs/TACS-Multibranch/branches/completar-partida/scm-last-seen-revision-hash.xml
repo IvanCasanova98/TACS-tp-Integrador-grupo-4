@@ -1,0 +1,7 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<jenkins.plugins.git.AbstractGitSCMSource_-SCMRevisionImpl plugin="git@4.7.1">
+  <head class="org.jenkinsci.plugins.github_branch_source.BranchSCMHead" plugin="github-branch-source@2.10.2">
+    <name>completar-partida</name>
+  </head>
+  <hash>16212a233e9b2075e5a1d106dc6c39e6ada5487e</hash>
+</jenkins.plugins.git.AbstractGitSCMSource_-SCMRevisionImpl>

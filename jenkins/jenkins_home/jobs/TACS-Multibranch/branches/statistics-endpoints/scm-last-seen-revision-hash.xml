@@ -1,0 +1,7 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<jenkins.plugins.git.AbstractGitSCMSource_-SCMRevisionImpl plugin="git@4.7.1">
+  <head class="org.jenkinsci.plugins.github_branch_source.BranchSCMHead" plugin="github-branch-source@2.10.2">
+    <name>statistics-endpoints</name>
+  </head>
+  <hash>9f46f8fc15ccebb9232c6f41a0aba3d97f00743b</hash>
+</jenkins.plugins.git.AbstractGitSCMSource_-SCMRevisionImpl>

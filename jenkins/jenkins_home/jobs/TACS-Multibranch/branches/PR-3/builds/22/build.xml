@@ -1,0 +1,263 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<flow-build plugin="workflow-job@2.40">
+  <actions>
+    <hudson.model.CauseAction>
+      <causeBag class="linked-hash-map">
+        <entry>
+          <jenkins.branch.BranchEventCause plugin="branch-api@2.6.3">
+            <timestamp>1619377715075</timestamp>
+            <origin>140.82.115.242 → 35.227.197.193 → 140.82.115.242 ⇒ https://9d6e22.emporter.app:8080/github-webhook/</origin>
+            <description>Pull request #3 updated</description>
+          </jenkins.branch.BranchEventCause>
+          <int>1</int>
+        </entry>
+      </causeBag>
+    </hudson.model.CauseAction>
+    <org.jenkinsci.plugins.workflow.libs.LibrariesAction plugin="workflow-cps-global-lib@2.18">
+      <libraries/>
+    </org.jenkinsci.plugins.workflow.libs.LibrariesAction>
+    <org.jenkinsci.plugins.pipeline.modeldefinition.actions.ExecutionModelAction plugin="pipeline-model-definition@1.8.4">
+      <stagesUUID>aaa2679d-6baa-46b4-80ec-507d65f2a636</stagesUUID>
+      <pipelineDefs>
+        <org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTPipelineDef plugin="pipeline-model-api@1.8.4">
+          <stages>
+            <stages>
+              <org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTStage>
+                <name>Application Unit Tests</name>
+                <branches>
+                  <org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTBranch>
+                    <name>default</name>
+                    <steps>
+                      <org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTStep>
+                        <name>sh</name>
+                        <args class="org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTNamedArgumentList">
+                          <arguments class="linked-hash-map">
+                            <entry>
+                              <org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTKey>
+                                <key>script</key>
+                              </org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTKey>
+                              <org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTValue_-ConstantValue>
+                                <value class="string">sbt clean coverage test coverageReport</value>
+                              </org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTValue_-ConstantValue>
+                            </entry>
+                          </arguments>
+                        </args>
+                      </org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTStep>
+                    </steps>
+                  </org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTBranch>
+                </branches>
+              </org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTStage>
+            </stages>
+            <uuid>aaa2679d-6baa-46b4-80ec-507d65f2a636</uuid>
+          </stages>
+          <agent>
+            <agentType>
+              <key>any</key>
+            </agentType>
+          </agent>
+          <options>
+            <options>
+              <org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTOption>
+                <name>timeout</name>
+                <args>
+                  <org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTKeyValueOrMethodCallPair>
+                    <key>
+                      <key>time</key>
+                    </key>
+                    <value class="org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTValue$ConstantValue">
+                      <value class="int">10</value>
+                    </value>
+                  </org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTKeyValueOrMethodCallPair>
+                  <org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTKeyValueOrMethodCallPair>
+                    <key>
+                      <key>unit</key>
+                    </key>
+                    <value class="org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTValue$ConstantValue">
+                      <value class="string">MINUTES</value>
+                    </value>
+                  </org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTKeyValueOrMethodCallPair>
+                </args>
+              </org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTOption>
+            </options>
+            <inStage>false</inStage>
+          </options>
+        </org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTPipelineDef>
+      </pipelineDefs>
+    </org.jenkinsci.plugins.pipeline.modeldefinition.actions.ExecutionModelAction>
+    <org.jenkinsci.plugins.workflow.cps.EnvActionImpl plugin="workflow-cps@2.90">
+      <env class="tree-map"/>
+    </org.jenkinsci.plugins.workflow.cps.EnvActionImpl>
+    <jenkins.scm.api.SCMRevisionAction plugin="scm-api@2.6.4">
+      <sourceId>e453cfb4-aace-4ef8-8223-5fad656b2940</sourceId>
+      <revision class="org.jenkinsci.plugins.github_branch_source.PullRequestSCMRevision" plugin="github-branch-source@2.10.2">
+        <head class="org.jenkinsci.plugins.github_branch_source.PullRequestSCMHead">
+          <name>PR-3</name>
+          <merge>true</merge>
+          <number>3</number>
+          <target>
+            <name>master</name>
+          </target>
+          <sourceOwner>IvanCasanova98</sourceOwner>
+          <sourceRepo>TACS-tp-Integrador-grupo-4</sourceRepo>
+          <sourceBranch>jekins-test-1</sourceBranch>
+          <origin class="jenkins.scm.api.SCMHeadOrigin$Default" plugin="scm-api@2.6.4"/>
+        </head>
+        <target class="jenkins.plugins.git.AbstractGitSCMSource$SCMRevisionImpl" plugin="git@4.7.1">
+          <head class="org.jenkinsci.plugins.github_branch_source.BranchSCMHead" reference="../../head/target"/>
+          <hash>fb93446a589d9b060697f924a4866ca0dd18a709</hash>
+        </target>
+        <baseHash>fb93446a589d9b060697f924a4866ca0dd18a709</baseHash>
+        <pullHash>0bc1fa5f13d9f3464e7e67d55a75792f5f89cd02</pullHash>
+        <mergeHash>a9c49d6312e920b03cbb3d110f5de82c2c6c75c8</mergeHash>
+      </revision>
+    </jenkins.scm.api.SCMRevisionAction>
+    <hudson.plugins.git.util.MergeRecord plugin="git@4.7.1">
+      <branch>remotes/origin/master</branch>
+      <sha1>fb93446a589d9b060697f924a4866ca0dd18a709</sha1>
+    </hudson.plugins.git.util.MergeRecord>
+    <hudson.plugins.git.util.BuildData plugin="git@4.7.1">
+      <buildsByBranchName>
+        <entry>
+          <string>PR-3</string>
+          <hudson.plugins.git.util.Build>
+            <marked plugin="git-client@3.7.1">
+              <sha1>0bc1fa5f13d9f3464e7e67d55a75792f5f89cd02</sha1>
+              <branches class="singleton-set">
+                <hudson.plugins.git.Branch>
+                  <sha1 reference="../../../sha1"/>
+                  <name>PR-3</name>
+                </hudson.plugins.git.Branch>
+              </branches>
+            </marked>
+            <revision plugin="git-client@3.7.1">
+              <sha1>0bc1fa5f13d9f3464e7e67d55a75792f5f89cd02</sha1>
+              <branches class="singleton-set" reference="../../marked/branches"/>
+            </revision>
+            <hudsonBuildNumber>22</hudsonBuildNumber>
+          </hudson.plugins.git.util.Build>
+        </entry>
+      </buildsByBranchName>
+      <lastBuild reference="../buildsByBranchName/entry/hudson.plugins.git.util.Build"/>
+      <remoteUrls>
+        <string>https://github.com/IvanCasanova98/TACS-tp-Integrador-grupo-4.git</string>
+      </remoteUrls>
+    </hudson.plugins.git.util.BuildData>
+    <org.jenkinsci.plugins.workflow.steps.scm.MultiSCMRevisionState plugin="workflow-scm-step@2.12">
+      <revisionStates>
+        <entry>
+          <string>git https://github.com/IvanCasanova98/TACS-tp-Integrador-grupo-4.git</string>
+          <hudson.scm.SCMRevisionState_-None/>
+        </entry>
+      </revisionStates>
+    </org.jenkinsci.plugins.workflow.steps.scm.MultiSCMRevisionState>
+  </actions>
+  <queueId>195</queueId>
+  <timestamp>1619377731883</timestamp>
+  <startTime>1619377731914</startTime>
+  <result>SUCCESS</result>
+  <duration>33276</duration>
+  <charset>UTF-8</charset>
+  <keepLog>false</keepLog>
+  <execution class="org.jenkinsci.plugins.workflow.cps.CpsFlowExecution">
+    <result>SUCCESS</result>
+    <script>// Instead of annotating an unnecessary import statement, the symbol _ is annotated, according to the annotation pattern.
+
+def repoName = &quot;scala-sbt-sample&quot;
+def version = env.CHANGE_ID
+
+pipeline {
+    agent any
+    options {
+      timeout(time: 10, unit: &apos;MINUTES&apos;) 
+  	}
+
+    stages{
+
+        //stage(&quot;Application Build&quot;){
+           // steps{
+             //   sh &quot;sbt run&quot;
+            //}
+        //}
+        stage(&quot;Application Unit Tests&quot;){
+            steps{
+                sh &quot;sbt clean coverage test coverageReport&quot;
+            }
+        }
+
+    }
+}</script>
+    <loadedScripts class="map"/>
+    <durabilityHint>MAX_SURVIVABILITY</durabilityHint>
+    <timings class="map">
+      <entry>
+        <string>flowNode</string>
+        <long>716228567</long>
+      </entry>
+      <entry>
+        <string>classLoad</string>
+        <long>400068664</long>
+      </entry>
+      <entry>
+        <string>run</string>
+        <long>3289263543</long>
+      </entry>
+      <entry>
+        <string>parse</string>
+        <long>567908516</long>
+      </entry>
+      <entry>
+        <string>saveProgram</string>
+        <long>218914480</long>
+      </entry>
+    </timings>
+    <sandbox>false</sandbox>
+    <iota>25</iota>
+    <head>1:25</head>
+    <done>true</done>
+    <resumeBlocked>false</resumeBlocked>
+  </execution>
+  <completed>true</completed>
+  <checkouts class="hudson.util.PersistedList">
+    <org.jenkinsci.plugins.workflow.job.WorkflowRun_-SCMCheckout>
+      <scm class="hudson.plugins.git.GitSCM" plugin="git@4.7.1">
+        <configVersion>2</configVersion>
+        <userRemoteConfigs>
+          <hudson.plugins.git.UserRemoteConfig>
+            <name>origin</name>
+            <refspec>+refs/pull/3/head:refs/remotes/origin/PR-3 +refs/heads/master:refs/remotes/origin/master</refspec>
+            <url>https://github.com/IvanCasanova98/TACS-tp-Integrador-grupo-4.git</url>
+            <credentialsId>Jekins-Tacs</credentialsId>
+          </hudson.plugins.git.UserRemoteConfig>
+        </userRemoteConfigs>
+        <branches class="singleton-list">
+          <hudson.plugins.git.BranchSpec>
+            <name>PR-3</name>
+          </hudson.plugins.git.BranchSpec>
+        </branches>
+        <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+        <browser class="hudson.plugins.git.browser.GithubWeb">
+          <url>https://github.com/IvanCasanova98/TACS-tp-Integrador-grupo-4</url>
+        </browser>
+        <submoduleCfg class="empty-list"/>
+        <extensions>
+          <jenkins.plugins.git.MergeWithGitSCMExtension>
+            <baseName>remotes/origin/master</baseName>
+            <baseHash>fb93446a589d9b060697f924a4866ca0dd18a709</baseHash>
+          </jenkins.plugins.git.MergeWithGitSCMExtension>
+          <jenkins.plugins.git.GitSCMSourceDefaults>
+            <includeTags>false</includeTags>
+          </jenkins.plugins.git.GitSCMSourceDefaults>
+          <hudson.plugins.git.extensions.impl.BuildChooserSetting>
+            <buildChooser class="jenkins.plugins.git.AbstractGitSCMSource$SpecificRevisionBuildChooser">
+              <revision reference="../../../../../../../actions/hudson.plugins.git.util.BuildData/buildsByBranchName/entry/hudson.plugins.git.util.Build/marked"/>
+            </buildChooser>
+          </hudson.plugins.git.extensions.impl.BuildChooserSetting>
+        </extensions>
+      </scm>
+      <node></node>
+      <workspace>/Users/icasanova/.jenkins/workspace/TACS-Multibranch_PR-3@2</workspace>
+      <changelogFile>/Users/icasanova/.jenkins/jobs/TACS-Multibranch/branches/PR-3/builds/22/changelog2686259665638689365.xml</changelogFile>
+      <pollingBaseline class="hudson.scm.SCMRevisionState$None" reference="../../../actions/org.jenkinsci.plugins.workflow.steps.scm.MultiSCMRevisionState/revisionStates/entry/hudson.scm.SCMRevisionState_-None"/>
+    </org.jenkinsci.plugins.workflow.job.WorkflowRun_-SCMCheckout>
+  </checkouts>
+</flow-build>

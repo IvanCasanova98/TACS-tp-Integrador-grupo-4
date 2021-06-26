@@ -1,0 +1,14 @@
+*.class
+*.log
+.idea
+*.iml
+*.ipr
+*.iws
+target
+.bsp
+.DS_Store
+project/boot/
+project/plugins/project/
+.vscode
+null/
+mysql/

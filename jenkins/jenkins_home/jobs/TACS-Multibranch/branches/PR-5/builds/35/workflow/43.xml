@@ -1,0 +1,126 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<Tag plugin="workflow-support@3.8">
+  <node class="org.jenkinsci.plugins.workflow.graph.FlowEndNode" plugin="workflow-api@2.42">
+    <parentIds>
+      <string>42</string>
+    </parentIds>
+    <id>43</id>
+    <startId>2</startId>
+    <result>
+      <name>FAILURE</name>
+      <ordinal>2</ordinal>
+      <color>RED</color>
+      <completeBuild>true</completeBuild>
+    </result>
+  </node>
+  <actions>
+    <wf.a.ErrorAction plugin="workflow-api@2.42">
+      <error class="java.io.IOException">
+        <detailMessage>Error while accessing rate limit API</detailMessage>
+        <cause class="org.kohsuke.github.HttpException" plugin="github-api@1.123">
+          <detailMessage>{&quot;message&quot;:&quot;Bad credentials&quot;,&quot;documentation_url&quot;:&quot;https://docs.github.com/rest&quot;}</detailMessage>
+          <cause class="java.io.IOException">
+            <detailMessage>Server returned HTTP response code: 401 for URL: https://api.github.com/rate_limit</detailMessage>
+            <cause class="java.io.IOException">
+              <detailMessage>Server returned HTTP response code: 401 for URL: https://api.github.com/rate_limit</detailMessage>
+              <stackTrace>
+                <trace>java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1924)</trace>
+                <trace>java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1520)</trace>
+                <trace>java.base/java.net.HttpURLConnection.getResponseCode(HttpURLConnection.java:527)</trace>
+                <trace>java.base/sun.net.www.protocol.https.HttpsURLConnectionImpl.getResponseCode(HttpsURLConnectionImpl.java:334)</trace>
+                <trace>org.kohsuke.github.GitHubHttpUrlConnectionClient.getResponseInfo(GitHubHttpUrlConnectionClient.java:64)</trace>
+                <trace>org.kohsuke.github.GitHubClient.sendRequest(GitHubClient.java:394)</trace>
+                <trace>org.kohsuke.github.GitHubClient.getRateLimit(GitHubClient.java:232)</trace>
+                <trace>org.kohsuke.github.GitHubClient.getRateLimit(GitHubClient.java:214)</trace>
+                <trace>org.kohsuke.github.GitHub.getRateLimit(GitHub.java:466)</trace>
+                <trace>com.github.terma.jenkins.githubprcoveragestatus.GitHubPullRequestRepository.getGitHubRepository(GitHubPullRequestRepository.java:42)</trace>
+                <trace>com.github.terma.jenkins.githubprcoveragestatus.CompareCoverageAction.perform(CompareCoverageAction.java:137)</trace>
+                <trace>jenkins.tasks.SimpleBuildStep.perform(SimpleBuildStep.java:123)</trace>
+                <trace>org.jenkinsci.plugins.workflow.steps.CoreStep$Execution.run(CoreStep.java:99)</trace>
+                <trace>org.jenkinsci.plugins.workflow.steps.CoreStep$Execution.run(CoreStep.java:69)</trace>
+                <trace>org.jenkinsci.plugins.workflow.steps.SynchronousNonBlockingStepExecution.lambda$start$0(SynchronousNonBlockingStepExecution.java:47)</trace>
+                <trace>java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:515)</trace>
+                <trace>java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)</trace>
+                <trace>java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)</trace>
+                <trace>java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)</trace>
+                <trace>java.base/java.lang.Thread.run(Thread.java:829)</trace>
+              </stackTrace>
+              <suppressedExceptions class="empty-list"/>
+            </cause>
+            <stackTrace>
+              <trace>java.base/jdk.internal.reflect.GeneratedConstructorAccessor285.newInstance(Unknown Source)</trace>
+              <trace>java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)</trace>
+              <trace>java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:490)</trace>
+              <trace>java.base/sun.net.www.protocol.http.HttpURLConnection$10.run(HttpURLConnection.java:1974)</trace>
+              <trace>java.base/sun.net.www.protocol.http.HttpURLConnection$10.run(HttpURLConnection.java:1969)</trace>
+              <trace>java.base/java.security.AccessController.doPrivileged(Native Method)</trace>
+              <trace>java.base/sun.net.www.protocol.http.HttpURLConnection.getChainedException(HttpURLConnection.java:1968)</trace>
+              <trace>java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1536)</trace>
+              <trace>java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1520)</trace>
+              <trace>java.base/sun.net.www.protocol.https.HttpsURLConnectionImpl.getInputStream(HttpsURLConnectionImpl.java:250)</trace>
+              <trace>org.kohsuke.github.GitHubHttpUrlConnectionClient$HttpURLConnectionResponseInfo.bodyStream(GitHubHttpUrlConnectionClient.java:196)</trace>
+              <trace>org.kohsuke.github.GitHubResponse$ResponseInfo.getBodyAsString(GitHubResponse.java:314)</trace>
+              <trace>org.kohsuke.github.GitHubResponse.parseBody(GitHubResponse.java:92)</trace>
+              <trace>org.kohsuke.github.GitHubClient.lambda$getRateLimit$1(GitHubClient.java:232)</trace>
+              <trace>org.kohsuke.github.GitHubClient.createResponse(GitHubClient.java:455)</trace>
+              <trace>org.kohsuke.github.GitHubClient.sendRequest(GitHubClient.java:406)</trace>
+              <trace>org.kohsuke.github.GitHubClient.getRateLimit(GitHubClient.java:232)</trace>
+              <trace>org.kohsuke.github.GitHubClient.getRateLimit(GitHubClient.java:214)</trace>
+              <trace>org.kohsuke.github.GitHub.getRateLimit(GitHub.java:466)</trace>
+              <trace>com.github.terma.jenkins.githubprcoveragestatus.GitHubPullRequestRepository.getGitHubRepository(GitHubPullRequestRepository.java:42)</trace>
+              <trace>com.github.terma.jenkins.githubprcoveragestatus.CompareCoverageAction.perform(CompareCoverageAction.java:137)</trace>
+              <trace>jenkins.tasks.SimpleBuildStep.perform(SimpleBuildStep.java:123)</trace>
+              <trace>org.jenkinsci.plugins.workflow.steps.CoreStep$Execution.run(CoreStep.java:99)</trace>
+              <trace>org.jenkinsci.plugins.workflow.steps.CoreStep$Execution.run(CoreStep.java:69)</trace>
+              <trace>org.jenkinsci.plugins.workflow.steps.SynchronousNonBlockingStepExecution.lambda$start$0(SynchronousNonBlockingStepExecution.java:47)</trace>
+              <trace>java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:515)</trace>
+              <trace>java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)</trace>
+              <trace>java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)</trace>
+              <trace>java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)</trace>
+              <trace>java.base/java.lang.Thread.run(Thread.java:829)</trace>
+            </stackTrace>
+            <suppressedExceptions class="empty-list"/>
+          </cause>
+          <stackTrace>
+            <trace>org.kohsuke.github.GitHubClient.interpretApiError(GitHubClient.java:489)</trace>
+            <trace>org.kohsuke.github.GitHubClient.sendRequest(GitHubClient.java:414)</trace>
+            <trace>org.kohsuke.github.GitHubClient.getRateLimit(GitHubClient.java:232)</trace>
+            <trace>org.kohsuke.github.GitHubClient.getRateLimit(GitHubClient.java:214)</trace>
+            <trace>org.kohsuke.github.GitHub.getRateLimit(GitHub.java:466)</trace>
+            <trace>com.github.terma.jenkins.githubprcoveragestatus.GitHubPullRequestRepository.getGitHubRepository(GitHubPullRequestRepository.java:42)</trace>
+            <trace>com.github.terma.jenkins.githubprcoveragestatus.CompareCoverageAction.perform(CompareCoverageAction.java:137)</trace>
+            <trace>jenkins.tasks.SimpleBuildStep.perform(SimpleBuildStep.java:123)</trace>
+            <trace>org.jenkinsci.plugins.workflow.steps.CoreStep$Execution.run(CoreStep.java:99)</trace>
+            <trace>org.jenkinsci.plugins.workflow.steps.CoreStep$Execution.run(CoreStep.java:69)</trace>
+            <trace>org.jenkinsci.plugins.workflow.steps.SynchronousNonBlockingStepExecution.lambda$start$0(SynchronousNonBlockingStepExecution.java:47)</trace>
+            <trace>java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:515)</trace>
+            <trace>java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)</trace>
+            <trace>java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)</trace>
+            <trace>java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)</trace>
+            <trace>java.base/java.lang.Thread.run(Thread.java:829)</trace>
+          </stackTrace>
+          <suppressedExceptions class="empty-list"/>
+          <responseCode>401</responseCode>
+          <url>https://api.github.com/rate_limit</url>
+        </cause>
+        <stackTrace>
+          <trace>com.github.terma.jenkins.githubprcoveragestatus.GitHubPullRequestRepository.getGitHubRepository(GitHubPullRequestRepository.java:48)</trace>
+          <trace>com.github.terma.jenkins.githubprcoveragestatus.CompareCoverageAction.perform(CompareCoverageAction.java:137)</trace>
+          <trace>jenkins.tasks.SimpleBuildStep.perform(SimpleBuildStep.java:123)</trace>
+          <trace>org.jenkinsci.plugins.workflow.steps.CoreStep$Execution.run(CoreStep.java:99)</trace>
+          <trace>org.jenkinsci.plugins.workflow.steps.CoreStep$Execution.run(CoreStep.java:69)</trace>
+          <trace>org.jenkinsci.plugins.workflow.steps.SynchronousNonBlockingStepExecution.lambda$start$0(SynchronousNonBlockingStepExecution.java:47)</trace>
+          <trace>java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:515)</trace>
+          <trace>java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)</trace>
+          <trace>java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)</trace>
+          <trace>java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)</trace>
+          <trace>java.base/java.lang.Thread.run(Thread.java:829)</trace>
+        </stackTrace>
+        <suppressedExceptions class="empty-list"/>
+      </error>
+    </wf.a.ErrorAction>
+    <wf.a.TimingAction plugin="workflow-api@2.42">
+      <startTime>1619494350922</startTime>
+    </wf.a.TimingAction>
+  </actions>
+</Tag>

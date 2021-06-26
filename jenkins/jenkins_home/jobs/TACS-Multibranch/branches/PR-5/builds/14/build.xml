@@ -1,0 +1,26 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<flow-build plugin="workflow-job@2.40">
+  <actions>
+    <hudson.model.CauseAction>
+      <causeBag class="linked-hash-map">
+        <entry>
+          <jenkins.branch.BranchEventCause plugin="branch-api@2.6.3">
+            <timestamp>1619395870791</timestamp>
+            <origin>140.82.115.243 → 35.227.197.193 → 140.82.115.243 ⇒ https://63b464.emporter.app:8081/github-webhook/</origin>
+            <description>Pull request #5 updated</description>
+          </jenkins.branch.BranchEventCause>
+          <int>1</int>
+        </entry>
+      </causeBag>
+    </hudson.model.CauseAction>
+  </actions>
+  <queueId>489</queueId>
+  <timestamp>1619395883649</timestamp>
+  <startTime>1619395883670</startTime>
+  <result>FAILURE</result>
+  <duration>12</duration>
+  <charset>UTF-8</charset>
+  <keepLog>false</keepLog>
+  <completed>true</completed>
+  <checkouts class="hudson.util.PersistedList"/>
+</flow-build>

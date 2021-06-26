@@ -1,0 +1,18 @@
+commit a7883c63f7b247fb6b7b64e5a718b8c78ad5ea66
+tree 425ab0e22b686c9f672296293d73c1517c075f6c
+parent 85d47ecddcfa9766cb0d6edd5145073e0516028c
+author Ivan Casanova <ivan.casanova@mercadolibre.com> 2021-04-25 21:11:07 -0300
+committer GitHub <noreply@github.com> 2021-04-25 21:11:07 -0300
+
+    Update build.sbt
+
+:100644 100644 dadaa4514da06567dea916618b8e1bf1767b994f eeab8b725551dfd47d5a3800cd220ae9eb9c76e7 M	build.sbt
+commit 85d47ecddcfa9766cb0d6edd5145073e0516028c
+tree 3a778b0056b23913c71d90af0ea9f7564c07e63a
+parent ac3d8be63ff46170956db44ec490af50c25dc905
+author Ivan Casanova <ivan.casanova@mercadolibre.com> 2021-04-25 21:10:19 -0300
+committer GitHub <noreply@github.com> 2021-04-25 21:10:19 -0300
+
+    Update plugins.sbt
+
+:100644 100644 edf2f516739557ed868783d878c78db756a7a102 9ef3f8dbbb498a98aeb080a08d564b76df0d7a14 M	project/plugins.sbt

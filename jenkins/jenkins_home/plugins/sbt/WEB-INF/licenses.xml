@@ -1,0 +1,12 @@
+<l:dependencies xmlns:l='licenses'>
+  <l:dependency name='Jenkins sbt plugin' groupId='org.jenkins-ci.plugins' artifactId='sbt' version='1.5' url='http://wiki.jenkins-ci.org/display/JENKINS/sbt+plugin'>
+    <l:description>Build your scala project using sbt in Jenkins</l:description>
+    <l:license name='The MIT License' url='http://www.opensource.org/licenses/mit-license.php' />
+  </l:dependency>
+  <l:dependency name='Commons Lang' groupId='commons-lang' artifactId='commons-lang' version='2.5' url='http://commons.apache.org/lang/'>
+    <l:description>Commons Lang, a package of Java utility classes for the
+        classes that are in java.lang's hierarchy, or are considered to be so
+        standard as to justify existence in java.lang.</l:description>
+    <l:license name='The Apache Software License, Version 2.0' url='http://www.apache.org/licenses/LICENSE-2.0.txt' />
+  </l:dependency>
+</l:dependencies>

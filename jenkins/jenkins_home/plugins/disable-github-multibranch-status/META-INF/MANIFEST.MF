@@ -1,0 +1,21 @@
+Manifest-Version: 1.0
+Archiver-Version: Plexus Archiver
+Created-By: Apache Maven
+Built-By: saville
+Build-Jdk: 1.8.0_201
+Extension-Name: disable-github-multibranch-status
+Specification-Title: Adds support for disabling the GitHub status for 
+ a Multibranch pipeline job.
+Implementation-Title: disable-github-multibranch-status
+Implementation-Version: 1.2
+Group-Id: org.jenkins-ci.plugins
+Short-Name: disable-github-multibranch-status
+Long-Name: Disable GitHub Multibranch Status Plugin
+Url: https://github.com/jenkinsci/disable-github-multibranch-status-pl
+ ugin
+Plugin-Version: 1.2
+Hudson-Version: 1.625.3
+Jenkins-Version: 1.625.3
+Plugin-Dependencies: github-branch-source:2.2.0
+Plugin-Developers: 
+

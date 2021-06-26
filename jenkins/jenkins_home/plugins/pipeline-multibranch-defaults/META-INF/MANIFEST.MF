@@ -1,0 +1,25 @@
+Manifest-Version: 1.0
+Archiver-Version: Plexus Archiver
+Created-By: Apache Maven
+Built-By: sam
+Build-Jdk: 1.8.0_222
+Extension-Name: pipeline-multibranch-defaults
+Specification-Title: Enhances Pipeline plugin to handle branches bette
+ r by automatically grouping builds from different
+         branches. Supports enable one default pipeline
+Implementation-Title: pipeline-multibranch-defaults
+Implementation-Version: 2.1
+Group-Id: org.jenkins-ci.plugins
+Short-Name: pipeline-multibranch-defaults
+Long-Name: Pipeline: Multibranch with defaults
+Url: https://wiki.jenkins-ci.org/display/JENKINS/Pipeline+Multibranch+
+ Defaults+Plugin
+Compatible-Since-Version: 2.0
+Plugin-Version: 2.1
+Hudson-Version: 2.130
+Jenkins-Version: 2.130
+Plugin-Dependencies: workflow-api:2.29,workflow-cps:2.56,workflow-job:
+ 2.25,workflow-multibranch:2.20,branch-api:2.0.20,cloudbees-folder:6.6
+ ,config-file-provider:3.2,scm-api:2.2.8
+Plugin-Developers: Sam Gleske:sag47:sam.mxracer@gmail.com
+

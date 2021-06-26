@@ -1,0 +1,26 @@
+Manifest-Version: 1.0
+Archiver-Version: Plexus Archiver
+Created-By: Apache Maven
+Built-By: timja
+Build-Jdk: 1.8.0_222
+Extension-Name: postbuild-task
+Specification-Title: Allows to execute a batch/shell task depending on
+  the build log output.
+Specification-Vendor: Ushus Technologies
+Implementation-Vendor: Ushus Technologies
+Implementation-Title: postbuild-task
+Implementation-Version: 1.9
+Group-Id: org.jvnet.hudson.plugins
+Short-Name: postbuild-task
+Long-Name: Post build task
+Url: https://github.com/jenkinsci/postbuild-task-plugin
+Minimum-Java-Version: 1.8
+Plugin-Version: 1.9
+Hudson-Version: 2.204.6
+Jenkins-Version: 2.204.6
+Plugin-Developers: Shinod Mohandas:shinodkm:shinodkm@gmail.com,Fred:ca
+ storpilot:castorpilot@gmail.com
+Plugin-License-Name: The MIT license
+Plugin-License-Url: https://opensource.org/licenses/MIT
+Plugin-ScmUrl: https://github.com/jenkinsci/postbuild-task-plugin
+

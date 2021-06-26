@@ -1,0 +1,7 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<jenkins.plugins.git.AbstractGitSCMSource_-SCMRevisionImpl plugin="git@4.7.1">
+  <head class="org.jenkinsci.plugins.github_branch_source.BranchSCMHead" plugin="github-branch-source@2.10.2">
+    <name>feature/jwt</name>
+  </head>
+  <hash>a45eb8605e4f6ec51c206e3ec6609a42a9c8ad6b</hash>
+</jenkins.plugins.git.AbstractGitSCMSource_-SCMRevisionImpl>

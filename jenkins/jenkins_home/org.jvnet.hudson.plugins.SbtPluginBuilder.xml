@@ -1,0 +1,19 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<org.jvnet.hudson.plugins.SbtPluginBuilder_-DescriptorImpl plugin="sbt@1.5">
+  <installations>
+    <org.jvnet.hudson.plugins.SbtPluginBuilder_-SbtInstallation>
+      <name>sbt</name>
+      <home></home>
+      <properties>
+        <hudson.tools.InstallSourceProperty>
+          <installers>
+            <org.jvnet.hudson.plugins.SbtPluginBuilder_-SbtInstaller>
+              <id>1.5.3</id>
+            </org.jvnet.hudson.plugins.SbtPluginBuilder_-SbtInstaller>
+          </installers>
+        </hudson.tools.InstallSourceProperty>
+      </properties>
+      <sbtArguments></sbtArguments>
+    </org.jvnet.hudson.plugins.SbtPluginBuilder_-SbtInstallation>
+  </installations>
+</org.jvnet.hudson.plugins.SbtPluginBuilder_-DescriptorImpl>

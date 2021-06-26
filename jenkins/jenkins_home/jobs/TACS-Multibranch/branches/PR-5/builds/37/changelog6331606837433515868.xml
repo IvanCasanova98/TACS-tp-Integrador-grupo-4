@@ -1,0 +1,1696 @@
+commit ff234602c9558edb95057741a3c1b2b822c111dc
+tree 2a8237744b4a2a665bba0a17b49dc243a8027754
+parent b44bfc5eff8fc8cb45386ac20256b152fd37eee8
+author JulietaAbuin <julieta.abuin@despegar.com> 2021-06-21 20:33:48 -0300
+committer JulietaAbuin <julieta.abuin@despegar.com> 2021-06-21 20:33:48 -0300
+
+    make entrega5 compile
+
+
+:100644 100644 340f23eb220dca4eb1050e43997bbac80d745272 bbbb5345834dad0e8c4bfd75d5c3edf00643c14c M	src/main/scala/repositories/daos/DeckSQLDao.scala
+:100644 100644 82c542a6fca6e62a31a45b8eb6c6e930dde898e9 de32eee14afdf7fe5482bf5f261266b2ba0c6585 M	src/main/scala/routes/Utils.scala
+commit aad8ab6cafa75625fa92b55ec6c54abeb6119d60
+tree d243b4428b4c176db3feda4d41d24aa2dea56d5d
+parent 691163cde5774239ff31ff3853187a6c4ae32bc0
+author Julieta Abuin <31349321+JulietaAbuin@users.noreply.github.com> 2021-06-21 20:14:14 -0300
+committer GitHub <noreply@github.com> 2021-06-21 20:14:14 -0300
+
+    Automated match (#26)
+    
+    * add automated player as WS client
+    
+    * now playing turns with automated player
+    
+    * finish thread when match ends
+    
+    * delete local daos that are not used
+    
+    * add automated player
+    
+    * ignore automated player from statistics
+    
+    * choose best attribute
+    
+    * remove imports
+
+:100644 100644 0289fce7ef550e56be0a47893792dba9f383945c 66ce25aa66770c1105718c237f943036153b8ced M	mysql-script/init_script.sql
+:000000 100644 0000000000000000000000000000000000000000 a30c2a9a93b1ea92b4bc836e39feb563b192bcce A	src/main/scala/models/AutomatedPlayer.scala
+:100644 100644 24cc913aeaca13e32a2e805822255e41282d850f 26b9be101a0dc28daf22f3adc64592bbcb7c26b2 M	src/main/scala/models/CardAttribute.scala
+:100644 100644 210a3a073a81667c4d197c7c9344b582bfaa8bad d4461f7a79e09ee16c49c7a2699aa9a3e1d4ae59 M	src/main/scala/repositories/StatisticsRepository.scala
+:100644 000000 8227f894c4f1656695ee161de255f0edcf85a8af 0000000000000000000000000000000000000000 D	src/main/scala/repositories/daos/MovementLocalDAO.scala
+:100644 000000 166f3b0bda0e72923d29c087fe83e6559d965dc2 0000000000000000000000000000000000000000 D	src/main/scala/repositories/daos/PlayerLocalDao.scala
+:100644 100644 d0acccf6630a5679322fefe277eae70a6f1dc98d 47e47d695f7e81bffcb21c9763c2b6af4b2e155c M	src/main/scala/routes/PlayRoutes.scala
+:100644 100644 c7829d33ccb8035f0f26293288ca0b9b470f0c2d afe2074d57b26291f44cb9c754f9569c005c1991 M	src/main/scala/routes/Routes.scala
+:100644 100644 644c3d5d7ab680d85cc73d8c048086030f4de143 82c542a6fca6e62a31a45b8eb6c6e930dde898e9 M	src/main/scala/routes/Utils.scala
+:100644 100644 4eecaf2c477c6fb8549f8b4eea7ef1c3030f22cb cdc6f33288b74759a948668425295c4885d62eda M	src/main/scala/serializers/Json4sSnakeCaseSupport.scala
+:100644 100644 f4771744e265f1728015ee5a3686c12a3692e979 9392ee1ebd4c0c4c9eb5ab94fdc9fcf4a1c06aed M	src/main/scala/server/ClassInjection.scala
+:100644 100644 404e125c5192d1e7733e0b3d5048c4eaca1e0106 1c621db605e827ff607ed3438b7ca3bf099b2296 M	src/main/scala/services/DeckService.scala
+:100644 100644 0246148f4414beb0f2a2e26f102ac150864f7f8a 4963967a708f93f35e35e4f155494e2eb9678aa5 M	src/main/scala/services/JWTUtils.scala
+:100644 100644 2f6cc220e58403a3c67325668ea08619d9da2a18 4f3983143f85adf49ebfa50c88602f7daa5f2dbf M	src/main/scala/services/MatchRoom.scala
+:000000 100644 0000000000000000000000000000000000000000 e6dd61eff81f4a08c3bb185c3a3a0d3c61c096c5 A	src/main/scala/services/MatchRoomActor.scala
+:100644 100644 ba84039e3fe3a05382fa832a6157657de11fff1d 47e748439bb08ace8b6e21396aa67878f81093c4 M	src/main/scala/services/MatchService.scala
+:100644 100644 3773add9de448a4075ec5d10fd4cc124b6fd27c0 847f0b519ceb64593a5a66ac8b49e69e25e0369a M	src/test/scala/integrationTests/MatchRoomActorTest.scala
+commit a45eb8605e4f6ec51c206e3ec6609a42a9c8ad6b
+tree 2858b4e316382f559e42f00766ce46d0ffc971a2
+parent 78c774551216c81f8d0752c9f5a27b6ac08d52ba
+author chiarama <chiarabetiana@gmail.com> 2021-06-21 02:00:18 -0500
+committer chiarama <chiarabetiana@gmail.com> 2021-06-21 02:00:18 -0500
+
+    mini fix
+
+
+:100644 100644 2b6e57a940b359ec46515b3e7eeadc040ac927f4 d3cb622db8cb64e88fa96193277a8adc17fb7af5 M	docker-compose.yml
+commit 8d52d6845aedd51e86daf8f6856eab6b68263e73
+tree 1b5f6576edff08495628db2635c09810b4ad2b78
+parent 0f348f38a0a7ce30e459978642bddf0f879cae90
+author chiarama <chiarabetiana@gmail.com> 2021-06-21 00:47:37 -0500
+committer chiarama <chiarabetiana@gmail.com> 2021-06-21 00:47:37 -0500
+
+    agrego jwt
+
+
+:100644 100644 fa5e2ecfe7fe3571570424b5099f0be69027d057 340f23eb220dca4eb1050e43997bbac80d745272 M	src/main/scala/repositories/daos/DeckSQLDao.scala
+:100644 100644 a3e89383255203e52c64c8a33273c3d0c391da2f 5b17d0384e9a419cf91b91b1e73415197f928745 M	src/main/scala/routes/DeckRoutes.scala
+:100644 100644 024a3c8f8291bc7c69034bbe2d59dca7e055f586 80b031619d7acd84fc0839639bb9ea9fc9c0ca96 M	src/main/scala/routes/MatchRoutes.scala
+:100644 100644 d05a13a6e09b0d78fc9b00a8214790d978520393 6e6f14b33e22414398bc4d0253f6c91b2aa9e3e2 M	src/main/scala/routes/StatisticsRoutes.scala
+:100644 100644 bd527072ef72d76e94d940b96182c61f44aa66fa 644c3d5d7ab680d85cc73d8c048086030f4de143 M	src/main/scala/routes/Utils.scala
+commit 154cf4cf0281616ec384030bbc1b261761945491
+tree f088db064d178f951a422f98f2859730359f1843
+parent 0afcb012b37e24dee75b852d54321b9bbb7d59e5
+author JulietaAbuin <julieta.abuin@despegar.com> 2021-06-20 19:12:59 -0300
+committer JulietaAbuin <julieta.abuin@despegar.com> 2021-06-20 19:12:59 -0300
+
+    remove imports
+
+
+:100644 100644 4d7300000b4def6ea388b73fb92e99b8e587331b a30c2a9a93b1ea92b4bc836e39feb563b192bcce M	src/main/scala/models/AutomatedPlayer.scala
+commit 0afcb012b37e24dee75b852d54321b9bbb7d59e5
+tree 83ce2db3200c919689df484bf417b7d856e151fc
+parent 5c5b58ff889ab77dba4f11296e62057dac9f09e1
+author JulietaAbuin <julieta.abuin@despegar.com> 2021-06-20 19:12:39 -0300
+committer JulietaAbuin <julieta.abuin@despegar.com> 2021-06-20 19:12:39 -0300
+
+    choose best attribute
+
+
+:100644 100644 83b144e809f14d2f35361b5cd7f9a97c0098f0d8 4d7300000b4def6ea388b73fb92e99b8e587331b M	src/main/scala/models/AutomatedPlayer.scala
+commit 5c5b58ff889ab77dba4f11296e62057dac9f09e1
+tree 6f31a616d3fe72bdd9d3e428e651b7074afeb0b5
+parent d70a2430f0afa8dcf6306f243fc5acb01b3a6243
+author JulietaAbuin <julieta.abuin@despegar.com> 2021-06-20 19:00:21 -0300
+committer JulietaAbuin <julieta.abuin@despegar.com> 2021-06-20 19:00:21 -0300
+
+    ignore automated player from statistics
+
+
+:100644 100644 210a3a073a81667c4d197c7c9344b582bfaa8bad d4461f7a79e09ee16c49c7a2699aa9a3e1d4ae59 M	src/main/scala/repositories/StatisticsRepository.scala
+commit 3fd082e72394855bdc52a31a264f6060c350de0f
+tree 108eae031f53cc1c3420ee2b09a25d0c2ec2efe3
+parent 5ba752b12917f86ed0c996dd7e9af57d5c91ff79
+author chiarama <chiarabetiana@gmail.com> 2021-06-19 20:24:17 -0500
+committer chiarama <chiarabetiana@gmail.com> 2021-06-19 20:24:17 -0500
+
+    agrego autorizacion en deckRoutes
+
+
+:100644 100644 9b6e9e6d43920ad09dbe3750368fdc0cf0d1dc6f e0706e436c1a644423491a58a54861cc94dc5e1f M	docker-compose.yml
+:100644 100644 16559532b4bd18e9434ddd8a49f79349f6efe5b1 a3e89383255203e52c64c8a33273c3d0c391da2f M	src/main/scala/routes/DeckRoutes.scala
+:100644 100644 012ec2df3a5af117647ed98d5e0813ffccc8292f cf349a91e779404a49c14ba7fc94ed1c318eddbf M	src/main/scala/routes/Utils.scala
+commit d70a2430f0afa8dcf6306f243fc5acb01b3a6243
+tree 13f2856d2047d515a1a6dae6523332699493ff01
+parent ac03fe8a4892734bad33e151ecc7ad7b3e280e46
+author JulietaAbuin <julieta.abuin@despegar.com> 2021-06-17 19:27:24 -0300
+committer JulietaAbuin <julieta.abuin@despegar.com> 2021-06-17 19:27:24 -0300
+
+    add automated player
+
+
+:100644 100644 0289fce7ef550e56be0a47893792dba9f383945c 66ce25aa66770c1105718c237f943036153b8ced M	mysql-script/init_script.sql
+commit ac03fe8a4892734bad33e151ecc7ad7b3e280e46
+tree e89fa6804ba26c542654e83b034e26ea0a0ce2a8
+parent 9a18324e5010cdde8ffdcdfedc3a1a68c416d7e8
+author JulietaAbuin <julieta.abuin@despegar.com> 2021-06-17 19:23:25 -0300
+committer JulietaAbuin <julieta.abuin@despegar.com> 2021-06-17 19:23:25 -0300
+
+    delete local daos that are not used
+
+
+:100644 100644 a496173322445d87f5e4a75690379856b4f5cb52 83b144e809f14d2f35361b5cd7f9a97c0098f0d8 M	src/main/scala/models/AutomatedPlayer.scala
+:100644 000000 8227f894c4f1656695ee161de255f0edcf85a8af 0000000000000000000000000000000000000000 D	src/main/scala/repositories/daos/MovementLocalDAO.scala
+:100644 000000 166f3b0bda0e72923d29c087fe83e6559d965dc2 0000000000000000000000000000000000000000 D	src/main/scala/repositories/daos/PlayerLocalDao.scala
+:100644 100644 55c7570ce03fd1249b4ff0b09746c2d92a555a72 9392ee1ebd4c0c4c9eb5ab94fdc9fcf4a1c06aed M	src/main/scala/server/ClassInjection.scala
+commit 9a18324e5010cdde8ffdcdfedc3a1a68c416d7e8
+tree 7461419bedc150e6a237070427d901769299d99a
+parent 746d727800f4d40a2bf140c67039260e01522506
+author JulietaAbuin <julieta.abuin@despegar.com> 2021-06-17 17:49:44 -0300
+committer JulietaAbuin <julieta.abuin@despegar.com> 2021-06-17 17:49:44 -0300
+
+    finish thread when match ends
+
+
+:100644 100644 1fcb97076ffb6c1cc0684001bb6242116d83edc7 a496173322445d87f5e4a75690379856b4f5cb52 M	src/main/scala/models/AutomatedPlayer.scala
+:100644 100644 424a01667bc11f15405ab5881cab1f06d3416e86 87092492d6b7858a6e43bc4ee15fd841546fb416 M	src/main/scala/routes/Utils.scala
+:100644 100644 b1b6039c679ee5db7546db037d954e9d0623e821 e6dd61eff81f4a08c3bb185c3a3a0d3c61c096c5 M	src/main/scala/services/MatchRoomActor.scala
+:100644 100644 ba84039e3fe3a05382fa832a6157657de11fff1d 47e748439bb08ace8b6e21396aa67878f81093c4 M	src/main/scala/services/MatchService.scala
+commit 746d727800f4d40a2bf140c67039260e01522506
+tree 9feabf73502aef01c6dde91e821f7a59b6a9aeff
+parent e9d1887aec404692e1a1553c724b3d0b67830f23
+author JulietaAbuin <julieta.abuin@despegar.com> 2021-06-17 17:17:16 -0300
+committer JulietaAbuin <julieta.abuin@despegar.com> 2021-06-17 17:17:16 -0300
+
+    now playing turns with automated player
+
+
+:100644 100644 1a55a3d3b61df625ad7227729b68add2feb5c837 1fcb97076ffb6c1cc0684001bb6242116d83edc7 M	src/main/scala/models/AutomatedPlayer.scala
+:100644 100644 24cc913aeaca13e32a2e805822255e41282d850f 26b9be101a0dc28daf22f3adc64592bbcb7c26b2 M	src/main/scala/models/CardAttribute.scala
+:100644 100644 c7829d33ccb8035f0f26293288ca0b9b470f0c2d afe2074d57b26291f44cb9c754f9569c005c1991 M	src/main/scala/routes/Routes.scala
+:100644 100644 f0d043f4e3f3611c00fc5af92766d9bfcb391698 424a01667bc11f15405ab5881cab1f06d3416e86 M	src/main/scala/routes/Utils.scala
+:100644 100644 4eecaf2c477c6fb8549f8b4eea7ef1c3030f22cb cdc6f33288b74759a948668425295c4885d62eda M	src/main/scala/serializers/Json4sSnakeCaseSupport.scala
+:100644 100644 f4771744e265f1728015ee5a3686c12a3692e979 55c7570ce03fd1249b4ff0b09746c2d92a555a72 M	src/main/scala/server/ClassInjection.scala
+:100644 100644 aebf42c392c47c7fbd17911969f13a18728d3a63 4f3983143f85adf49ebfa50c88602f7daa5f2dbf M	src/main/scala/services/MatchRoom.scala
+:000000 100644 0000000000000000000000000000000000000000 b1b6039c679ee5db7546db037d954e9d0623e821 A	src/main/scala/services/MatchRoomActor.scala
+:100644 100644 3773add9de448a4075ec5d10fd4cc124b6fd27c0 847f0b519ceb64593a5a66ac8b49e69e25e0369a M	src/test/scala/integrationTests/MatchRoomActorTest.scala
+commit e9d1887aec404692e1a1553c724b3d0b67830f23
+tree 46b07d4d50a82358eb96753497574d4a52358610
+parent d66ea0730523effbf6e3a71fec94bf1a003bd01b
+author JulietaAbuin <julieta.abuin@despegar.com> 2021-06-17 16:30:42 -0300
+committer JulietaAbuin <julieta.abuin@despegar.com> 2021-06-17 16:30:42 -0300
+
+    add automated player as WS client
+
+
+:000000 100644 0000000000000000000000000000000000000000 1a55a3d3b61df625ad7227729b68add2feb5c837 A	src/main/scala/models/AutomatedPlayer.scala
+:100644 100644 d0acccf6630a5679322fefe277eae70a6f1dc98d 47e47d695f7e81bffcb21c9763c2b6af4b2e155c M	src/main/scala/routes/PlayRoutes.scala
+:100644 100644 404e125c5192d1e7733e0b3d5048c4eaca1e0106 1c621db605e827ff607ed3438b7ca3bf099b2296 M	src/main/scala/services/DeckService.scala
+:100644 100644 2f6cc220e58403a3c67325668ea08619d9da2a18 aebf42c392c47c7fbd17911969f13a18728d3a63 M	src/main/scala/services/MatchRoom.scala
+commit 5ba752b12917f86ed0c996dd7e9af57d5c91ff79
+tree 62a41a2b3d5e7dd8e6c08be5a14d43d6377a15b9
+parent 2df6c3caee5bf8791f566cce7bdee5406133fd6d
+author chiarama <chiarabetiana@gmail.com> 2021-06-16 23:33:33 -0500
+committer chiarama <chiarabetiana@gmail.com> 2021-06-16 23:33:33 -0500
+
+    jwt for auth
+
+
+:100644 100644 147d4fef68c2276a698b9139472372adaaccc231 16559532b4bd18e9434ddd8a49f79349f6efe5b1 M	src/main/scala/routes/DeckRoutes.scala
+:100644 100644 c780f846a980efc79c1386ceeb0138d5ec543d5a 012ec2df3a5af117647ed98d5e0813ffccc8292f M	src/main/scala/routes/Utils.scala
+commit d66ea0730523effbf6e3a71fec94bf1a003bd01b
+tree bbc98abfcc30434462314e3eb46b6b5c44454377
+parent 35d9a56bff9c57a7d3103f7850087a1aaf153bca
+author IvanCasanova98 <ivan.casanova@mercadolibre.com> 2021-06-15 14:51:16 -0300
+committer IvanCasanova98 <ivan.casanova@mercadolibre.com> 2021-06-15 14:51:16 -0300
+
+    changed build for image
+
+
+:100644 100644 9b6e9e6d43920ad09dbe3750368fdc0cf0d1dc6f d3cb622db8cb64e88fa96193277a8adc17fb7af5 M	docker-compose.yml
+commit 35d9a56bff9c57a7d3103f7850087a1aaf153bca
+tree 17c087785173e3645ffb280f7ac25afc09042e2e
+parent 9722b2b2f41eba7b1b5e72bd9ca884bf7e8d6263
+author JulietaAbuin <julieta.abuin@despegar.com> 2021-06-15 10:18:03 -0300
+committer JulietaAbuin <julieta.abuin@despegar.com> 2021-06-15 10:18:03 -0300
+
+    remove drop
+
+
+:100644 100644 8904b4f3b81a4c461869ce591d1f034f26811272 0289fce7ef550e56be0a47893792dba9f383945c M	mysql-script/init_script.sql
+commit 9722b2b2f41eba7b1b5e72bd9ca884bf7e8d6263
+tree 4e90ac0555758efb0a656202c31e92402053c403
+parent 1e37a5bda85c9aac68aa9df8e78b8018d4c3f424
+author JulietaAbuin <julieta.abuin@despegar.com> 2021-06-15 01:38:53 -0300
+committer JulietaAbuin <julieta.abuin@despegar.com> 2021-06-15 01:38:53 -0300
+
+    add drop
+
+
+:100644 100644 0289fce7ef550e56be0a47893792dba9f383945c 8904b4f3b81a4c461869ce591d1f034f26811272 M	mysql-script/init_script.sql
+commit 1e37a5bda85c9aac68aa9df8e78b8018d4c3f424
+tree 17c087785173e3645ffb280f7ac25afc09042e2e
+parent 652e7dae379c8eefdac4deab530a2b2dbd54ee9f
+author JulietaAbuin <julieta.abuin@despegar.com> 2021-06-15 00:32:26 -0300
+committer JulietaAbuin <julieta.abuin@despegar.com> 2021-06-15 00:32:26 -0300
+
+    remove space from insert
+
+
+:100644 100644 31b7c63effb67aff284b688eb2ff5f6a91b5e256 0289fce7ef550e56be0a47893792dba9f383945c M	mysql-script/init_script.sql
+commit 652e7dae379c8eefdac4deab530a2b2dbd54ee9f
+tree 59bc57d54b3744f8587fc3a4b1bd8f9f4977c480
+parent b64ebb0de3ef7bda9319412a4b47fb1bca1d1d09
+author JulietaAbuin <julieta.abuin@despegar.com> 2021-06-14 23:38:25 -0300
+committer JulietaAbuin <julieta.abuin@despegar.com> 2021-06-14 23:38:25 -0300
+
+    add inserts to db
+
+
+:100644 100644 e1e4f003810d95078eb13e038359fac52309282b 31b7c63effb67aff284b688eb2ff5f6a91b5e256 M	mysql-script/init_script.sql
+commit b64ebb0de3ef7bda9319412a4b47fb1bca1d1d09
+tree 5fe8f1bd8d6421d336476930eb531b03b2c3de60
+parent b274f41b5d390f01bd996d6c92e4516c3f739e3c
+author JulietaAbuin <julieta.abuin@despegar.com> 2021-06-14 20:27:44 -0300
+committer JulietaAbuin <julieta.abuin@despegar.com> 2021-06-14 20:27:44 -0300
+
+    add abandon event to test
+
+
+:100644 100644 13e713487d7b304c56843f95d3e2bb5a75a6ea71 3773add9de448a4075ec5d10fd4cc124b6fd27c0 M	src/test/scala/integrationTests/MatchRoomActorTest.scala
+commit b274f41b5d390f01bd996d6c92e4516c3f739e3c
+tree 30d8b639491cfc1378eb4b80d8a9b7c79ad35c80
+parent 8135224d4e42cb935b3e1be006094636b54245b3
+author JulietaAbuin <julieta.abuin@despegar.com> 2021-06-14 20:21:37 -0300
+committer JulietaAbuin <julieta.abuin@despegar.com> 2021-06-14 20:21:37 -0300
+
+    filter by user and date
+
+
+:100644 100644 318ac12e67119c1820c8f21088f620ad364249cd 210a3a073a81667c4d197c7c9344b582bfaa8bad M	src/main/scala/repositories/StatisticsRepository.scala
+:100644 100644 cce1fe58162d60e455a7bf791d2962df776490aa 87ad399861874ccc9f2598aeefa6dfb4d3bb24bf M	src/main/scala/services/StatisticsService.scala
+:100644 100644 a3894cbdf2d1ad1d77c416a268b307f48803e632 9b472f97cfd217dbfc75adfd762fd903811416bd M	src/test/scala/integrationTests/StatisticsIntegrationTest.scala
+commit 8135224d4e42cb935b3e1be006094636b54245b3
+tree b4d09163ee5f4960308e82e5da46c3dc4c6ea64f
+parent 9f46f8fc15ccebb9232c6f41a0aba3d97f00743b
+author JulietaAbuin <julieta.abuin@despegar.com> 2021-06-14 20:13:42 -0300
+committer JulietaAbuin <julieta.abuin@despegar.com> 2021-06-14 20:13:42 -0300
+
+    added match actor tests
+
+
+:100644 100644 5dfc511ad0953e11a9f10834edf2d1c94f02497f 13e713487d7b304c56843f95d3e2bb5a75a6ea71 M	src/test/scala/integrationTests/MatchRoomActorTest.scala
+commit 9f46f8fc15ccebb9232c6f41a0aba3d97f00743b
+tree 0915eb3e993e90bfb8e52dea5d96edb9a4d7ed2d
+parent 599603986794d42ff63a4f6d646a5c5e77d9f699
+author JulietaAbuin <julieta.abuin@despegar.com> 2021-06-14 00:48:49 -0300
+committer JulietaAbuin <julieta.abuin@despegar.com> 2021-06-14 00:48:49 -0300
+
+    fixed match actor room test
+
+
+:100644 100644 2543d9b95b1d3549ef31dc9a622cb83d33ce4c68 df242a872bf750bb9127797b7b0cf054b1b04b6d M	build.sbt
+:100644 100644 efa9219cb2de67c8e9e5d962f8d38a25ab19f4d4 c7829d33ccb8035f0f26293288ca0b9b470f0c2d M	src/main/scala/routes/Routes.scala
+:100644 100644 27af6164d782da4e4f672392ad09def47dd31c81 2f6cc220e58403a3c67325668ea08619d9da2a18 M	src/main/scala/services/MatchRoom.scala
+:100644 100644 dc0dc5796bbf62e01f2602017e37874eaa9288c3 df6a5367c9ea0b5aeb4d064ed338f106ca51f75b M	src/test/scala/integrationTests/DeckCRUDIntegrationTest.scala
+:100644 100644 0952f561400032a8aa557d84c36a07f0053ffdd0 5dfc511ad0953e11a9f10834edf2d1c94f02497f M	src/test/scala/integrationTests/MatchRoomActorTest.scala
+:100644 100644 8a75e5594f896a61dd03407df0d5a85dedbdcb70 2e0ea35ae5ff79bca193787e57160eb439b3faec M	src/test/scala/integrationTests/MatchServiceIntegrationTest.scala
+:100644 100644 1849387f50ea8ff7e7e7befbc4e14f36bb3b7c36 a3894cbdf2d1ad1d77c416a268b307f48803e632 M	src/test/scala/integrationTests/StatisticsIntegrationTest.scala
+:100644 100644 59e9f47cc7bcf7ccf20b220fdd6bbf29b210fee7 50c820c2983a952a2e96e9ba77cf48467911c50a M	src/test/scala/unitTests/WebsocketRoutes.scala
+:100644 100644 152088963f69ee0955126608127379ab4dded7f3 de0196db6e6756170d35bc5b053c8a8a5300ce3e M	src/test/scala/unitTests/daoTests/DeckSQLDaoTest.scala
+:100644 100644 3714fbccfd65aa84a8bb8186373e6ccac5910c81 1a6bb6d488e14cea287635d338e52675475bb365 M	src/test/scala/unitTests/daoTests/MatchSQLDaoTest.scala
+:100644 100644 5cc0c0aa0b6a8e8b60d445e2189587acccfd254b 335ca7d81be4c748775f5417490db0156ec00287 M	src/test/scala/unitTests/daoTests/MovementSQLDaoTest.scala
+:100644 100644 337f82755b44b8156add787b5264bf3735f547f6 23d456a63e6dfec3e38a373def7345d6c81643c0 M	src/test/scala/unitTests/daoTests/PlayerSQLDaoTest.scala
+:000000 100644 0000000000000000000000000000000000000000 7dd720bc32f32d5c67032ec7c79f53f8819767e6 A	src/test/scala/unitTests/servicesTest/DeckServiceTest.scala
+:100644 100644 977c67d1688a6c00d02240269c34b80a24a2e91c 24e682b4f55ce05c843235cad82d39d4fc86e5ec M	src/test/scala/unitTests/servicesTest/MatchServiceTest.scala
+:100644 100644 12a97913e5b79ea07d1217950ef3238a002e3f53 6c67253120afe21e0bbb9dfae7be5135352189ca M	src/test/scala/unitTests/servicesTest/SuperheroApiTest.scala
+commit 599603986794d42ff63a4f6d646a5c5e77d9f699
+tree 8dc87b85a77e81ca57561f24425287e83268e8a2
+parent 27ccc6d3c09050ccfb7f87f2c143e2bb6868aa2c
+author JulietaAbuin <julieta.abuin@despegar.com> 2021-06-13 22:38:54 -0300
+committer JulietaAbuin <julieta.abuin@despegar.com> 2021-06-13 22:38:54 -0300
+
+    more coverage in match service
+
+
+:100644 100644 d9e7d34c5463750d6cc457b241a86c63178f8c71 fbb15a176a92b1cd6668834873f4cddd18ce01f5 M	src/main/scala/repositories/MatchRepository.scala
+:100644 100644 fcf5cbad15c0bba0b376ebb2f876297764b112a2 5377787598c3d599d6537b220816773f577c837e M	src/main/scala/repositories/MovementRepository.scala
+:100644 100644 7b822789339d13ad9a8045aa2c98bd8caa4f9282 28c29cc9707fc1c59fc0e2fab61a7cfeea99ef1b M	src/main/scala/routes/CardRoutes.scala
+:100644 100644 96256db8bb5719a7247b2c6ff31b92033c39a15b 404e125c5192d1e7733e0b3d5048c4eaca1e0106 M	src/main/scala/services/DeckService.scala
+:100644 100644 9ba692773ebed592db933deeb03a9a743e450411 917743c8840f5af595524cafafef940713444b68 M	src/main/scala/services/SuperheroApi.scala
+:100644 100644 c28ff8cdd9637a65f8420be9650ca16619004f90 dc0dc5796bbf62e01f2602017e37874eaa9288c3 M	src/test/scala/integrationTests/DeckCRUDIntegrationTest.scala
+:100644 100644 104813623614d75eae4ce260185f048dae640d9e 977c67d1688a6c00d02240269c34b80a24a2e91c M	src/test/scala/unitTests/servicesTest/MatchServiceTest.scala
+:100644 100644 c150971b46a226b47aefb5421743299769084fa4 12a97913e5b79ea07d1217950ef3238a002e3f53 M	src/test/scala/unitTests/servicesTest/SuperheroApiTest.scala
+commit 2df6c3caee5bf8791f566cce7bdee5406133fd6d
+tree 8d56e20f0419fdd856b0a049dc90fa0983bf3a47
+parent 66a7da7472e812b0144a470c283a842545282acd
+author chiarama <chiarabetiana@gmail.com> 2021-06-13 19:22:34 -0500
+committer chiarama <chiarabetiana@gmail.com> 2021-06-13 19:22:34 -0500
+
+    Add jwt
+
+
+:100644 100644 2543d9b95b1d3549ef31dc9a622cb83d33ce4c68 2b42e314c6aeb40156f64b52714b7a04b03005bb M	build.sbt
+:000000 100644 0000000000000000000000000000000000000000 0246148f4414beb0f2a2e26f102ac150864f7f8a A	src/main/scala/services/JWTUtils.scala
+:100644 100644 74da6a2d3ff0061bc647101e0346c4d3aa14f500 1dfd36d8ef87f8aa632b1b1612e63b1b4dc1cd7c M	src/main/scala/services/LoginService.scala
+commit 27ccc6d3c09050ccfb7f87f2c143e2bb6868aa2c
+tree 926cf0c265e652b80220d903bfac86f344a690d9
+parent c14e08f7369f1399be9734378a6dad45b8dea71c
+author JulietaAbuin <julieta.abuin@despegar.com> 2021-06-13 20:35:38 -0300
+committer JulietaAbuin <julieta.abuin@despegar.com> 2021-06-13 20:35:38 -0300
+
+    reuse delete tables
+
+
+:100644 100644 8bceae18cd1722a668016fbc6a26813c8f534076 d2c40976e508224dc053febe268c57b05f751a0c M	src/test/scala/db/H2DB.scala
+:100644 100644 50bcf6e54a3518a13093fec4c10391ab7e8868c9 8a75e5594f896a61dd03407df0d5a85dedbdcb70 M	src/test/scala/integrationTests/MatchServiceIntegrationTest.scala
+:100644 100644 017edd418ad23a8597dbacdd99ff6ecd1b741d22 1849387f50ea8ff7e7e7befbc4e14f36bb3b7c36 M	src/test/scala/integrationTests/StatisticsIntegrationTest.scala
+:100644 100644 549b5b1c25c896bca3549a3a63141307a4e1458f 152088963f69ee0955126608127379ab4dded7f3 M	src/test/scala/unitTests/daoTests/DeckSQLDaoTest.scala
+:100644 100644 d768eaae093c9039e9c9ad02cc132228a7120281 3714fbccfd65aa84a8bb8186373e6ccac5910c81 M	src/test/scala/unitTests/daoTests/MatchSQLDaoTest.scala
+:100644 100644 577df268165c090292c92eee47ed01969e979be5 5cc0c0aa0b6a8e8b60d445e2189587acccfd254b M	src/test/scala/unitTests/daoTests/MovementSQLDaoTest.scala
+commit c14e08f7369f1399be9734378a6dad45b8dea71c
+tree b41fbaf3e2df007718ae8ee245b11a285fa505f1
+parent 540e261288064f22c952f53657211a7b168fe647
+author JulietaAbuin <julieta.abuin@despegar.com> 2021-06-13 20:32:13 -0300
+committer JulietaAbuin <julieta.abuin@despegar.com> 2021-06-13 20:32:13 -0300
+
+    reset tests context
+
+
+:100644 100644 1ce1eb86ffd67c51755e568c6c14f4974136d629 50bcf6e54a3518a13093fec4c10391ab7e8868c9 M	src/test/scala/integrationTests/MatchServiceIntegrationTest.scala
+:100644 100644 d99f4cd16dc3043b20b7f69affbbafb36b8d6642 017edd418ad23a8597dbacdd99ff6ecd1b741d22 M	src/test/scala/integrationTests/StatisticsIntegrationTest.scala
+:100644 100644 f84d2ba1abe6ecc0514f7fbf3f02789118729f46 549b5b1c25c896bca3549a3a63141307a4e1458f M	src/test/scala/unitTests/daoTests/DeckSQLDaoTest.scala
+:100644 100644 f02ad2b60a4c142829cef3ee469a92d93eccd49e d768eaae093c9039e9c9ad02cc132228a7120281 M	src/test/scala/unitTests/daoTests/MatchSQLDaoTest.scala
+commit 04d3b6ce3d27fe9dd2f68975f7375d0c2b892d99
+tree dd3c493e23e1555ffab8eb6992b29120b028c02c
+parent 552c0c497a6a3d0d634056be4b884e1ca927fd1f
+author JulietaAbuin <julieta.abuin@despegar.com> 2021-06-13 19:44:43 -0300
+committer JulietaAbuin <julieta.abuin@despegar.com> 2021-06-13 19:44:43 -0300
+
+    added statistics tests
+
+
+:100644 100644 3b8c0ad0f03112cf3d268375e56a296340feced5 318ac12e67119c1820c8f21088f620ad364249cd M	src/main/scala/repositories/StatisticsRepository.scala
+:100644 100644 7c8d9f3ad5255390ea986d83788fc827206397cb d05a13a6e09b0d78fc9b00a8214790d978520393 M	src/main/scala/routes/StatisticsRoutes.scala
+:000000 100644 0000000000000000000000000000000000000000 d99f4cd16dc3043b20b7f69affbbafb36b8d6642 A	src/test/scala/integrationTests/StatisticsIntegrationTest.scala
+commit 61e21c1b2400b1a3a3805b028b5fac8c4202fc4a
+tree 54df3d52b6491d38b3f3142d3ffe7bcca7f06465
+parent 8f4af749a6ff7719474c2c7e8122caf18a9126aa
+author Ivan Casanova <ivan.casanova@mercadolibre.com> 2021-06-13 16:59:46 -0300
+committer Ivan Casanova <ivan.casanova@mercadolibre.com> 2021-06-13 16:59:46 -0300
+
+    fix test movements
+
+
+:100644 100644 1aa90eb6852b91ac00b6c32ad49d4ca5209099b3 8bceae18cd1722a668016fbc6a26813c8f534076 M	src/test/scala/db/H2DB.scala
+:100644 100644 fdde850bb7462b09d0db06b08adb81afaebc240f 4771eb8eb834ebb568cb2b7f38e73a89ee3574bd M	src/test/scala/unitTests/daoTests/MovementSQLDaoTest.scala
+commit 552c0c497a6a3d0d634056be4b884e1ca927fd1f
+tree be993e98511d2ab121adb00c479c1283d1984624
+parent 12b4e161f3452d83c4263e2c8ac4b6290f179fe3
+author JulietaAbuin <julieta.abuin@despegar.com> 2021-06-13 12:51:10 -0300
+committer JulietaAbuin <julieta.abuin@despegar.com> 2021-06-13 12:51:10 -0300
+
+    throw bad request if incorrect query params
+
+
+:100644 100644 41d8b16d845f4b6f990f4c019e7f0ee92d862f9d 3b8c0ad0f03112cf3d268375e56a296340feced5 M	src/main/scala/repositories/StatisticsRepository.scala
+:100644 100644 c06f404df9221fe06c4b387baa162d342a51b8a0 7c8d9f3ad5255390ea986d83788fc827206397cb M	src/main/scala/routes/StatisticsRoutes.scala
+:100644 100644 c780f846a980efc79c1386ceeb0138d5ec543d5a f0d043f4e3f3611c00fc5af92766d9bfcb391698 M	src/main/scala/routes/Utils.scala
+commit 12b4e161f3452d83c4263e2c8ac4b6290f179fe3
+tree 5d33570e3f11e8fc07733abc764273e7e48726a8
+parent da7c7ee1d88fde484e7f633361461aab10b04a70
+author JulietaAbuin <julieta.abuin@despegar.com> 2021-06-12 19:11:02 -0300
+committer JulietaAbuin <julieta.abuin@despegar.com> 2021-06-12 19:11:02 -0300
+
+    develop remaining statistics endpoint
+
+
+:100644 100644 c7c016e1b5b27da68ac640434d204126d1f326d4 1190e71318f4d4b6dabd9e7ec4005ec389929dc3 M	src/main/scala/exceptions/Exceptions.scala
+:100644 100644 fb8deebe392a50c2e1dd515f33dd45f6e0e4ca8c a11d25a221644d3bbb52d47b15ea6aafc21edb65 M	src/main/scala/models/Match.scala
+:100644 100644 8fef9fdf1963e1500170f0dbe1e944a93cc4d890 41d8b16d845f4b6f990f4c019e7f0ee92d862f9d M	src/main/scala/repositories/StatisticsRepository.scala
+:100644 100644 744998ee35f27374213dc4db6381773677d6c5da c06f404df9221fe06c4b387baa162d342a51b8a0 M	src/main/scala/routes/StatisticsRoutes.scala
+:100644 100644 dc4b8cfc0820b2da771a3bf0deb4e323d01e311b cce1fe58162d60e455a7bf791d2962df776490aa M	src/main/scala/services/StatisticsService.scala
+commit da7c7ee1d88fde484e7f633361461aab10b04a70
+tree 5aa6418f225d3eb632b578e089cdc0f0d5e98f08
+parent 8f4af749a6ff7719474c2c7e8122caf18a9126aa
+author JulietaAbuin <julieta.abuin@despegar.com> 2021-06-11 23:46:34 -0300
+committer JulietaAbuin <julieta.abuin@despegar.com> 2021-06-11 23:46:34 -0300
+
+    ranking statistics
+
+
+:100644 100644 8084b42b63892908df2c9d0a21eb3b668c1a62c5 8698e09be129c04319eae37c764a42eda342c239 M	src/main/scala/models/Player.scala
+:000000 100644 0000000000000000000000000000000000000000 8fef9fdf1963e1500170f0dbe1e944a93cc4d890 A	src/main/scala/repositories/StatisticsRepository.scala
+:100644 100644 e50042aa7227cb2750ab8d7e4d9e4b25cbf8c6f0 efa9219cb2de67c8e9e5d962f8d38a25ab19f4d4 M	src/main/scala/routes/Routes.scala
+:100644 100644 7b2de4eb862130063e74429e7d2bac89e7b49db9 744998ee35f27374213dc4db6381773677d6c5da M	src/main/scala/routes/StatisticsRoutes.scala
+:100644 100644 bb7b7893f69d810ccb8a61c58beb8717ea26ffd9 f4771744e265f1728015ee5a3686c12a3692e979 M	src/main/scala/server/ClassInjection.scala
+:100644 100644 74da6a2d3ff0061bc647101e0346c4d3aa14f500 b768ce55901e250445b4c82a36b692687a198613 M	src/main/scala/services/LoginService.scala
+:000000 100644 0000000000000000000000000000000000000000 dc4b8cfc0820b2da771a3bf0deb4e323d01e311b A	src/main/scala/services/StatisticsService.scala
+:100644 100644 fdde850bb7462b09d0db06b08adb81afaebc240f 0f517fa10cf18acb97dcb7e62f5cab736ad52fd4 M	src/test/scala/unitTests/daoTests/MovementSQLDaoTest.scala
+commit 8f4af749a6ff7719474c2c7e8122caf18a9126aa
+tree 0c61917996059587c4634dab7ec9f7c10d92fc22
+parent 28512ad04798e8d9ba87c7a7bdd3b21493f3601e
+author chiarama <chiarabetiana@gmail.com> 2021-06-10 20:01:50 -0500
+committer chiarama <chiarabetiana@gmail.com> 2021-06-10 20:01:50 -0500
+
+    Add test movementSQL
+
+
+:000000 100644 0000000000000000000000000000000000000000 fdde850bb7462b09d0db06b08adb81afaebc240f A	src/test/scala/unitTests/daoTests/MovementSQLDaoTest.scala
+commit 28512ad04798e8d9ba87c7a7bdd3b21493f3601e
+tree 606d39bfbf41582401fb4120d677cff1e6d7db9f
+parent 595410bc8658600c29c54e92176218d99cdf3809
+author chiarama <chiarabetiana@gmail.com> 2021-06-08 23:40:51 -0500
+committer chiarama <chiarabetiana@gmail.com> 2021-06-08 23:40:51 -0500
+
+    persist movement
+
+
+:100644 100644 9230bf62dc12d01faf85d4796419c0af34a6b2f7 9b6e9e6d43920ad09dbe3750368fdc0cf0d1dc6f M	docker-compose.yml
+:000000 100644 0000000000000000000000000000000000000000 4e15f2df6ad9772bb5dadf023bf5cb32f2d728cf A	src/main/scala/repositories/daos/MovementSQLDao.scala
+:100644 100644 62e6c52f1d93327d4ecdd5be63ebddb47a312e5c bb7b7893f69d810ccb8a61c58beb8717ea26ffd9 M	src/main/scala/server/ClassInjection.scala
+:100644 100644 4d9e212ddecc50a37afa9c7834a1aa1ef4231344 9075d2f59c4852b672945f6274671c5f6844ac5a M	src/main/scala/server/DBConnection.scala
+commit d277581192dcde82c000963a019af82443399120
+tree 964430531bbcf5b596c97135329a46f45b2394a7
+parent 4bb308ba0d1a18b8739bcc658e9a202a773fe5aa
+author chiarama <chiarabetiana@gmail.com> 2021-06-08 22:00:45 -0500
+committer chiarama <chiarabetiana@gmail.com> 2021-06-08 22:00:45 -0500
+
+    persist players and matches
+
+
+:100644 100644 8d05e7089b7752febe4f8ed23f509918b301c85f 32bf490d72a1ea799ee23e306a28e84c3ce8b034 M	Dockerfile
+:100644 100644 054bef7bd47dd1ec9f75e052fa56dce56298b4f4 e1e4f003810d95078eb13e038359fac52309282b M	mysql-script/init_script.sql
+:100644 100644 12d23e630e13f004c17b2906ff5e838152a38c4e a60cb1d958cb8dfc9dd7b0d7b7c6b72e8eb4ed49 M	src/main/scala/server/ClassInjection.scala
+commit aa0e184f272eb21259661730a9802bd307d9f034
+tree a76c13492931ee4a184f54791cb46c8198ae3b9b
+parent e2f7e5e6e6751141361ba9543944358969184813
+author JulietaAbuin <julieta.abuin@despegar.com> 2021-06-08 23:13:15 -0300
+committer JulietaAbuin <julieta.abuin@despegar.com> 2021-06-08 23:13:15 -0300
+
+    fix other tests
+
+
+:100644 100644 1d46418c881a69fb9beede7185d131528562636c 1ce1eb86ffd67c51755e568c6c14f4974136d629 M	src/test/scala/integrationTests/MatchServiceIntegrationTest.scala
+:100644 100644 3720919cbc47ba6548ba1eceb78f271f81de7afa 83151afd377423cc75fbbe16278616002f52f463 M	src/test/scala/unitTests/daoTests/DeckSQLDaoTest.scala
+commit e2f7e5e6e6751141361ba9543944358969184813
+tree bc49f5f4f8aef78d26165e9f84e9119cae8f7ddd
+parent 4bb308ba0d1a18b8739bcc658e9a202a773fe5aa
+author JulietaAbuin <julieta.abuin@despegar.com> 2021-06-08 23:01:17 -0300
+committer JulietaAbuin <julieta.abuin@despegar.com> 2021-06-08 23:01:17 -0300
+
+    fixed tests, match room actor test remaining
+
+
+:100644 100644 fb131db0a471a7b110f3ef4fb760a62ce732e8bb 147d4fef68c2276a698b9139472372adaaccc231 M	src/main/scala/routes/DeckRoutes.scala
+:100644 100644 914eb91fa18bbf58513895d60d98c11ed1c72fad 024a3c8f8291bc7c69034bbe2d59dca7e055f586 M	src/main/scala/routes/MatchRoutes.scala
+:100644 100644 12d23e630e13f004c17b2906ff5e838152a38c4e 448b1197e6eea43ff52966402c6a6438b49b13f1 M	src/main/scala/server/ClassInjection.scala
+:100644 100644 a7e1a471335df0d148fa1f41db71104b59227fbb 4d9e212ddecc50a37afa9c7834a1aa1ef4231344 M	src/main/scala/server/DBConnection.scala
+:000000 100644 0000000000000000000000000000000000000000 edd869598eeea41bd12899d07d97180ca1fb4666 A	src/test/scala/db/RoutesWithTestInjection.scala
+:100644 100644 a41b167723a34092e0ca768edbc10b87d56d0ec2 c28ff8cdd9637a65f8420be9650ca16619004f90 M	src/test/scala/integrationTests/DeckCRUDIntegrationTest.scala
+:100644 100644 f52725b728259e10901c7d557bea7b98447fb542 1d46418c881a69fb9beede7185d131528562636c M	src/test/scala/integrationTests/MatchServiceIntegrationTest.scala
+commit 4bb308ba0d1a18b8739bcc658e9a202a773fe5aa
+tree d1305dfc3552757f6c777ba7a3dc1451bca68258
+parent 43829afacfd7f6c3c6875b116bd3499ecaa60dfe
+author JulietaAbuin <julieta.abuin@despegar.com> 2021-06-08 20:09:31 -0300
+committer JulietaAbuin <julieta.abuin@despegar.com> 2021-06-08 20:09:31 -0300
+
+    remove imports
+
+
+:100644 100644 16e9fa153cb364f050d35646c4313276ee87bf71 f52725b728259e10901c7d557bea7b98447fb542 M	src/test/scala/integrationTests/MatchServiceIntegrationTest.scala
+commit 43829afacfd7f6c3c6875b116bd3499ecaa60dfe
+tree 2724da7ec5948be6449576e05490e7d3a3228aa2
+parent 6736d0fa6bd8b5c0537db3e1ee62d898055e443a
+author JulietaAbuin <julieta.abuin@despegar.com> 2021-06-08 20:09:18 -0300
+committer JulietaAbuin <julieta.abuin@despegar.com> 2021-06-08 20:09:18 -0300
+
+    finish matchsql dao and change tests
+
+
+:100644 100644 655082814c3e45c4efce5ecffff509f6363a344a 0b4dea63041552df9da883989f93cd9b191ff141 M	src/main/scala/repositories/daos/MatchSQLDao.scala
+:100644 100644 3a44f2f2385589629e5479dfd4be9725543d7861 914eb91fa18bbf58513895d60d98c11ed1c72fad M	src/main/scala/routes/MatchRoutes.scala
+:100644 100644 a963ccf37862410ee599f8c1b5ee727b5911be4f 31c15fa7272295aac48740fdf84cb854ba25a1b8 M	src/test/resources/superamigos.sql
+:100644 100644 800c9459b6ad8faad66af2e4f151ba84c63728ef 16e9fa153cb364f050d35646c4313276ee87bf71 M	src/test/scala/integrationTests/MatchServiceIntegrationTest.scala
+:100644 100644 a7210b589060d5b09bbb7cde9428231e33623708 b4d033c9069a1bf84d1cc8366fb78f4a024fc783 M	src/test/scala/unitTests/daoTests/MatchSQLDaoTest.scala
+commit 15a8610e1c4e941eb668cc17c0eb0de72e813781
+tree 0b521fe2408a20ad3fd468ff0a0656959d4928e3
+parent 65306a0e816fd8e53e3db51ddbeb1cedd63e093b
+author chiarama <chiarabetiana@gmail.com> 2021-06-08 00:27:05 -0500
+committer chiarama <chiarabetiana@gmail.com> 2021-06-08 00:27:05 -0500
+
+    cambio memoria por database
+
+
+:100644 100644 dac181f726d9ecedfe1ba856ba84e11d5357f9a2 76d3230009d02a3059f141314089abce16bedd62 M	src/main/scala/server/ClassInjection.scala
+commit a69d757669e38f6c1efc6d1fa73dddcf8250d218
+tree 029e23eb08e471b86a00ee0346923d56d51d37ab
+parent 6cb484f98041b986c8fcea0db78b292569ab81ab
+author fgiannotti <francogiannotti115@gmail.com> 2021-06-08 01:38:36 -0300
+committer fgiannotti <francogiannotti115@gmail.com> 2021-06-08 01:38:36 -0300
+
+    player sql dao + test
+
+
+:100644 100644 e75b3b873902aa72fe258cc88d70de5c0b79973c 9976f3dc2e96f844f0e43acf5a2657ccac796661 M	src/main/scala/repositories/PlayerRepository.scala
+:100644 100644 8aecf92008964e4e41dad50f055dc343ec367105 fa5e2ecfe7fe3571570424b5099f0be69027d057 M	src/main/scala/repositories/daos/DeckSQLDao.scala
+:000000 100644 0000000000000000000000000000000000000000 d81b6691e14e43832e92fec9365017def284548d A	src/main/scala/repositories/daos/PlayerDao.scala
+:000000 100644 0000000000000000000000000000000000000000 166f3b0bda0e72923d29c087fe83e6559d965dc2 A	src/main/scala/repositories/daos/PlayerLocalDao.scala
+:000000 100644 0000000000000000000000000000000000000000 6bafae756b2cece713e1d042a7074576acd073fb A	src/main/scala/repositories/daos/PlayerSQLDao.scala
+:100644 100644 dac181f726d9ecedfe1ba856ba84e11d5357f9a2 ecdad2bc0ff00d12d59a03e678e24c5830631c78 M	src/main/scala/server/ClassInjection.scala
+:000000 100644 0000000000000000000000000000000000000000 337f82755b44b8156add787b5264bf3735f547f6 A	src/test/scala/unitTests/daoTests/PlayerSQLDaoTest.scala
+commit 65306a0e816fd8e53e3db51ddbeb1cedd63e093b
+tree 2c69252efe448a17210a8881bbff8cb87b3d62a2
+parent 2c60cbf962fb8a34974d7d4873e463068816a3b5
+author chiarama <chiarabetiana@gmail.com> 2021-06-07 22:53:22 -0500
+committer chiarama <chiarabetiana@gmail.com> 2021-06-07 22:53:22 -0500
+
+    persist data
+
+
+:100644 100644 6dbce0fefce71d2082316fb1aee1e701fcf63626 a7f60acc550755d75333ce60833f57cd1627d95e M	.gitignore
+:100644 100644 10ae9e0615a82da3b0b0984bea46ac289fd552c4 9230bf62dc12d01faf85d4796419c0af34a6b2f7 M	docker-compose.yml
+:100644 100644 df79cf59800457763fa8b42bc447bc47185a7548 054bef7bd47dd1ec9f75e052fa56dce56298b4f4 M	mysql-script/init_script.sql
+commit 41a8c587ed02c75d7e351ddc701caa5dd3f2c495
+tree 413eaec4748232f01f979f7831a662b414baf7c4
+parent 6cb484f98041b986c8fcea0db78b292569ab81ab
+author JulietaAbuin <julieta.abuin@despegar.com> 2021-06-08 00:39:41 -0300
+committer JulietaAbuin <julieta.abuin@despegar.com> 2021-06-08 00:39:41 -0300
+
+    comment some fks and do matchsqldao without players integration
+
+
+:100644 100644 854f24adbbeb0e357569d0364ed504f901982fff d24e8386ad1cd4810b4625d655cfd55c08729554 M	src/main/scala/repositories/daos/MatchLocalDAO.scala
+:100644 100644 845495ec55b72abcea29259c8a0111de0e4e8bf6 655082814c3e45c4efce5ecffff509f6363a344a M	src/main/scala/repositories/daos/MatchSQLDao.scala
+:100644 100644 e9683a5eb98825661b5b6bd4396c7553164490ee aa5fdf39b29f0982463079c4b30ceb4e80211f7f M	src/main/scala/repositories/dbdtos/MatchDBDTO.scala
+:100644 100644 dac181f726d9ecedfe1ba856ba84e11d5357f9a2 f78b6c9398f82f5a3fe380ef83d9e20e22587bca M	src/main/scala/server/ClassInjection.scala
+:100644 100644 cb4f82871c6a9f12872de4c950bc127654687214 5bec7da710394e8cc4171cfb0ba8d7c9192f6b90 M	src/test/resources/superamigos.sql
+:100644 100644 f8ecfaa58d7c639dff677f34cb791dad56720398 0952f561400032a8aa557d84c36a07f0053ffdd0 M	src/test/scala/integrationTests/MatchRoomActorTest.scala
+:100644 100644 1cfe60a0202fa13044984c42d616f29cd97787ff 800c9459b6ad8faad66af2e4f151ba84c63728ef M	src/test/scala/integrationTests/MatchServiceIntegrationTest.scala
+:000000 100644 0000000000000000000000000000000000000000 a7210b589060d5b09bbb7cde9428231e33623708 A	src/test/scala/unitTests/daoTests/MatchSQLDaoTest.scala
+commit b82a5a13d2146165bd85184798b2cd627dc7e099
+tree 09d1a224648a54b9a0c8fa9d28d67e13c8277c51
+parent 9e33407b24c932705e22e78b1201f8af2e982cb1
+author chiarama <chiarabetiana@gmail.com> 2021-06-07 21:49:47 -0500
+committer chiarama <chiarabetiana@gmail.com> 2021-06-07 21:49:47 -0500
+
+    agrego base de datos a docker
+
+
+:100644 100644 5b58e374562844bb709a2cacbb1b6598e7ac9e40 6dbce0fefce71d2082316fb1aee1e701fcf63626 M	.gitignore
+:100644 100644 b56a167778b8f77336b3598da75818d8c75e3c08 352316b4bf788048cb28899703da998de5dfdd02 M	docker-compose.yml
+:000000 100644 0000000000000000000000000000000000000000 df79cf59800457763fa8b42bc447bc47185a7548 A	mysql-script/init_script.sql
+:100644 100644 681652a446caadd2711d1b87c8fd008cd89fd3bd 99b4763043a90014c29d79d6146df72332358027 M	src/main/scala/server/DBConnection.scala
+:100644 100644 7ead18dad6bde4789db95595732af01c8ee1756a 9acd2f3b930927a417cd6990799a1cf2373e7bff M	src/test/resources/superamigos.sql
+commit 6cb484f98041b986c8fcea0db78b292569ab81ab
+tree f284387b27a6f95be9522d3ecc39f871506688a2
+parent 6b5d0d38b7df7635fd8693c08622ae8aeb793cf5
+author JulietaAbuin <julieta.abuin@despegar.com> 2021-06-07 01:37:36 -0300
+committer JulietaAbuin <julieta.abuin@despegar.com> 2021-06-07 01:37:36 -0300
+
+    make create deck return real id and added get all decks
+
+
+:100644 100644 cf7dc030e84964679aff69570419dcd06f70f8b0 8aecf92008964e4e41dad50f055dc343ec367105 M	src/main/scala/repositories/daos/DeckSQLDao.scala
+:000000 100644 0000000000000000000000000000000000000000 845495ec55b72abcea29259c8a0111de0e4e8bf6 A	src/main/scala/repositories/daos/MatchSQLDao.scala
+:100644 100644 7ead18dad6bde4789db95595732af01c8ee1756a cb4f82871c6a9f12872de4c950bc127654687214 M	src/test/resources/superamigos.sql
+:100644 100644 72c983fa5fd0ce7600a5647eed3a0820dd6c72c7 3720919cbc47ba6548ba1eceb78f271f81de7afa M	src/test/scala/unitTests/daoTests/DeckSQLDaoTest.scala
+commit 6b5d0d38b7df7635fd8693c08622ae8aeb793cf5
+tree 5ea420c41815192f16e78453002beb8504e6e700
+parent 9e33407b24c932705e22e78b1201f8af2e982cb1
+author JulietaAbuin <julieta.abuin@despegar.com> 2021-06-07 00:26:25 -0300
+committer JulietaAbuin <julieta.abuin@despegar.com> 2021-06-07 00:26:25 -0300
+
+    Added app user and changed deck integration tests
+
+
+:000000 100644 0000000000000000000000000000000000000000 791e14432db8ad8e07a5afddca0c9deb169600b9 A	src/main/resources/database_user.sql
+:100644 100644 1cf04aad6f7c6a03d79f184bbd76911e599a4f17 c7c016e1b5b27da68ac640434d204126d1f326d4 M	src/main/scala/exceptions/Exceptions.scala
+:100644 100644 34b7bd756decb84e40d3ca663c495497bc5f476a 8719f02bfcd47e40cfe58c6a94be61d9fc62a9cb M	src/main/scala/repositories/DeckRepository.scala
+:100644 100644 681652a446caadd2711d1b87c8fd008cd89fd3bd 4eede4ca426b5bcbdf9a0aa71cdb108a79dc7152 M	src/main/scala/server/DBConnection.scala
+:100644 100644 fea841793c25163cc68cd6895e188bece9afc024 1aa90eb6852b91ac00b6c32ad49d4ca5209099b3 M	src/test/scala/db/H2DB.scala
+:100644 100644 34e733b404345fbba7ea59b8456c463b432d7f4e a41b167723a34092e0ca768edbc10b87d56d0ec2 M	src/test/scala/integrationTests/DeckCRUDIntegrationTest.scala
+:100644 100644 f3568222c60ac93036b039828738cad6109c1b96 72c983fa5fd0ce7600a5647eed3a0820dd6c72c7 M	src/test/scala/unitTests/daoTests/DeckSQLDaoTest.scala
+commit 9e33407b24c932705e22e78b1201f8af2e982cb1
+tree 7c73f8ac002554101e1b21d7f682a93271751b16
+parent ffb22453345957f32641b2af0e09bcbe3d7ba9fd
+author fgiannotti <francogiannotti115@gmail.com> 2021-06-06 19:12:11 -0300
+committer fgiannotti <francogiannotti115@gmail.com> 2021-06-06 19:12:11 -0300
+
+    update deck + delete deck implementation with tests
+
+
+:100644 100644 78c784f4ad33e64b3b4b50974faea64e36f09674 cf7dc030e84964679aff69570419dcd06f70f8b0 M	src/main/scala/repositories/daos/DeckSQLDao.scala
+:100644 100644 f58ae7b7aca9c66fcdc16d69fefd8b4ce912dc30 f3568222c60ac93036b039828738cad6109c1b96 M	src/test/scala/unitTests/daoTests/DeckSQLDaoTest.scala
+commit ffb22453345957f32641b2af0e09bcbe3d7ba9fd
+tree f881a69c36d65fd10bb865bd2ed928195ff505dc
+parent 5379cd4ce212493b3968984643e33895e754ca3f
+author fgiannotti <francogiannotti115@gmail.com> 2021-06-06 18:00:35 -0300
+committer fgiannotti <francogiannotti115@gmail.com> 2021-06-06 18:00:35 -0300
+
+    first dao with sql implementation + test working
+
+
+:100644 100644 17c6d17ac66492198cd767710832a4ce34f8f44b 2543d9b95b1d3549ef31dc9a622cb83d33ce4c68 M	build.sbt
+:000000 100644 0000000000000000000000000000000000000000 78c784f4ad33e64b3b4b50974faea64e36f09674 A	src/main/scala/repositories/daos/DeckSQLDao.scala
+:100644 100644 d379daedc7652cf81d9106006cdbc6c74e93af43 dac181f726d9ecedfe1ba856ba84e11d5357f9a2 M	src/main/scala/server/ClassInjection.scala
+:000000 100644 0000000000000000000000000000000000000000 681652a446caadd2711d1b87c8fd008cd89fd3bd A	src/main/scala/server/DBConnection.scala
+:100644 100644 1adfd0d2e13bcd9eaf6cd155a9032269584ef6f6 cc32cdde1867f1ae2045c8b26d5cffbee1edd9ca M	src/main/scala/server/HttpServer.scala
+:000000 100644 0000000000000000000000000000000000000000 7ead18dad6bde4789db95595732af01c8ee1756a A	src/test/resources/superamigos.sql
+:000000 100644 0000000000000000000000000000000000000000 fea841793c25163cc68cd6895e188bece9afc024 A	src/test/scala/db/H2DB.scala
+:000000 100644 0000000000000000000000000000000000000000 f58ae7b7aca9c66fcdc16d69fefd8b4ce912dc30 A	src/test/scala/unitTests/daoTests/DeckSQLDaoTest.scala
+commit 16212a233e9b2075e5a1d106dc6c39e6ada5487e
+tree d0b44fb9959b62f8f0c33db9026ff3db2f11ce2e
+parent 02efb3d2c567d9665fd7066134ef5ca3688933ea
+author fgiannotti <franco.giannotti@mercadolibre.com> 2021-06-01 17:21:31 -0300
+committer fgiannotti <franco.giannotti@mercadolibre.com> 2021-06-01 17:21:31 -0300
+
+    make any new player as addmin
+
+
+:100644 100644 933191ef49f4af80afcfd1ed2939d16187500639 e75b3b873902aa72fe258cc88d70de5c0b79973c M	src/main/scala/repositories/PlayerRepository.scala
+commit 02efb3d2c567d9665fd7066134ef5ca3688933ea
+tree 8251da4091acf816e59c57a77ca86c1e7f28e3b3
+parent 9531f5475e9222012015094dfd71153bd3294649
+author JulietaAbuin <julieta.abuin@despegar.com> 2021-06-01 10:28:12 -0300
+committer JulietaAbuin <julieta.abuin@despegar.com> 2021-06-01 10:28:12 -0300
+
+    change test
+
+
+:100644 100644 fd9c89a6bb2ec78a55b1ea8da91061403349ccee f8ecfaa58d7c639dff677f34cb791dad56720398 M	src/test/scala/integrationTests/MatchRoomActorTest.scala
+commit 9531f5475e9222012015094dfd71153bd3294649
+tree 2be3660aff3248866e56861245149dc9ce1dc392
+parent 6e1046baa3d7262dfbcb830da9ffdc148af7c896
+author chiarama <chiarabetiana@gmail.com> 2021-05-31 23:58:20 -0500
+committer chiarama <chiarabetiana@gmail.com> 2021-05-31 23:58:20 -0500
+
+    Restriccion para modificar estados de partidas terminadas
+
+
+:100644 100644 a542c0f6f0a8e18d1553f7577a630b453d10bec2 854f24adbbeb0e357569d0364ed504f901982fff M	src/main/scala/repositories/daos/MatchLocalDAO.scala
+commit 6e1046baa3d7262dfbcb830da9ffdc148af7c896
+tree f0148c10e4ee6332016982228617e646cd2bc2a2
+parent 85e810b7b14a4d277dad22124690efdfa55941bf
+author fgiannotti <franco.giannotti@mercadolibre.com> 2021-05-31 22:13:29 -0300
+committer fgiannotti <franco.giannotti@mercadolibre.com> 2021-05-31 22:13:29 -0300
+
+    abandon event
+
+
+:100644 100644 d801f0aeb6780a741dff7630b2c77c7f8bfa7e74 6fb6e054711989eae2b0312ab982560db9ed466e M	src/main/scala/models/Events.scala
+:100644 100644 fd63f8a756aea45f7cf0f795771fb3273b84c589 fb8deebe392a50c2e1dd515f33dd45f6e0e4ca8c M	src/main/scala/models/Match.scala
+:100644 100644 88dbe99d79e404176cbe97ac5348d3f598148f1b 27af6164d782da4e4f672392ad09def47dd31c81 M	src/main/scala/services/MatchRoom.scala
+commit 51adec0c35975847001f1b38795e28b521080b32
+tree b6217c7624a16d1e3f71cfd179cb9a686f129dc3
+parent 532d55ae775815b7cc357629246970aab4f3499f
+author fgiannotti <franco.giannotti@mercadolibre.com> 2021-05-31 21:41:51 -0300
+committer fgiannotti <franco.giannotti@mercadolibre.com> 2021-05-31 21:41:51 -0300
+
+    stop match msg when user left match
+
+
+:100644 100644 13141900d4c2ec4e8cd2c53d5df4dcf042232486 c0408c67615fecedab8850b52219be04316fe0d8 M	src/main/scala/services/MatchRoom.scala
+commit fe31cfcedf24aff02576e27b73951dcae61c6edc
+tree ce5c96a3b96988613d7ca173db49bab7de4a98ac
+parent 532d55ae775815b7cc357629246970aab4f3499f
+author JulietaAbuin <julieta.abuin@despegar.com> 2021-05-31 21:31:40 -0300
+committer JulietaAbuin <julieta.abuin@despegar.com> 2021-05-31 21:31:40 -0300
+
+    fix ids in decks
+
+
+:100644 100644 ee10727ebf563420ca5b281f5c7e7e66f8325599 d379daedc7652cf81d9106006cdbc6c74e93af43 M	src/main/scala/server/ClassInjection.scala
+:100644 100644 13141900d4c2ec4e8cd2c53d5df4dcf042232486 7d9d0fff6ef1cee90a7904816847d9d7a0791480 M	src/main/scala/services/MatchRoom.scala
+commit dadcb2415229bb03930e1803cb6365369d5a7aa3
+tree 66219b7349c0d992c01936496329abf4496eeec8
+parent 7219bc9b39531e1f3fbf3ba1fa9bc56cc310756d
+author JulietaAbuin <julieta.abuin@despegar.com> 2021-05-31 20:17:36 -0300
+committer JulietaAbuin <julieta.abuin@despegar.com> 2021-05-31 20:17:36 -0300
+
+    continue match
+
+
+:100644 100644 6d30de9d0697d8e861e6fb686f49150ebc0cd72f a542c0f6f0a8e18d1553f7577a630b453d10bec2 M	src/main/scala/repositories/daos/MatchLocalDAO.scala
+:100644 100644 1c317a3a8e7ff50b5246602f629e9f62b0307adf 8227f894c4f1656695ee161de255f0edcf85a8af M	src/main/scala/repositories/daos/MovementLocalDAO.scala
+:100644 100644 48f8e637e772ac27988967a9addf00288e30e537 a2a9e8b9f2eddd584a2aa5501181de8ea7b65772 M	src/main/scala/routes/PlayRoutes.scala
+:100644 100644 2bc86ebe1ef704c2b3ab5fc891e27f3966f25c9b 7bdf4fa1d7aabf21ccdfaa26a9df8a2b95027b31 M	src/main/scala/services/MatchRoom.scala
+:100644 100644 4e5818a8a6fd9e96d8a2c3b7e6c6eb5dcde8e41d 40e610299d14a88f50e77cdbb31cb23274f5b758 M	src/main/scala/services/MatchService.scala
+:100644 100644 17f52889ded78761305a48bb2dfa4ef0b3537b3f 104813623614d75eae4ce260185f048dae640d9e M	src/test/scala/unitTests/servicesTest/MatchServiceTest.scala
+commit f3428c0443e546b5aed345afc0ac0af5c1143dab
+tree 9183cd9dca339f2f330e17f4f8bdc0e0b53916a7
+parent 5de675eb5cb26bc537aaafed1ac3573dafe42c46
+author fgiannotti <franco.giannotti@mercadolibre.com> 2021-05-31 18:49:49 -0300
+committer fgiannotti <franco.giannotti@mercadolibre.com> 2021-05-31 18:49:49 -0300
+
+    id order
+
+
+:100644 100644 42ebcc378240d232280e73d88599685a4dc04949 df517c75b0475956dd464daf9ce077819ae32bff M	src/main/scala/repositories/daos/DeckLocalDao.scala
+:100644 100644 6d30de9d0697d8e861e6fb686f49150ebc0cd72f a542c0f6f0a8e18d1553f7577a630b453d10bec2 M	src/main/scala/repositories/daos/MatchLocalDAO.scala
+:100644 100644 1c317a3a8e7ff50b5246602f629e9f62b0307adf 8227f894c4f1656695ee161de255f0edcf85a8af M	src/main/scala/repositories/daos/MovementLocalDAO.scala
+:100644 100644 4e5818a8a6fd9e96d8a2c3b7e6c6eb5dcde8e41d 114989838132534865f026ef355b0d1f015151c3 M	src/main/scala/services/MatchService.scala
+commit 7219bc9b39531e1f3fbf3ba1fa9bc56cc310756d
+tree ba572c4ea491e83c7d52e8b557ab14a154e4f02d
+parent 5de675eb5cb26bc537aaafed1ac3573dafe42c46
+author JulietaAbuin <julieta.abuin@despegar.com> 2021-05-31 18:34:32 -0300
+committer JulietaAbuin <julieta.abuin@despegar.com> 2021-05-31 18:34:32 -0300
+
+    update match status
+
+
+:100644 100644 f1f336a35de1d45371dfcd723186da2088d04585 2bc86ebe1ef704c2b3ab5fc891e27f3966f25c9b M	src/main/scala/services/MatchRoom.scala
+commit 5de675eb5cb26bc537aaafed1ac3573dafe42c46
+tree b4deed92cb23d0e5a7e35d104c147225337fdc4b
+parent 618a92e5eef862f22bbde0813b4624164560139e
+author fgiannotti <franco.giannotti@mercadolibre.com> 2021-05-31 16:59:37 -0300
+committer fgiannotti <franco.giannotti@mercadolibre.com> 2021-05-31 16:59:37 -0300
+
+    push revert back
+
+
+:100644 100644 1de4b6053d950d86b75cfd0c3108a46a610bbde4 d801f0aeb6780a741dff7630b2c77c7f8bfa7e74 M	src/main/scala/models/Events.scala
+:100644 100644 1fd10e34bfb6b03390af393ccc8b7684d0b85e63 ee10727ebf563420ca5b281f5c7e7e66f8325599 M	src/main/scala/server/ClassInjection.scala
+:100644 100644 5721c581b9b9a99d2e7b86135d6a4cbe235074ea f1f336a35de1d45371dfcd723186da2088d04585 M	src/main/scala/services/MatchRoom.scala
+commit 618a92e5eef862f22bbde0813b4624164560139e
+tree 9fc6d6cc4ee73106fcb28f83e20b0a27d402518a
+parent 5978f7a2d96e139641847f5c935e4a8b45869ef1
+author JulietaAbuin <julieta.abuin@despegar.com> 2021-05-31 09:52:49 -0300
+committer JulietaAbuin <julieta.abuin@despegar.com> 2021-05-31 09:52:49 -0300
+
+    send winner and loser card to front directly
+
+
+:100644 100644 739f7811f7a1e87e1eea36ff6000a19b1b046264 1de4b6053d950d86b75cfd0c3108a46a610bbde4 M	src/main/scala/models/Events.scala
+:100644 100644 ca9606674713b01bfd080612282e81dc9cd06b44 5721c581b9b9a99d2e7b86135d6a4cbe235074ea M	src/main/scala/services/MatchRoom.scala
+:100644 100644 ad46b1d876f78d50e241789a2807977c19d6ec10 4e5818a8a6fd9e96d8a2c3b7e6c6eb5dcde8e41d M	src/main/scala/services/MatchService.scala
+:000000 100644 0000000000000000000000000000000000000000 17f52889ded78761305a48bb2dfa4ef0b3537b3f A	src/test/scala/unitTests/servicesTest/MatchServiceTest.scala
+commit 5978f7a2d96e139641847f5c935e4a8b45869ef1
+tree 160ad24b543f0cbd5bf2bfa96c31d2c440cfa788
+parent 9100da8915e123a06e2b3510465c76c1b9bb1d46
+author fgiannotti <franco.giannotti@mercadolibre.com> 2021-05-31 05:06:52 -0300
+committer fgiannotti <franco.giannotti@mercadolibre.com> 2021-05-31 05:06:52 -0300
+
+    logica para resolver partida
+
+
+:100644 100644 1576ac3811c8b2afe799b91325aa7a076b4b59b3 739f7811f7a1e87e1eea36ff6000a19b1b046264 M	src/main/scala/models/Events.scala
+:100644 100644 0f9b2ecba0209d782464e8314df208a14063a44a d9e7d34c5463750d6cc457b241a86c63178f8c71 M	src/main/scala/repositories/MatchRepository.scala
+:100644 100644 eedb12e3b0697c4f3fefd5af258f1723912454e1 56dac65da3d8980d45260cc2bdd7199bba16f449 M	src/main/scala/repositories/daos/MatchDAO.scala
+:100644 100644 46f3777f1cb0faa31246f8a6ac4167927a52c800 6d30de9d0697d8e861e6fb686f49150ebc0cd72f M	src/main/scala/repositories/daos/MatchLocalDAO.scala
+:100644 100644 c1dcb562a79cddcb4778a97eb61561cc5d38f234 ca9606674713b01bfd080612282e81dc9cd06b44 M	src/main/scala/services/MatchRoom.scala
+:100644 100644 391156bcf6805fa14bb7c9da48afb6335c6c247f ad46b1d876f78d50e241789a2807977c19d6ec10 M	src/main/scala/services/MatchService.scala
+commit 9100da8915e123a06e2b3510465c76c1b9bb1d46
+tree 073e62d1b59d56e028d6878b39b85e62f2623e95
+parent 0555c41a14e74d0be5a25dbe4b08f0c5caa954bb
+author fgiannotti <franco.giannotti@mercadolibre.com> 2021-05-31 01:26:10 -0300
+committer fgiannotti <franco.giannotti@mercadolibre.com> 2021-05-31 01:26:10 -0300
+
+    add my imgs
+
+
+:100644 100644 4e06d903c17842de4cd233bc757f48632b362f52 1fd10e34bfb6b03390af393ccc8b7684d0b85e63 M	src/main/scala/server/ClassInjection.scala
+commit 0555c41a14e74d0be5a25dbe4b08f0c5caa954bb
+tree 12424f4e450d2f2fb437603e1bf98cda70310f86
+parent a477c27e113caf9b5beabb5dce4651f75370f451
+author JulietaAbuin <julieta.abuin@despegar.com> 2021-05-31 00:41:07 -0300
+committer JulietaAbuin <julieta.abuin@despegar.com> 2021-05-31 00:41:07 -0300
+
+    movement and next turn events finisehd
+
+
+:100644 100644 13329af1f450948a9d2bc619096a590330fe05d7 1cf04aad6f7c6a03d79f184bbd76911e599a4f17 M	src/main/scala/exceptions/Exceptions.scala
+:100644 100644 80e581a6039acab2699c9fdbe1c5035b5205eda3 24cc913aeaca13e32a2e805822255e41282d850f M	src/main/scala/models/CardAttribute.scala
+:100644 100644 98101e58b031e1a4dfeb65379059c3d5f7c57fe1 6c2fb4b729eee6fdf7b7ec72f08cba613bd70679 M	src/main/scala/models/DeckDbDTO.scala
+:100644 100644 2ee27b0b41a3feacc0dee296a83725b5005ecd77 1576ac3811c8b2afe799b91325aa7a076b4b59b3 M	src/main/scala/models/Events.scala
+:100644 100644 eff85bef3969ed0f21b834254e22ef0f2c7e0b22 fd63f8a756aea45f7cf0f795771fb3273b84c589 M	src/main/scala/models/Match.scala
+:100644 100644 aacb61f2b8374a2a80f45216d7fc6015ce5b5408 fcf5cbad15c0bba0b376ebb2f876297764b112a2 M	src/main/scala/repositories/MovementRepository.scala
+:100644 100644 c9f26200c84cae2d9bd8e4dbdb356feb3c962e8d 57f733bf3ea54b1ab0a6048fe2245c96fcae2c30 M	src/main/scala/repositories/daos/MovementDAO.scala
+:100644 100644 078c143a5753bb2685dca76d1ae453e682dac17c 1c317a3a8e7ff50b5246602f629e9f62b0307adf M	src/main/scala/repositories/daos/MovementLocalDAO.scala
+:100644 100644 d5f1e24eb8163b24811ab40f59a8d40471b6e327 4e06d903c17842de4cd233bc757f48632b362f52 M	src/main/scala/server/ClassInjection.scala
+:100644 100644 da5d8c71e5637ae56bab707a606ebd2ee679e257 c1dcb562a79cddcb4778a97eb61561cc5d38f234 M	src/main/scala/services/MatchRoom.scala
+:100644 100644 51e47570527ec7dc749070276d5496544b00c757 391156bcf6805fa14bb7c9da48afb6335c6c247f M	src/main/scala/services/MatchService.scala
+commit a477c27e113caf9b5beabb5dce4651f75370f451
+tree 3f1a8c7e8e251538723a2d090a2e907a3e52ff0e
+parent 2589f13a0878910a68724b98d6999c180d913f7c
+author JulietaAbuin <julieta.abuin@despegar.com> 2021-05-30 20:26:05 -0300
+committer JulietaAbuin <julieta.abuin@despegar.com> 2021-05-30 20:26:05 -0300
+
+    added json parser and turn event to front end
+
+
+:100644 100644 50aa60efd46e4cc3c0e3d50bdfb398c1bcdf8e0b 17c6d17ac66492198cd767710832a4ce34f8f44b M	build.sbt
+:100644 100644 5f32fc683118c3cab312ed9801b04eedc469499b 80e581a6039acab2699c9fdbe1c5035b5205eda3 M	src/main/scala/models/CardAttribute.scala
+:100644 100644 a55a4dda0ac06e6acc34ba30ba514546e694808a 2ee27b0b41a3feacc0dee296a83725b5005ecd77 M	src/main/scala/models/Events.scala
+:100644 100644 98285de9cd8ec5676082058e0ec4c0c0b8a14c67 aacb61f2b8374a2a80f45216d7fc6015ce5b5408 M	src/main/scala/repositories/MovementRepository.scala
+:100644 100644 5cc4068f2085f91bf17c083f33d2813185ded040 c9f26200c84cae2d9bd8e4dbdb356feb3c962e8d M	src/main/scala/repositories/daos/MovementDAO.scala
+:100644 100644 1e6ca0cde44a23d39ee53d28fc253d59c32e88ce 078c143a5753bb2685dca76d1ae453e682dac17c M	src/main/scala/repositories/daos/MovementLocalDAO.scala
+:100644 100644 b5491f91dc073578c19871a62f2c1d68b877146e 3a44f2f2385589629e5479dfd4be9725543d7861 M	src/main/scala/routes/MatchRoutes.scala
+:100644 100644 73b40938b79fcbe5a85ea608004cb83ad8f3d088 48f8e637e772ac27988967a9addf00288e30e537 M	src/main/scala/routes/PlayRoutes.scala
+:100644 100644 3559cae0eb1298ee1dcee769cc5a45a2ea80d667 e50042aa7227cb2750ab8d7e4d9e4b25cbf8c6f0 M	src/main/scala/routes/Routes.scala
+:100644 100644 d3707ed0c8f97283728856ce8bc1b56efdf4699b 4eecaf2c477c6fb8549f8b4eea7ef1c3030f22cb M	src/main/scala/serializers/Json4sSnakeCaseSupport.scala
+:000000 100644 0000000000000000000000000000000000000000 32282ab5a36398a0b83a55cbc635fce6d80dfc65 A	src/main/scala/serializers/JsonParser.scala
+:100644 100644 ab0f3574dc2afa05fce322f07ad12e0902e6a3f4 d5f1e24eb8163b24811ab40f59a8d40471b6e327 M	src/main/scala/server/ClassInjection.scala
+:100644 100644 a08333ea631d69cc7b463b37590e43c98f72deb4 da5d8c71e5637ae56bab707a606ebd2ee679e257 R076	src/main/scala/models/MatchRoom.scala	src/main/scala/services/MatchRoom.scala
+:100644 100644 7d11e6fb95eebd702be34ac92c65ce8ef25e50a5 51e47570527ec7dc749070276d5496544b00c757 M	src/main/scala/services/MatchService.scala
+commit 2589f13a0878910a68724b98d6999c180d913f7c
+tree f0ec32838c23341728f555a815702f28b267ac33
+parent 60ab980373f738eeecd53a09b843cffc1b8918ca
+author JulietaAbuin <julieta.abuin@despegar.com> 2021-05-30 15:12:56 -0300
+committer JulietaAbuin <julieta.abuin@despegar.com> 2021-05-30 15:12:56 -0300
+
+    format
+
+
+:100644 100644 440e6015996769f89818c8f4ef3296762c04b9ad a08333ea631d69cc7b463b37590e43c98f72deb4 M	src/main/scala/models/MatchRoom.scala
+commit 6893ff8e3065d106c315d08821bfb5d0ec92bcd5
+tree 8f9304f168297af25e6272a5dc5d9defd13bf3d5
+parent 358d1cd69b93e494049022c05fd5929e1d51f12d
+author JulietaAbuin <julieta.abuin@despegar.com> 2021-05-30 15:01:38 -0300
+committer JulietaAbuin <julieta.abuin@despegar.com> 2021-05-30 15:01:38 -0300
+
+    more timeout
+
+
+:100644 100644 a66dc8a9a15a72a15990f57cdd2a9e160fa855e5 96256db8bb5719a7247b2c6ff31b92033c39a15b M	src/main/scala/services/DeckService.scala
+commit 71abd744268ad29101d5781c5dd2f4a951ece63b
+tree ccafd9e770deebc98afe80996cd5440aa207872c
+parent 358d1cd69b93e494049022c05fd5929e1d51f12d
+author chiarama <chiarabetiana@gmail.com> 2021-05-30 11:39:31 -0500
+committer chiarama <chiarabetiana@gmail.com> 2021-05-30 11:39:31 -0500
+
+    agrego evento set attribute
+
+
+:100644 100644 46b08b155e472703ef69190ebd1470afe4e8d7f5 a55a4dda0ac06e6acc34ba30ba514546e694808a M	src/main/scala/models/Events.scala
+:100644 100644 5ea2cad8d0a4526040b961fdd82d818683ef5d51 eff85bef3969ed0f21b834254e22ef0f2c7e0b22 M	src/main/scala/models/Match.scala
+:100644 100644 1aa7dfa52dbef92e8f04f9c3fa0879b6f88086ff 440e6015996769f89818c8f4ef3296762c04b9ad M	src/main/scala/models/MatchRoom.scala
+:100644 100644 9819e3b43c1761f127ec9e11b3d1a12678b6b251 98285de9cd8ec5676082058e0ec4c0c0b8a14c67 M	src/main/scala/repositories/MovementRepository.scala
+:100644 100644 1a975b1fa995a370373499499f02a088bdc565c6 5cc4068f2085f91bf17c083f33d2813185ded040 M	src/main/scala/repositories/daos/MovementDAO.scala
+:100644 100644 8ca6a1fa4f0d93d6e4875384c2b89fe233ce7676 1e6ca0cde44a23d39ee53d28fc253d59c32e88ce M	src/main/scala/repositories/daos/MovementLocalDAO.scala
+:100644 100644 19b7d940c2e7062660bd4e16a178e6dfac2a74d3 ab0f3574dc2afa05fce322f07ad12e0902e6a3f4 M	src/main/scala/server/ClassInjection.scala
+:100644 100644 8932ecb212372397add508b3a43f484e5f9b2951 7d11e6fb95eebd702be34ac92c65ce8ef25e50a5 M	src/main/scala/services/MatchService.scala
+commit 358d1cd69b93e494049022c05fd5929e1d51f12d
+tree 6413846a07082b68059b4b623dbec900c0b0e4ac
+parent 28a25cab8e296eac16ed66092e002c191f946011
+author chiarama <chiarabetiana@gmail.com> 2021-05-29 19:34:36 -0500
+committer chiarama <chiarabetiana@gmail.com> 2021-05-29 19:34:36 -0500
+
+    Event init Match
+
+
+:100644 100644 f074288ada85669b8c9c6c7e832dc8c6f022e003 46b08b155e472703ef69190ebd1470afe4e8d7f5 M	src/main/scala/models/Events.scala
+:100644 100644 a45456ec13f94a1ade1406ff51d9416ca920281f 1aa7dfa52dbef92e8f04f9c3fa0879b6f88086ff M	src/main/scala/models/MatchRoom.scala
+:100644 100644 ce876ea41970ccd6c524d588789dfa0c701d5384 8084b42b63892908df2c9d0a21eb3b668c1a62c5 M	src/main/scala/models/Player.scala
+:100644 100644 92de054660c8ef9b88a3d364fe1f535b2c6f1bb6 19b7d940c2e7062660bd4e16a178e6dfac2a74d3 M	src/main/scala/server/ClassInjection.scala
+commit 28a25cab8e296eac16ed66092e002c191f946011
+tree b17a3dd5abad51157fc8c3c52c890e434e50b667
+parent 8d0023c4029c4e29830134ff2b720e2090573d76
+author fgiannotti <franco.giannotti@mercadolibre.com> 2021-05-29 17:54:38 -0300
+committer fgiannotti <franco.giannotti@mercadolibre.com> 2021-05-29 17:54:38 -0300
+
+    fix import
+
+
+:100644 100644 365c4b4853e5646dbcda31ab73b9f975eb916e2c c150971b46a226b47aefb5421743299769084fa4 M	src/test/scala/unitTests/servicesTest/SuperheroApiTest.scala
+commit 8d0023c4029c4e29830134ff2b720e2090573d76
+tree e757f5eedd60311ff1d86426103ec51073a874b6
+parent 677d00c23101ed3626d33f5e81196800b02cf6ce
+author JulietaAbuin <julieta.abuin@despegar.com> 2021-05-29 17:53:42 -0300
+committer JulietaAbuin <julieta.abuin@despegar.com> 2021-05-29 17:53:42 -0300
+
+    remove imports
+
+
+:100644 100644 b8c2afc9f2350ec0f0c72a20487b0ddc12693716 365c4b4853e5646dbcda31ab73b9f975eb916e2c M	src/test/scala/unitTests/servicesTest/SuperheroApiTest.scala
+commit 677d00c23101ed3626d33f5e81196800b02cf6ce
+tree 84f72a0c59a355ce91598f200ed0b3c9cc74ebf9
+parent 552ec1954271de221dd81bde29975aefce24b196
+author fgiannotti <franco.giannotti@mercadolibre.com> 2021-05-29 17:52:24 -0300
+committer fgiannotti <franco.giannotti@mercadolibre.com> 2021-05-29 17:52:24 -0300
+
+    compile
+
+
+:100644 100644 1f0fa6cea9c55f8967b999aa5f354f59de8800c7 9819e3b43c1761f127ec9e11b3d1a12678b6b251 M	src/main/scala/repositories/MovementRepository.scala
+:100644 100644 13a4239a30f6ff31a49588c42c6fc6d4b97beca1 1a975b1fa995a370373499499f02a088bdc565c6 M	src/main/scala/repositories/daos/MovementDAO.scala
+:100644 100644 02148450bc3e6aadcdb40f1723532a330e97a4b2 8ca6a1fa4f0d93d6e4875384c2b89fe233ce7676 M	src/main/scala/repositories/daos/MovementLocalDAO.scala
+:100644 100644 052c0c4357af04ccb60882304c85fc1cd9092455 92de054660c8ef9b88a3d364fe1f535b2c6f1bb6 M	src/main/scala/server/ClassInjection.scala
+:100644 100644 058349ecf4460505c1a511eedbcaedc6ddad9d82 9ba692773ebed592db933deeb03a9a743e450411 M	src/main/scala/services/SuperheroApi.scala
+commit 552ec1954271de221dd81bde29975aefce24b196
+tree e34302662f5a23781c7bd4e94cc811d1c00a7eb0
+parent ac1b72d462da007e95ab2eefae7eed21b1d4af2e
+author JulietaAbuin <julieta.abuin@despegar.com> 2021-05-29 17:39:51 -0300
+committer JulietaAbuin <julieta.abuin@despegar.com> 2021-05-29 17:39:51 -0300
+
+    movement info for match routes
+
+
+:100644 100644 67e062750f7b255d0b4059766b99be90bef6c29d 5f32fc683118c3cab312ed9801b04eedc469499b M	src/main/scala/models/CardAttribute.scala
+:100644 100644 cd35cc0ad40343a25afc4fbeeb374ffb33566b81 5ea2cad8d0a4526040b961fdd82d818683ef5d51 M	src/main/scala/models/Match.scala
+:000000 100644 0000000000000000000000000000000000000000 1f0fa6cea9c55f8967b999aa5f354f59de8800c7 A	src/main/scala/repositories/MovementRepository.scala
+:000000 100644 0000000000000000000000000000000000000000 13a4239a30f6ff31a49588c42c6fc6d4b97beca1 A	src/main/scala/repositories/daos/MovementDAO.scala
+:000000 100644 0000000000000000000000000000000000000000 02148450bc3e6aadcdb40f1723532a330e97a4b2 A	src/main/scala/repositories/daos/MovementLocalDAO.scala
+:100644 100644 723822ddaed4dc18b485dbf0f2e054c21d9885af b5491f91dc073578c19871a62f2c1d68b877146e M	src/main/scala/routes/MatchRoutes.scala
+:100644 100644 898dafb94388a3d09c9652701db5a37e3e2a498e d3707ed0c8f97283728856ce8bc1b56efdf4699b M	src/main/scala/serializers/Json4sSnakeCaseSupport.scala
+:100644 100644 0aecced2514229279591026a5eb5a61627ac8fbe 052c0c4357af04ccb60882304c85fc1cd9092455 M	src/main/scala/server/ClassInjection.scala
+:100644 100644 164635364fece2657292eec9451932b1345c2ce9 8932ecb212372397add508b3a43f484e5f9b2951 M	src/main/scala/services/MatchService.scala
+:100644 100644 d7dff0e358614fdb18bbf9ddc7a0d27dd960e65d 1cfe60a0202fa13044984c42d616f29cd97787ff M	src/test/scala/integrationTests/MatchServiceIntegrationTest.scala
+commit ac1b72d462da007e95ab2eefae7eed21b1d4af2e
+tree 45e1c9334ba8f4307649dd1c81624ac8129e43b5
+parent e072334a63b20f7006b3bf29c8a206a93bedb50d
+author JulietaAbuin <julieta.abuin@despegar.com> 2021-05-29 00:45:25 -0300
+committer JulietaAbuin <julieta.abuin@despegar.com> 2021-05-29 00:45:25 -0300
+
+    added keep alive in both actors
+
+
+:100644 100644 7162dd04ae19fb649741fa7ecd2e58210eae08ea a45456ec13f94a1ade1406ff51d9416ca920281f M	src/main/scala/models/MatchRoom.scala
+:100644 100644 0f52d7a521d65d49f8f0952553a6672d933b442a 1adfd0d2e13bcd9eaf6cd155a9032269584ef6f6 M	src/main/scala/server/HttpServer.scala
+:100644 100644 1b9748f1008b753aeaceedaf4ae1b3ac1caa558b a5b5e7185ff79141534b6bef639ad7dda350ca89 M	src/main/scala/services/ConnectedPlayersService.scala
+commit e072334a63b20f7006b3bf29c8a206a93bedb50d
+tree 5bab6efa0906d3d3cc562ec641244cfd20a7cddb
+parent e9c417dc05e5fb25ecc97973a65196ed6106b332
+author JulietaAbuin <julieta.abuin@despegar.com> 2021-05-28 00:09:16 -0300
+committer JulietaAbuin <julieta.abuin@despegar.com> 2021-05-28 00:09:16 -0300
+
+    add matches in db at class injection
+
+
+:100644 100644 eb8a5abcbfe3039a371d6d3936cc5aa01c7f7136 723822ddaed4dc18b485dbf0f2e054c21d9885af M	src/main/scala/routes/MatchRoutes.scala
+:100644 100644 9c2f0ab7c6017a68464732ebf5efd2444d0bfc79 0aecced2514229279591026a5eb5a61627ac8fbe M	src/main/scala/server/ClassInjection.scala
+commit e9c417dc05e5fb25ecc97973a65196ed6106b332
+tree 342e4df9cc240c35cfbe340882365d8ce820a5b8
+parent 4f484e180755d3c1fde94076278ddfed751eb962
+author JulietaAbuin <julieta.abuin@despegar.com> 2021-05-27 20:24:55 -0300
+committer JulietaAbuin <julieta.abuin@despegar.com> 2021-05-27 20:24:55 -0300
+
+    add get matches by user id endpoint
+
+
+:100644 100644 8ccc9f773945fab15bb26b1388928174f0334568 cd35cc0ad40343a25afc4fbeeb374ffb33566b81 M	src/main/scala/models/Match.scala
+:100644 100644 9ae7469b4a70c9d532471b9b3b1518a6844f7a26 0f9b2ecba0209d782464e8314df208a14063a44a M	src/main/scala/repositories/MatchRepository.scala
+:100644 100644 e4b41f7c77e1194883dcb9452eb004c92fd62d75 eedb12e3b0697c4f3fefd5af258f1723912454e1 M	src/main/scala/repositories/daos/MatchDAO.scala
+:100644 100644 b2b53e0f0d3915522b434d5e4d44b52db0141a65 46f3777f1cb0faa31246f8a6ac4167927a52c800 M	src/main/scala/repositories/daos/MatchLocalDAO.scala
+:100644 100644 9843c8620480f9bb44781ff15709f3e39a099846 eb8a5abcbfe3039a371d6d3936cc5aa01c7f7136 M	src/main/scala/routes/MatchRoutes.scala
+:100644 100644 fe23985c66ba4b418f5eee93f85e32d65fa47215 a66dc8a9a15a72a15990f57cdd2a9e160fa855e5 M	src/main/scala/services/DeckService.scala
+:100644 100644 5ba9999807339fab156f6710e75d753943c5f82a 164635364fece2657292eec9451932b1345c2ce9 M	src/main/scala/services/MatchService.scala
+commit 4f484e180755d3c1fde94076278ddfed751eb962
+tree e032a090607906179f0482354e5d46fe548a89c9
+parent d83850e9acecf0cf60156b951ab0ab2bbd098a86
+author JulietaAbuin <julieta.abuin@despegar.com> 2021-05-27 20:02:52 -0300
+committer JulietaAbuin <julieta.abuin@despegar.com> 2021-05-27 20:02:52 -0300
+
+    add winner in matchdbdto
+
+
+:100644 100644 cd2558279242d8d709068be8fce2e828b15d4b0e 8ccc9f773945fab15bb26b1388928174f0334568 M	src/main/scala/models/Match.scala
+:100644 100644 c00f2115285fb24a0913a4c139e970241ef85fe9 b2b53e0f0d3915522b434d5e4d44b52db0141a65 M	src/main/scala/repositories/daos/MatchLocalDAO.scala
+:100644 100644 0f7f055dcdff9a4246931e48ee9a7ade53d41c10 e9683a5eb98825661b5b6bd4396c7553164490ee M	src/main/scala/repositories/dbdtos/MatchDBDTO.scala
+:100644 100644 48fd843ff1e9b478f2b1fd6e0db90d6fac99012c 74da6a2d3ff0061bc647101e0346c4d3aa14f500 M	src/main/scala/services/LoginService.scala
+:100644 100644 fcd4162d9b53d92a9dbc09240fbd69a9fdb7c56c fd9c89a6bb2ec78a55b1ea8da91061403349ccee M	src/test/scala/integrationTests/MatchRoomActorTest.scala
+:100644 100644 a84cdf322a41f4592a9a28f5eb1130946fcc9443 d7dff0e358614fdb18bbf9ddc7a0d27dd960e65d M	src/test/scala/integrationTests/MatchServiceIntegrationTest.scala
+commit d83850e9acecf0cf60156b951ab0ab2bbd098a86
+tree cc00d7c92c22a5f39affdb6c52b00ec60d757bee
+parent 38330ca171a1cbe913fb386b4dbe5ce9f5316e92
+author JulietaAbuin <julieta.abuin@despegar.com> 2021-05-27 19:35:25 -0300
+committer JulietaAbuin <julieta.abuin@despegar.com> 2021-05-27 19:35:25 -0300
+
+    remove unused imports
+
+
+:100644 100644 1665ff043deb92063f5854649174cbe569ae4e92 9c2f0ab7c6017a68464732ebf5efd2444d0bfc79 M	src/main/scala/server/ClassInjection.scala
+commit 38330ca171a1cbe913fb386b4dbe5ce9f5316e92
+tree 4d1d25491d9a16b5df508349b6ee4ae91bb9fd1c
+parent baf32bc1e3c127d66abe4539e3572277d0485887
+author JulietaAbuin <julieta.abuin@despegar.com> 2021-05-27 19:34:53 -0300
+committer JulietaAbuin <julieta.abuin@despegar.com> 2021-05-27 19:34:53 -0300
+
+    add get match by id
+
+
+:100644 100644 2c76d88a42724131e7e9884af4e11f4a3ea7ff3d 98101e58b031e1a4dfeb65379059c3d5f7c57fe1 R076	src/main/scala/models/Deck.scala	src/main/scala/models/DeckDbDTO.scala
+:100644 100644 f5c4daf7958f0f5bd123de20b73abe1240f79fdd cd2558279242d8d709068be8fce2e828b15d4b0e M	src/main/scala/models/Match.scala
+:100644 100644 7f6bf9e0939aeb8592d633fa8524eb920ad22700 34b7bd756decb84e40d3ca663c495497bc5f476a M	src/main/scala/repositories/DeckRepository.scala
+:100644 100644 54c45bb25d631b1c211e533b31a76922586b1dc1 9f63b7893d8d61dce5ebca6d97f505ea0b489f7c M	src/main/scala/repositories/daos/DeckDao.scala
+:100644 100644 c29fab06a350216ee61ee2f4bf72b96b1f77f0c7 42ebcc378240d232280e73d88599685a4dc04949 M	src/main/scala/repositories/daos/DeckLocalDao.scala
+:100644 100644 de4bd4a484426a9a8dfe6625bf057e1ce752d105 9843c8620480f9bb44781ff15709f3e39a099846 M	src/main/scala/routes/MatchRoutes.scala
+:100644 100644 0464af04c011d72070e25c30eac5f2670c93ba1f 1665ff043deb92063f5854649174cbe569ae4e92 M	src/main/scala/server/ClassInjection.scala
+:100644 100644 4d7b8d4ba02efe409a2f50dd192d07d0282b32a3 fe23985c66ba4b418f5eee93f85e32d65fa47215 M	src/main/scala/services/DeckService.scala
+:100644 100644 367f8dbbdaa628e49da1a2242d0012d113f48556 5ba9999807339fab156f6710e75d753943c5f82a M	src/main/scala/services/MatchService.scala
+:100644 100644 8c78cdc8b6e2bf1e8cb53e1707a41745b6aeca08 34e733b404345fbba7ea59b8456c463b432d7f4e M	src/test/scala/integrationTests/DeckCRUDIntegrationTest.scala
+:100644 100644 70cfac200d208de71d52da636643719fdb7ead63 a84cdf322a41f4592a9a28f5eb1130946fcc9443 M	src/test/scala/integrationTests/MatchServiceIntegrationTest.scala
+commit baf32bc1e3c127d66abe4539e3572277d0485887
+tree de674127b3bcebf211194e785c6ddac29fc82dbd
+parent 9bf6bf20db13acfcc79439dcc66823aefb1c8b70
+author Franco G <franco.giannotti@mercadolibre.com> 2021-05-26 12:24:59 -0300
+committer GitHub <noreply@github.com> 2021-05-26 12:24:59 -0300
+
+    Sockets rooms (#21)
+    
+    * socket rooms
+    
+    * changed log
+    
+    * replaced println for logger
+    
+    * added join match validation of userid
+    
+    * removed logger in routes
+    
+    * handle joining both users into same lobby and getting notified about it
+    
+    * fixed handle request response and added players get by id endpoint
+    
+    * user is ready event in match
+    
+    * added tests
+    
+    * fixed typo
+    
+    * test with wiremock superheroapi
+    
+    * tested all superheroapi
+    
+    Co-authored-by: JulietaAbuin <julieta.abuin@despegar.com>
+
+:100644 100644 6a68539769d1ae1d393a520c4ce136b743224164 50aa60efd46e4cc3c0e3d50bdfb398c1bcdf8e0b M	build.sbt
+:100644 100644 46483488d8ca8b77b30cb692bdbe198d75d451a0 13329af1f450948a9d2bc619096a590330fe05d7 M	src/main/scala/exceptions/Exceptions.scala
+:100644 100644 2aa268650c5265bc1fd07195690ff684b13d4930 f074288ada85669b8c9c6c7e832dc8c6f022e003 M	src/main/scala/models/Events.scala
+:100644 100644 1f0e373465ae2e267b0760e84c39a977212631e0 f5c4daf7958f0f5bd123de20b73abe1240f79fdd M	src/main/scala/models/Match.scala
+:100644 100644 c4d3fbc672820d24a84b9ada3cc96b76b2e41ffe 7162dd04ae19fb649741fa7ecd2e58210eae08ea M	src/main/scala/models/MatchRoom.scala
+:100644 100644 a5cf982628f67a7670b453057f985fe5d2f82c53 ce876ea41970ccd6c524d588789dfa0c701d5384 M	src/main/scala/models/Player.scala
+:100644 100644 577baad0c06931325ed22fa66766cdd86e5a1db2 9ae7469b4a70c9d532471b9b3b1518a6844f7a26 M	src/main/scala/repositories/MatchRepository.scala
+:100644 100644 988e177ba4ca3582169e7b8673f31f1dd749d391 933191ef49f4af80afcfd1ed2939d16187500639 M	src/main/scala/repositories/PlayerRepository.scala
+:100644 100644 63af10e69129dfd989801e5b7fa4d4daa78b243e e4b41f7c77e1194883dcb9452eb004c92fd62d75 M	src/main/scala/repositories/daos/MatchDAO.scala
+:100644 100644 5096d101e2fd00718132a36a93d9cb06377f79d9 c00f2115285fb24a0913a4c139e970241ef85fe9 M	src/main/scala/repositories/daos/MatchLocalDAO.scala
+:100644 100644 1e8b4947f452297bd33304848f3351b96a05f723 0f7f055dcdff9a4246931e48ee9a7ade53d41c10 M	src/main/scala/repositories/dbdtos/MatchDBDTO.scala
+:100644 100644 4ce4e263fd91523a9c1d5e96fef654ed055203df de4bd4a484426a9a8dfe6625bf057e1ce752d105 M	src/main/scala/routes/MatchRoutes.scala
+:100644 100644 5125707a7908b02a5d2a65bddacb0ceb32d49180 73b40938b79fcbe5a85ea608004cb83ad8f3d088 M	src/main/scala/routes/PlayRoutes.scala
+:000000 100644 0000000000000000000000000000000000000000 14c06d353f6aebcfecc96c4c04aadafccbf9b90b A	src/main/scala/routes/PlayerRoutes.scala
+:100644 100644 ea5e45bdc1e9a4bc06fb5c264b0697fa9e9e9d9f 3559cae0eb1298ee1dcee769cc5a45a2ea80d667 M	src/main/scala/routes/Routes.scala
+:100644 100644 76d31fff569a31017c5c3f8b694d59a1eee64aab c780f846a980efc79c1386ceeb0138d5ec543d5a M	src/main/scala/routes/Utils.scala
+:100644 100644 2e37f0dd009f2ff304efa8bf30aace9efabddbb8 5a687ff7fd314b8d763d99d6e3668e1a17ddbc24 M	src/main/scala/routes/inputs/MatchInputs.scala
+:100644 100644 772b35e6fdb72f9ee48d6eab3e57fe44675c4b6a 898dafb94388a3d09c9652701db5a37e3e2a498e M	src/main/scala/serializers/Json4sSnakeCaseSupport.scala
+:100644 100644 2a27565dbcdec031321438fd4a757e0e23ffe859 0464af04c011d72070e25c30eac5f2670c93ba1f M	src/main/scala/server/ClassInjection.scala
+:100644 100644 08d55e2a406b1451831a404b1d5d18886ec96131 1b9748f1008b753aeaceedaf4ae1b3ac1caa558b M	src/main/scala/services/ConnectedPlayersService.scala
+:100644 100644 09a6636e7b12c326e29f92396cce362c10a35b1f 367f8dbbdaa628e49da1a2242d0012d113f48556 M	src/main/scala/services/MatchService.scala
+:100644 100644 a6b21bfca9813348b58efeb0e23d38bc63fa1b8b 058349ecf4460505c1a511eedbcaedc6ddad9d82 M	src/main/scala/services/SuperheroApi.scala
+:000000 100644 0000000000000000000000000000000000000000 7d993a18bb00e9fa4408f7fcd00f791abf6003ca A	src/test/resources/responses/card_by_id_response.json
+:000000 100644 0000000000000000000000000000000000000000 d37904137ebb62b875231321ca6f16e8a3619b18 A	src/test/resources/responses/card_by_id_without_all_attr_response.json
+:000000 100644 0000000000000000000000000000000000000000 1586bf9ddfde2abedfd32693895e387220e8708e A	src/test/resources/responses/cards_by_name_response.json
+:100644 100644 057450e26bbfed670a07ce6c1eefd2a337a743f1 8c78cdc8b6e2bf1e8cb53e1707a41745b6aeca08 M	src/test/scala/integrationTests/DeckCRUDIntegrationTest.scala
+:000000 100644 0000000000000000000000000000000000000000 fcd4162d9b53d92a9dbc09240fbd69a9fdb7c56c A	src/test/scala/integrationTests/MatchRoomActorTest.scala
+:000000 100644 0000000000000000000000000000000000000000 70cfac200d208de71d52da636643719fdb7ead63 A	src/test/scala/integrationTests/MatchServiceIntegrationTest.scala
+:100644 000000 23375c2cc880dbfcf455e70919f22663309f70b5 0000000000000000000000000000000000000000 D	src/test/scala/servicesTest/SuperheroApiTest.scala
+:100644 000000 27de9a2d9b51e9124fc244b7adc30fc7d27e902b 0000000000000000000000000000000000000000 D	src/test/scala/unitTests/TestRoutes.scala
+:000000 100644 0000000000000000000000000000000000000000 59e9f47cc7bcf7ccf20b220fdd6bbf29b210fee7 A	src/test/scala/unitTests/WebsocketRoutes.scala
+:000000 100644 0000000000000000000000000000000000000000 b8c2afc9f2350ec0f0c72a20487b0ddc12693716 A	src/test/scala/unitTests/servicesTest/SuperheroApiTest.scala
+commit f2d6102346cb0cd5f8f908d3833eb81e64cec1f6
+tree 515f625e4afdcf32df122aea574048584ba8e477
+parent c2a198b0dfc098de7c7546a78355e179ae6bf06c
+author chiarama <chiarabetiana@gmail.com> 2021-05-18 22:11:00 -0500
+committer chiarama <chiarabetiana@gmail.com> 2021-05-18 22:11:00 -0500
+
+    agrego docker compose
+
+
+:100644 100644 ca79ecceff25a6fdbafe6b280f963a96bb03d454 77b6547a3fa64a051c58d9b85c130d19b1e9d0a9 M	.dockerignore
+:100644 100644 364d67406dd0840ecb97f982913f18dfcc3ec5e3 8d05e7089b7752febe4f8ed23f509918b301c85f M	Dockerfile
+:000000 100644 0000000000000000000000000000000000000000 b56a167778b8f77336b3598da75818d8c75e3c08 A	docker-compose.yml
+:100644 100644 c00d6fdb5cea7e81d496682a83d85c02ca768d44 a6b21bfca9813348b58efeb0e23d38bc63fa1b8b M	src/main/scala/services/SuperheroApi.scala
+commit c13039f868cddc7737dbc828627a45ef600b1641
+tree 213765b32d0adce82a94442d0fb5d6012e5294cd
+parent a41d764cd6db8f44f4a6dfccf3f46eae310b4b1f
+author JulietaAbuin <julieta.abuin@despegar.com> 2021-05-16 22:12:06 -0300
+committer JulietaAbuin <julieta.abuin@despegar.com> 2021-05-16 22:12:06 -0300
+
+    fix comp
+
+
+:100644 100644 e2b23ea1dc6ba9a70a063abbcb1a1253a7871ad5 4ce4e263fd91523a9c1d5e96fef654ed055203df M	src/main/scala/routes/MatchRoutes.scala
+commit a41d764cd6db8f44f4a6dfccf3f46eae310b4b1f
+tree 6975f72494e9d10810dbb49c4ae7c5e67ac042d3
+parent ba542596bcfdf22142317c52f5141f506497d212
+author JulietaAbuin <julieta.abuin@despegar.com> 2021-05-16 22:10:30 -0300
+committer JulietaAbuin <julieta.abuin@despegar.com> 2021-05-16 22:10:30 -0300
+
+    fixed match routes
+
+
+:100644 100644 97997f219b33a8de6d42a2ec1abf7dd1ed5879fa 577baad0c06931325ed22fa66766cdd86e5a1db2 M	src/main/scala/repositories/MatchRepository.scala
+:100644 100644 b31c7c821dc8295a8290274721b8353db5086ab7 63af10e69129dfd989801e5b7fa4d4daa78b243e M	src/main/scala/repositories/daos/MatchDAO.scala
+:100644 100644 4273b71c87bc10acaf8578b54fcc2b1de4c1d957 5096d101e2fd00718132a36a93d9cb06377f79d9 M	src/main/scala/repositories/daos/MatchLocalDAO.scala
+:100644 100644 2f51add7489dc73f6686670d5592e175bb537500 1e8b4947f452297bd33304848f3351b96a05f723 M	src/main/scala/repositories/dbdtos/MatchDBDTO.scala
+:100644 100644 bb612c3e3de9d2e9dc157cb4ec5bd9f77f910a7e e2b23ea1dc6ba9a70a063abbcb1a1253a7871ad5 M	src/main/scala/routes/MatchRoutes.scala
+:100644 100644 a01a6b7b0479633e96c22dab1a6c14149be3e2c6 ea5e45bdc1e9a4bc06fb5c264b0697fa9e9e9d9f M	src/main/scala/routes/Routes.scala
+:100644 100644 1ffebff919787b216ec388ae4ef406cdf9504075 2e37f0dd009f2ff304efa8bf30aace9efabddbb8 M	src/main/scala/routes/inputs/MatchInputs.scala
+:100644 100644 db55aeb574a3dc4f94e4154441b69e934564f63c 09a6636e7b12c326e29f92396cce362c10a35b1f M	src/main/scala/services/MatchService.scala
+commit ba542596bcfdf22142317c52f5141f506497d212
+tree 3cb269bd2644ec6dca12055106f979fd951d6aa2
+parent 2c21fd3f6803751fb87b17ab00275b9f0b16c722
+author JulietaAbuin <julieta.abuin@despegar.com> 2021-05-16 20:58:22 -0300
+committer JulietaAbuin <julieta.abuin@despegar.com> 2021-05-16 20:58:22 -0300
+
+    replaced list of users for map by user id
+
+
+:100644 100644 f7aa272dda6ecf87becd306e773220bd2a50960f 08d55e2a406b1451831a404b1d5d18886ec96131 M	src/main/scala/services/ConnectedPlayersService.scala
+commit 2c21fd3f6803751fb87b17ab00275b9f0b16c722
+tree 1b23c2411598456abe35de9ef1e98d1e8c48de1a
+parent c84f21d2d08680268d28f21374ceaf0a1fae2fd3
+author JulietaAbuin <julieta.abuin@despegar.com> 2021-05-16 19:47:59 -0300
+committer JulietaAbuin <julieta.abuin@despegar.com> 2021-05-16 19:47:59 -0300
+
+    changed route to home and fix not logged user
+
+
+:100644 100644 29a7c5abab803b4ff5d74365264f06fa195563bd 5125707a7908b02a5d2a65bddacb0ceb32d49180 M	src/main/scala/routes/PlayRoutes.scala
+:100644 100644 4c1ac38375a8b7991111e98d8b3d2655121518a0 f7aa272dda6ecf87becd306e773220bd2a50960f M	src/main/scala/services/ConnectedPlayersService.scala
+commit c84f21d2d08680268d28f21374ceaf0a1fae2fd3
+tree 58ac0fbad5b76fe469be770ef4fea812be6868b4
+parent 8f7b6db65d5be4fcbd1f60ffea3efa86b583e1e2
+author fgiannotti <franco.giannotti@mercadolibre.com> 2021-05-16 17:04:02 -0300
+committer fgiannotti <franco.giannotti@mercadolibre.com> 2021-05-16 17:04:02 -0300
+
+    send JSON messages as string with play lib
+
+
+:100644 100644 0597d06645cd9abd2e40b4adcc54ca3de09a07b5 6a68539769d1ae1d393a520c4ce136b743224164 M	build.sbt
+:100644 100644 5e6b3cf25b04aef6ecd33cdbeed03b6cd2863a64 988e177ba4ca3582169e7b8673f31f1dd749d391 M	src/main/scala/repositories/PlayerRepository.scala
+:100644 100644 8db03a698b8701b69a0a34c3ee6228118f5abc50 bb612c3e3de9d2e9dc157cb4ec5bd9f77f910a7e M	src/main/scala/routes/MatchRoutes.scala
+:100644 100644 8d29f90d089c894316f3e476a17533ce6e08611e 4c1ac38375a8b7991111e98d8b3d2655121518a0 M	src/main/scala/services/ConnectedPlayersService.scala
+commit 8f7b6db65d5be4fcbd1f60ffea3efa86b583e1e2
+tree f5b1e85e4b9ca7f06aec8bcfd2d6f0c94f4b9ece
+parent 710ff45ca1fb9efaeecddb478b3546d97270a4a8
+author fgiannotti <franco.giannotti@mercadolibre.com> 2021-05-16 01:24:59 -0300
+committer fgiannotti <franco.giannotti@mercadolibre.com> 2021-05-16 01:24:59 -0300
+
+    fix multiple players connecting not showing
+
+
+:100644 100644 3e3959a1d228e5d5fe4f34f26af64049fa2e9092 29a7c5abab803b4ff5d74365264f06fa195563bd M	src/main/scala/routes/PlayRoutes.scala
+:100644 100644 d13bb950fa6f5dd3907e6d3e311d632b352e0b0b a01a6b7b0479633e96c22dab1a6c14149be3e2c6 M	src/main/scala/routes/Routes.scala
+:100644 100644 2656af2c2ba7b86741e945a149720a930edc3323 2a27565dbcdec031321438fd4a757e0e23ffe859 M	src/main/scala/server/ClassInjection.scala
+:100644 100644 235939309234ebe0917019f965ac79ad99653e57 8d29f90d089c894316f3e476a17533ce6e08611e M	src/main/scala/services/ConnectedPlayersService.scala
+commit 95cb6ca4a906be2ee924bab4c4deed7ce5bc1b5a
+tree acb216a94c6dc3b6da8b1474c3813ce677265451
+parent f5617ab62d4e34312400ba99f2131122fa895861
+author chiarama <chiarabetiana@gmail.com> 2021-05-15 17:50:21 -0500
+committer chiarama <chiarabetiana@gmail.com> 2021-05-15 17:50:21 -0500
+
+    add dockerfile and .dockerignore
+
+
+:000000 100644 0000000000000000000000000000000000000000 ca79ecceff25a6fdbafe6b280f963a96bb03d454 A	.dockerignore
+:000000 100644 0000000000000000000000000000000000000000 364d67406dd0840ecb97f982913f18dfcc3ec5e3 A	Dockerfile
+commit 6d8b435bff4a0cef47a17a646fa834f295fc9599
+tree e83a3218bc0562e15c39c4ae00a75209ab1360b6
+parent b66cfb8ea6f94a649dd48fb3f39259c21a37886b
+author JulietaAbuin <julieta.abuin@despegar.com> 2021-05-15 01:14:06 -0300
+committer JulietaAbuin <julieta.abuin@despegar.com> 2021-05-15 01:14:06 -0300
+
+    connection service functional
+
+
+:000000 100644 0000000000000000000000000000000000000000 2aa268650c5265bc1fd07195690ff684b13d4930 A	src/main/scala/models/Events.scala
+:000000 100644 0000000000000000000000000000000000000000 c4d3fbc672820d24a84b9ada3cc96b76b2e41ffe A	src/main/scala/models/MatchRoom.scala
+:100644 100644 9ae0e8c6110005bba471eb9a68a71d3c789a49fe fb131db0a471a7b110f3ef4fb760a62ce732e8bb M	src/main/scala/routes/DeckRoutes.scala
+:000000 100644 0000000000000000000000000000000000000000 3e3959a1d228e5d5fe4f34f26af64049fa2e9092 A	src/main/scala/routes/PlayRoutes.scala
+:100644 100644 ec8437992f7dc677ee9847ff2e6295ae45b89e1e d13bb950fa6f5dd3907e6d3e311d632b352e0b0b M	src/main/scala/routes/Routes.scala
+:100644 100644 cf7dfab42c678a7ecdf9a7e38002ec6738406463 0f52d7a521d65d49f8f0952553a6672d933b442a M	src/main/scala/server/HttpServer.scala
+:000000 100644 0000000000000000000000000000000000000000 235939309234ebe0917019f965ac79ad99653e57 A	src/main/scala/services/ConnectedPlayersService.scala
+:100644 100644 f9ef45e026e670ee8ab0abb2fb1543ae6fe7aa41 27de9a2d9b51e9124fc244b7adc30fc7d27e902b M	src/test/scala/unitTests/TestRoutes.scala
+commit f5617ab62d4e34312400ba99f2131122fa895861
+tree 188b6d276abd338bfe8d3bc0cfde481ce9b4432f
+parent 07386487c8e8007cc1b9f2613d7b1f67d6822419
+author fgiannotti <franco.giannotti@mercadolibre.com> 2021-05-14 23:43:54 -0300
+committer fgiannotti <franco.giannotti@mercadolibre.com> 2021-05-14 23:43:54 -0300
+
+    order imports
+
+
+:100644 100644 73450704cddcfba7c01f6dd78dbc435611755fd8 c00d6fdb5cea7e81d496682a83d85c02ca768d44 M	src/main/scala/services/SuperheroApi.scala
+commit 07386487c8e8007cc1b9f2613d7b1f67d6822419
+tree 1fbb125367a1640f090c2296828a6bed8612119f
+parent b7a82f1319ba53a1bb0715e671a1c5dd81c55bad
+author fgiannotti <franco.giannotti@mercadolibre.com> 2021-05-14 23:43:07 -0300
+committer fgiannotti <franco.giannotti@mercadolibre.com> 2021-05-14 23:43:07 -0300
+
+    Validate token Id from google
+
+
+:100644 100644 2422851091091a59313b0497c9669bc601d9847a 0597d06645cd9abd2e40b4adcc54ca3de09a07b5 M	build.sbt
+:100644 100644 739e78e0844048496663a6fdcb29b4506143db81 5e6b3cf25b04aef6ecd33cdbeed03b6cd2863a64 M	src/main/scala/repositories/PlayerRepository.scala
+:100644 100644 1da7a7f7e849fc9491f3bfeeb479d5fb8a7e5370 7d0e478cc1c6647c3012fb5b0b9ae4ea0c19c5c1 M	src/main/scala/routes/inputs/LoginInputs.scala
+:100644 100644 d305ca1df1ea77108fe142171fa46580a46ba8f5 48fd843ff1e9b478f2b1fd6e0db90d6fac99012c M	src/main/scala/services/LoginService.scala
+:100644 100644 73eeb024872207e96184be1e7cc2c6e6f9a1acc3 73450704cddcfba7c01f6dd78dbc435611755fd8 M	src/main/scala/services/SuperheroApi.scala
+commit b66cfb8ea6f94a649dd48fb3f39259c21a37886b
+tree 820d1c68e97d005aead2614f1d45a27edf899a6e
+parent e29d7c6934fee5f914ebb18141efafa4a97a50d6
+author JulietaAbuin <julieta.abuin@despegar.com> 2021-05-14 19:46:12 -0300
+committer JulietaAbuin <julieta.abuin@despegar.com> 2021-05-14 19:46:12 -0300
+
+    now websockets connect with frontend
+
+
+:100644 100644 bd89698a99ffb4e4e538c39b08ea08fa33fb1a59 ec8437992f7dc677ee9847ff2e6295ae45b89e1e M	src/main/scala/routes/Routes.scala
+:100644 100644 6cf7a42058377972e6cc326c441c4d42edf922f0 cf7dfab42c678a7ecdf9a7e38002ec6738406463 M	src/main/scala/server/HttpServer.scala
+:100644 100644 c28ef530dd40712b2c70334c8e10e342175f7718 f9ef45e026e670ee8ab0abb2fb1543ae6fe7aa41 M	src/test/scala/unitTests/TestRoutes.scala
+commit e29d7c6934fee5f914ebb18141efafa4a97a50d6
+tree a2743bb5a7c62a13c41a34082e0964f4ac2c2fd0
+parent 5612c59ddc611a0d162e6c03bcdad26338bfc172
+author JulietaAbuin <julieta.abuin@despegar.com> 2021-05-13 20:33:49 -0300
+committer JulietaAbuin <julieta.abuin@despegar.com> 2021-05-13 20:33:49 -0300
+
+    Create match service with local db
+
+
+:000000 100644 0000000000000000000000000000000000000000 97997f219b33a8de6d42a2ec1abf7dd1ed5879fa A	src/main/scala/repositories/MatchRepository.scala
+:000000 100644 0000000000000000000000000000000000000000 b31c7c821dc8295a8290274721b8353db5086ab7 A	src/main/scala/repositories/daos/MatchDAO.scala
+:000000 100644 0000000000000000000000000000000000000000 4273b71c87bc10acaf8578b54fcc2b1de4c1d957 A	src/main/scala/repositories/daos/MatchLocalDAO.scala
+:000000 100644 0000000000000000000000000000000000000000 2f51add7489dc73f6686670d5592e175bb537500 A	src/main/scala/repositories/dbdtos/MatchDBDTO.scala
+:100644 100644 83aa270e807413066060cb6ec3797e4a6d1486ec 7b822789339d13ad9a8045aa2c98bd8caa4f9282 M	src/main/scala/routes/CardRoutes.scala
+:100644 100644 99165245bfc98492fc17089110a575fd9560b296 9ae0e8c6110005bba471eb9a68a71d3c789a49fe M	src/main/scala/routes/DeckRoutes.scala
+:100644 100644 47016f0645dd6b67e49357feae42ed2c9efeb558 38d1af545e0605b90a58adf5f4cc6465a144ce4a M	src/main/scala/routes/LoginRoute.scala
+:100644 100644 f7648e1844d54818619b1ea6004768ed661873ec 8db03a698b8701b69a0a34c3ee6228118f5abc50 M	src/main/scala/routes/MatchRoutes.scala
+:100644 100644 b72ca1a67bfbf29430563cc2cd6e21c025da9d60 bd89698a99ffb4e4e538c39b08ea08fa33fb1a59 M	src/main/scala/routes/Routes.scala
+:100644 100644 0a6149636da9488545772b8e10d0a1c828f1be8f 76d31fff569a31017c5c3f8b694d59a1eee64aab M	src/main/scala/routes/Utils.scala
+:000000 100644 0000000000000000000000000000000000000000 1ffebff919787b216ec388ae4ef406cdf9504075 A	src/main/scala/routes/inputs/MatchInputs.scala
+:100644 100644 a7b97ea8e187734eb8b41328709c1cfd0e249288 772b35e6fdb72f9ee48d6eab3e57fe44675c4b6a M	src/main/scala/serializers/Json4sSnakeCaseSupport.scala
+:100644 100644 376f7ee3422e22563f52a309b46f33c84cf566df 2656af2c2ba7b86741e945a149720a930edc3323 M	src/main/scala/server/ClassInjection.scala
+:000000 100644 0000000000000000000000000000000000000000 db55aeb574a3dc4f94e4154441b69e934564f63c A	src/main/scala/services/MatchService.scala
+commit 5612c59ddc611a0d162e6c03bcdad26338bfc172
+tree 6b95903b86496d9b8ec979b957fb52bfbe283ffe
+parent 83af03e5012268f02f54ef433e0288b2fa64c759
+author JulietaAbuin <julieta.abuin@despegar.com> 2021-05-12 23:15:13 -0300
+committer JulietaAbuin <julieta.abuin@despegar.com> 2021-05-12 23:15:13 -0300
+
+    Separate routes
+
+
+:000000 100644 0000000000000000000000000000000000000000 83aa270e807413066060cb6ec3797e4a6d1486ec A	src/main/scala/routes/CardRoutes.scala
+:000000 100644 0000000000000000000000000000000000000000 47016f0645dd6b67e49357feae42ed2c9efeb558 A	src/main/scala/routes/LoginRoute.scala
+:000000 100644 0000000000000000000000000000000000000000 f7648e1844d54818619b1ea6004768ed661873ec A	src/main/scala/routes/MatchRoutes.scala
+:100644 100644 e8c59b459a7fb6d803ebcc8ceaa9b87c50c2ec38 b72ca1a67bfbf29430563cc2cd6e21c025da9d60 M	src/main/scala/routes/Routes.scala
+:000000 100644 0000000000000000000000000000000000000000 7b2de4eb862130063e74429e7d2bac89e7b49db9 A	src/main/scala/routes/StatisticsRoutes.scala
+commit 38aaedee0ccf84d136cc424b2ac2b6f83b614084
+tree 127a8d4d1b3b35149fa875d24b2e2950595bc232
+parent fb93446a589d9b060697f924a4866ca0dd18a709
+author fgiannotti <franco.giannotti@mercadolibre.com> 2021-05-04 17:41:26 -0300
+committer fgiannotti <franco.giannotti@mercadolibre.com> 2021-05-04 17:41:26 -0300
+
+    update readme
+
+
+:100644 100644 9b5b991b8856c8e0949a7a36b9500d56c4988b9e 7764180adfe87212b6609446f926853656f942ec M	README.md
+commit 3e842f7cdb603e0536d22f71c7749187d96e7fa8
+tree cef4b7027ccbf92b74d86a63c85b307db70c8783
+parent 7ed3cef3c55d67a3e4357f827d22632f01daf036
+author chiarama <37699529+chiarama@users.noreply.github.com> 2021-05-04 01:34:38 -0300
+committer chiarama <37699529+chiarama@users.noreply.github.com> 2021-05-04 01:34:38 -0300
+
+    mini fix
+
+
+:100644 100644 af7c0bdea684050370a735e2e36a945818dd245c 73eeb024872207e96184be1e7cc2c6e6f9a1acc3 M	src/main/scala/services/SuperheroApi.scala
+commit f1ee489908f3ce1ed8dd2060765a48365dcc0e35
+tree 838b301c7e187bfc12477065d3138dcebd00fd72
+parent d7630a289edbb4639fe3de624813b181e5dc1b17
+author JulietaAbuin <julieta.abuin@despegar.com> 2021-05-04 00:55:24 -0300
+committer JulietaAbuin <julieta.abuin@despegar.com> 2021-05-04 00:55:24 -0300
+
+    add put in allowed methods
+
+
+:100644 100644 e0c315c1dfc6720439ca8a3a7f1aacc4cac03454 e8c59b459a7fb6d803ebcc8ceaa9b87c50c2ec38 M	src/main/scala/routes/Routes.scala
+commit 30776aaf83e7846b5cb631687487463d79117249
+tree e76d4dc5fbe7f1654b4e8614ae771c6c9026eef6
+parent b64426d14e059379139e69b070f816d6754330d0
+author Ivan Casanova <ivan.casanova@mercadolibre.com> 2021-05-04 00:50:17 -0300
+committer Ivan Casanova <ivan.casanova@mercadolibre.com> 2021-05-04 00:50:17 -0300
+
+    change
+
+
+:100644 100644 ca79ecceff25a6fdbafe6b280f963a96bb03d454 5b58e374562844bb709a2cacbb1b6598e7ac9e40 M	.gitignore
+commit e9f054c9312f363918a4f1a24dff192f14ee8f62
+tree 0469eb8a3b30000f5eb119c80dcecf151a329c0f
+parent 5a31ec0d97001b9a31cfa5897daf2f284e2a557c
+author JulietaAbuin <julieta.abuin@despegar.com> 2021-05-04 00:05:53 -0300
+committer JulietaAbuin <julieta.abuin@despegar.com> 2021-05-04 00:05:53 -0300
+
+    add juli as admin
+
+
+:100644 100644 622050ae1dea8ba8d7bf57b19282442ae83923ec 376f7ee3422e22563f52a309b46f33c84cf566df M	src/main/scala/server/ClassInjection.scala
+commit 5a31ec0d97001b9a31cfa5897daf2f284e2a557c
+tree 47a1f821db532b60fb0ab35664e7cb8edaf96231
+parent b05b1a647e0afec75f8c88078af8186fcccc97ba
+author JulietaAbuin <julieta.abuin@despegar.com> 2021-05-03 21:35:35 -0300
+committer JulietaAbuin <julieta.abuin@despegar.com> 2021-05-03 21:35:35 -0300
+
+    Fix cors handling adding allowed methods
+
+
+:100644 100644 0ff6ddc8e5b2eecfb39cd959f89896152fdb90c9 99165245bfc98492fc17089110a575fd9560b296 M	src/main/scala/routes/DeckRoutes.scala
+:100644 100644 d7c4cef08566244342a8adef4b1d52e9f34579d5 e0c315c1dfc6720439ca8a3a7f1aacc4cac03454 M	src/main/scala/routes/Routes.scala
+commit b05b1a647e0afec75f8c88078af8186fcccc97ba
+tree d2f75b78ceab02c3ff5ede39d27d03f3963fe51d
+parent e3983eb371162799edd8c0732b9c49f1fb042def
+author JulietaAbuin <julieta.abuin@despegar.com> 2021-05-03 19:01:48 -0300
+committer JulietaAbuin <julieta.abuin@despegar.com> 2021-05-03 19:01:48 -0300
+
+    change routes
+
+
+:100644 100644 e2f61b59e946debcc43161a3c132cd2717a2459d 0ff6ddc8e5b2eecfb39cd959f89896152fdb90c9 M	src/main/scala/routes/DeckRoutes.scala
+commit e3983eb371162799edd8c0732b9c49f1fb042def
+tree eb909eaca84356dfd00910ef5886dc211f874d44
+parent 4a5c9b768b04a2bb059955c349b3cabe9255e5e0
+author JulietaAbuin <julieta.abuin@despegar.com> 2021-05-03 01:26:11 -0300
+committer JulietaAbuin <julieta.abuin@despegar.com> 2021-05-03 01:26:11 -0300
+
+    fix deck routes and add decks
+
+
+:100644 100644 a6d8ec0c3a8907ca1ae557b4b5e38ec2ade2a479 e2f61b59e946debcc43161a3c132cd2717a2459d M	src/main/scala/routes/DeckRoutes.scala
+:100644 100644 74c70fbf7833e8f31ebc50d932f2a6767e5aa73d d7c4cef08566244342a8adef4b1d52e9f34579d5 M	src/main/scala/routes/Routes.scala
+:100644 100644 69dd2a06bb9524ac1647504e088109c19a4e995b 622050ae1dea8ba8d7bf57b19282442ae83923ec M	src/main/scala/server/ClassInjection.scala
+commit 4a5c9b768b04a2bb059955c349b3cabe9255e5e0
+tree dfe8ed8f67fc97736ed0faa591e759c36b1ee15c
+parent d4fddc94af3bc4a9746efa3694af54d748c4ca10
+author JulietaAbuin <julieta.abuin@despegar.com> 2021-05-03 00:17:27 -0300
+committer JulietaAbuin <julieta.abuin@despegar.com> 2021-05-03 00:17:27 -0300
+
+    added decks get
+
+
+:100644 100644 fe66b1f2eb8d65874108ba40ec84318a64778588 7f6bf9e0939aeb8592d633fa8524eb920ad22700 M	src/main/scala/repositories/DeckRepository.scala
+:100644 100644 45b3eb89a6f501f8a83fd9a8eb4ac3a355cd25c9 54c45bb25d631b1c211e533b31a76922586b1dc1 M	src/main/scala/repositories/daos/DeckDao.scala
+:100644 100644 e3835265b406785b6218e071920b733b89605789 c29fab06a350216ee61ee2f4bf72b96b1f77f0c7 M	src/main/scala/repositories/daos/DeckLocalDao.scala
+:100644 100644 d1a4d02b7216ef39ff543e88cbb8a19f82df237d a6d8ec0c3a8907ca1ae557b4b5e38ec2ade2a479 M	src/main/scala/routes/DeckRoutes.scala
+:100644 100644 58756811c1f63296d6931f82b9dabfa80ed9c749 69dd2a06bb9524ac1647504e088109c19a4e995b M	src/main/scala/server/ClassInjection.scala
+:100644 100644 7041ad4ea8ee6364f4ce57b292f40090250bad91 4d7b8d4ba02efe409a2f50dd192d07d0282b32a3 M	src/main/scala/services/DeckService.scala
+commit 519383cea9bb649a5c03b2ec346adffc7b880d79
+tree a3dcba0660ed1f7fdfc1b6ecd780734de84ae25c
+parent ad789c660e62dd6e970600f077c810aa0e60bd06
+author chiarama <37699529+chiarama@users.noreply.github.com> 2021-05-02 23:24:13 -0300
+committer chiarama <37699529+chiarama@users.noreply.github.com> 2021-05-02 23:24:13 -0300
+
+    Add invalid powerstats
+
+
+:100644 100644 e84a5358370bd418b4f222cfeb4c67ae9422a3f4 af7c0bdea684050370a735e2e36a945818dd245c M	src/main/scala/services/SuperheroApi.scala
+commit ad789c660e62dd6e970600f077c810aa0e60bd06
+tree 39103607ccf382c49f4460515454ab2468a489e4
+parent 97df3a9f762785eacbaa0ae05286af9558b3d9f7
+author chiarama <37699529+chiarama@users.noreply.github.com> 2021-05-02 23:19:25 -0300
+committer chiarama <37699529+chiarama@users.noreply.github.com> 2021-05-02 23:19:25 -0300
+
+    Add invalid powerstats
+
+
+:100644 100644 38be44e9a06c275871a41c63728f5d6039b6a927 e84a5358370bd418b4f222cfeb4c67ae9422a3f4 M	src/main/scala/services/SuperheroApi.scala
+commit 2edc42e7bd1a16ac4d75d77db0527a94ae2bfe49
+tree 5083e1895d2c272ffcbd14940c1710a6f03e1e0d
+parent 2142dab1e4315ad10e023345da250c5a2cc9626e
+author JulietaAbuin <julieta.abuin@despegar.com> 2021-05-02 23:08:35 -0300
+committer JulietaAbuin <julieta.abuin@despegar.com> 2021-05-02 23:08:35 -0300
+
+    remove import
+
+
+:100644 100644 c899329c7b2dc00af7d6c8c33be5519d4971a85e 74c70fbf7833e8f31ebc50d932f2a6767e5aa73d M	src/main/scala/routes/Routes.scala
+commit 97df3a9f762785eacbaa0ae05286af9558b3d9f7
+tree 3da15a15a444266d6791f8fb06d68d7d88e5e267
+parent 0602a9d03664091174c7b6a64c8d22ea9b3706b5
+author IvanCasanova98 <ivan.casanova@mercadolibre.com> 2021-05-02 02:19:32 -0300
+committer IvanCasanova98 <ivan.casanova@mercadolibre.com> 2021-05-02 02:19:32 -0300
+
+    Corregido error de valores nulos en los power attribute
+
+
+:100644 100644 b63045b246faa3dc67af831110630da589edae04 2c76d88a42724131e7e9884af4e11f4a3ea7ff3d M	src/main/scala/models/Deck.scala
+:100644 100644 917715ded476f8670b54481bbf8c2c73df5aeaf7 872758e10ed67e924fad276f7ca9dc566428e8d4 M	src/main/scala/routes/Routes.scala
+commit 7bc2027bfe94105ba02f038c2bfdfc8a9f34551d
+tree 7d15f1cf0f81e1e3d05b24433a86fe3676944adf
+parent 02cca306c3f5d19a88b4658994b1d72e16e5ab29
+author JulietaAbuin <julieta.abuin@despegar.com> 2021-05-02 01:24:32 -0300
+committer JulietaAbuin <julieta.abuin@despegar.com> 2021-05-02 01:24:32 -0300
+
+    fix test
+
+
+:100644 100644 14b346f0c537b849253feb05130761073856e9a8 fe66b1f2eb8d65874108ba40ec84318a64778588 M	src/main/scala/repositories/DeckRepository.scala
+:100644 100644 69089b1f740952514d1e24fab18620ca3fedf20d 45b3eb89a6f501f8a83fd9a8eb4ac3a355cd25c9 R091	src/main/scala/repositories/daos/DeckIDao.scala	src/main/scala/repositories/daos/DeckDao.scala
+:100644 100644 06f4d7605e24d9126de6419978849cff26f33ba5 e3835265b406785b6218e071920b733b89605789 M	src/main/scala/repositories/daos/DeckLocalDao.scala
+:100644 100644 0bcbec1326b87c32084aefcd67fc7121b000219b 057450e26bbfed670a07ce6c1eefd2a337a743f1 M	src/test/scala/integrationTests/DeckCRUDIntegrationTest.scala
+commit 0602a9d03664091174c7b6a64c8d22ea9b3706b5
+tree 8801214d358fed31412dfb752cf14bd566fd4754
+parent 5c9113f6338aec6f5bed3857935dcacbb3a50208
+author IvanCasanova98 <ivan.casanova@mercadolibre.com> 2021-05-02 00:21:52 -0300
+committer IvanCasanova98 <ivan.casanova@mercadolibre.com> 2021-05-02 00:21:52 -0300
+
+    Add search by name
+
+
+:100644 100644 c7af31e37d74c8b08b54933f0c1f3b74cfcb3630 917715ded476f8670b54481bbf8c2c73df5aeaf7 M	src/main/scala/routes/Routes.scala
+:100644 100644 a92ddfd157c10b3f436b43e127f412ce53a7ecd6 38be44e9a06c275871a41c63728f5d6039b6a927 M	src/main/scala/services/SuperheroApi.scala
+:100644 100644 dd8b09828bbe9d3335967dbad47056cdeff98978 c28ef530dd40712b2c70334c8e10e342175f7718 M	src/test/scala/unitTests/TestRoutes.scala
+commit a51053b387b35ea8fd42e5a6153b0ad06903fa1d
+tree 0348c7ec5b47796709b06b3d9b96dffa391f2291
+parent 83cfd2ee984ae5aaf1c6d46dd17ec143c856f0cd
+author JulietaAbuin <julieta.abuin@despegar.com> 2021-05-01 19:44:04 -0300
+committer JulietaAbuin <julieta.abuin@despegar.com> 2021-05-01 19:44:04 -0300
+
+    add player creation
+
+
+:100644 100644 5faeaf1efe242e2d4dfc83a7dccab8eed51958ff 739e78e0844048496663a6fdcb29b4506143db81 M	src/main/scala/repositories/PlayerRepository.scala
+:100644 100644 08da1843cbbab0c9bbf2530ac74f089a55787d7f 8dff98df5185ebe2b89300faaaf40a7808edd278 M	src/main/scala/routes/Routes.scala
+:100644 100644 f29533d47d3c8083fda9a45c8d8d52fef3e7c508 1da7a7f7e849fc9491f3bfeeb479d5fb8a7e5370 M	src/main/scala/routes/inputs/LoginInputs.scala
+:100644 100644 042c6ceb165b242a794ab3abad2bbbede4721073 d305ca1df1ea77108fe142171fa46580a46ba8f5 M	src/main/scala/services/LoginService.scala
+commit 230fecf7c69c01c7e7a9679f42cfcc3c1328131f
+tree 8381bd1b7606050d57b67f6426d9f709ee18fea5
+parent b9fd1fa3a881d5c8794f98bb7ed9c2f7f0614956
+author JulietaAbuin <julieta.abuin@despegar.com> 2021-05-01 19:03:56 -0300
+committer JulietaAbuin <julieta.abuin@despegar.com> 2021-05-01 19:03:56 -0300
+
+    now allowing cors
+
+
+:100644 100644 c38c5a0976c7e2ccdb24451d329490f15dbedf9d b02792ff7c01bd45a743b60c58cdc3e05081749c M	build.sbt
+:100644 100644 24d3c888cfc1019d53e717ac8fa27fad4d77523d 08da1843cbbab0c9bbf2530ac74f089a55787d7f M	src/main/scala/routes/Routes.scala
+commit b9fd1fa3a881d5c8794f98bb7ed9c2f7f0614956
+tree a7dc3b068979ce89e261380359e7bc25d4018620
+parent 8a86cb01c95446a3851c1dd5ed1cc0ffcc861d06
+author fgiannotti <franco.giannotti@mercadolibre.com> 2021-05-01 17:28:33 -0300
+committer fgiannotti <franco.giannotti@mercadolibre.com> 2021-05-01 17:28:33 -0300
+
+    add changes for cors
+
+
+:100644 100644 1e70e87edbdf197fcedf8f3811ebf3688382ad06 c38c5a0976c7e2ccdb24451d329490f15dbedf9d M	build.sbt
+:100644 100644 dcf194f3303520b2de27b4b261a75a614d6d5772 24d3c888cfc1019d53e717ac8fa27fad4d77523d M	src/main/scala/routes/Routes.scala
+:100644 100644 48fef6f75516704ef21ddb993e612b9c7a971ef9 58756811c1f63296d6931f82b9dabfa80ed9c749 M	src/main/scala/server/ClassInjection.scala
+:100644 100644 0bcbec1326b87c32084aefcd67fc7121b000219b 0d9c442d0171f5f6dd3b533a791149de01b9d7c7 M	src/test/scala/integrationTests/DeckCRUDIntegrationTest.scala
+commit 5c9113f6338aec6f5bed3857935dcacbb3a50208
+tree 3380ca0f046a306b14fedc9c80257e19ca1103d8
+parent f31dafa5b25b50f43e9822ef68246033e112ed5f
+author chiarama <37699529+chiarama@users.noreply.github.com> 2021-05-01 03:04:28 -0300
+committer chiarama <37699529+chiarama@users.noreply.github.com> 2021-05-01 03:04:28 -0300
+
+    Agrego logica de get by id
+
+
+:100644 100644 76aaa3c28f8dd05138cfe83693aa192e53c9525b 46483488d8ca8b77b30cb692bdbe198d75d451a0 M	src/main/scala/exceptions/Exceptions.scala
+:100644 100644 97e350d680173601daa36ce7ade0a7abc48d54aa a92ddfd157c10b3f436b43e127f412ce53a7ecd6 M	src/main/scala/services/SuperheroApi.scala
+:100644 000000 06918e9e8e6bb22b65c98dc3dbee27d9da7da309 0000000000000000000000000000000000000000 D	src/main/scala/services/borrar.scala
+:000000 100644 0000000000000000000000000000000000000000 23375c2cc880dbfcf455e70919f22663309f70b5 A	src/test/scala/servicesTest/SuperheroApiTest.scala
+:100644 100644 be7f0c2a21060e856af30a518862e38dc9a9f557 dd8b09828bbe9d3335967dbad47056cdeff98978 M	src/test/scala/unitTests/TestRoutes.scala
+commit f31dafa5b25b50f43e9822ef68246033e112ed5f
+tree 6bac1b6133aaba84e2c103645b2027146290eb71
+parent 0e0760df9026537ce0a9c6ff90117d96bba98f74
+author IvanCasanova98 <ivan.casanova@mercadolibre.com> 2021-04-30 18:25:00 -0300
+committer IvanCasanova98 <ivan.casanova@mercadolibre.com> 2021-04-30 18:25:00 -0300
+
+    search by name
+
+
+:100644 100644 8999732114555972d28a635ae540a9ea55fe07eb 97e350d680173601daa36ce7ade0a7abc48d54aa M	src/main/scala/services/SuperheroApi.scala
+commit 0e0760df9026537ce0a9c6ff90117d96bba98f74
+tree fc5baf700fdfe2910c424e0fa619f4d0513f9c32
+parent 3ea2d245c9f0086f3ecbb466269ef8bf7391c868
+author IvanCasanova98 <ivan.casanova@mercadolibre.com> 2021-04-30 18:11:12 -0300
+committer IvanCasanova98 <ivan.casanova@mercadolibre.com> 2021-04-30 18:11:12 -0300
+
+    search by id
+
+
+:100644 100644 1e70e87edbdf197fcedf8f3811ebf3688382ad06 7cdf61bd65dfce7526c055c4f169c710a3f9b6b2 M	build.sbt
+:000000 100644 0000000000000000000000000000000000000000 8999732114555972d28a635ae540a9ea55fe07eb A	src/main/scala/services/SuperheroApi.scala
+:000000 100644 0000000000000000000000000000000000000000 06918e9e8e6bb22b65c98dc3dbee27d9da7da309 A	src/main/scala/services/borrar.scala
+commit 8a86cb01c95446a3851c1dd5ed1cc0ffcc861d06
+tree dc733178e07187dcae37f247e4fa66d601e9da57
+parent a93ebfbc396a71d68617e4805acf8087c85a356a
+author fgiannotti <franco.giannotti@mercadolibre.com> 2021-04-29 23:18:53 -0300
+committer fgiannotti <franco.giannotti@mercadolibre.com> 2021-04-29 23:18:53 -0300
+
+    change injection vars
+
+
+:100644 100644 d1f45f61e231bf4fbf2da13459fe2f20ac32b16d 48fef6f75516704ef21ddb993e612b9c7a971ef9 M	src/main/scala/server/ClassInjection.scala
+commit a93ebfbc396a71d68617e4805acf8087c85a356a
+tree 49761afde9c2837d8b9d240a780400942a3b2ad2
+parent e0051e57b25cced04d6bf00ebf75e313cf10fdbd
+author fgiannotti <franco.giannotti@mercadolibre.com> 2021-04-29 23:17:07 -0300
+committer fgiannotti <franco.giannotti@mercadolibre.com> 2021-04-29 23:17:07 -0300
+
+    deck dao
+
+
+:100644 100644 fba36e0bf895f079d13f1f106caa90bd1e46cbca 14b346f0c537b849253feb05130761073856e9a8 M	src/main/scala/repositories/DeckRepository.scala
+:000000 100644 0000000000000000000000000000000000000000 69089b1f740952514d1e24fab18620ca3fedf20d A	src/main/scala/repositories/daos/DeckIDao.scala
+:000000 100644 0000000000000000000000000000000000000000 06f4d7605e24d9126de6419978849cff26f33ba5 A	src/main/scala/repositories/daos/DeckLocalDao.scala
+commit e0051e57b25cced04d6bf00ebf75e313cf10fdbd
+tree 71e238b9212c2512d164a9c06d305806f568e408
+parent e3059146a510677e329e3650d60c2b08d6d25bb2
+author fgiannotti <franco.giannotti@mercadolibre.com> 2021-04-29 20:23:51 -0300
+committer fgiannotti <franco.giannotti@mercadolibre.com> 2021-04-29 20:23:51 -0300
+
+    add logging
+
+
+:100644 100644 9c38a626cd21b68ca8f569ac9fca0182f341c2ba dcf194f3303520b2de27b4b261a75a614d6d5772 M	src/main/scala/routes/Routes.scala
+:100644 100644 f2f70f7ef51293818e6d35a06c98a48846765e1b 042c6ceb165b242a794ab3abad2bbbede4721073 M	src/main/scala/services/LoginService.scala
+commit e3059146a510677e329e3650d60c2b08d6d25bb2
+tree 158e07c0de19c6902fac25ed98ddd41d5e408773
+parent af02b61b4e3b7ddf0bf35bdcce847fb69223293e
+author fgiannotti <franco.giannotti@mercadolibre.com> 2021-04-29 20:07:20 -0300
+committer fgiannotti <franco.giannotti@mercadolibre.com> 2021-04-29 20:07:20 -0300
+
+    login endoint: service + player repo
+
+
+:100644 100644 58f3c9d59866a26a65dd4ec9869f1ba153b834b2 a5cf982628f67a7670b453057f985fe5d2f82c53 M	src/main/scala/models/Player.scala
+:000000 100644 0000000000000000000000000000000000000000 5faeaf1efe242e2d4dfc83a7dccab8eed51958ff A	src/main/scala/repositories/PlayerRepository.scala
+:100644 100644 0ae6523abd7685ab969a1bd1fc69054b739f4a2a 9c38a626cd21b68ca8f569ac9fca0182f341c2ba M	src/main/scala/routes/Routes.scala
+:100644 100644 22b55656514dce69edcaaf3009469d7e0bdf53a1 d1f45f61e231bf4fbf2da13459fe2f20ac32b16d M	src/main/scala/server/ClassInjection.scala
+:000000 100644 0000000000000000000000000000000000000000 f2f70f7ef51293818e6d35a06c98a48846765e1b A	src/main/scala/services/LoginService.scala
+commit af02b61b4e3b7ddf0bf35bdcce847fb69223293e
+tree 36b29ee9312a9634a08dedcba5ca618818e01e00
+parent 3ea2d245c9f0086f3ecbb466269ef8bf7391c868
+author fgiannotti <franco.giannotti@mercadolibre.com> 2021-04-28 21:46:00 -0300
+committer fgiannotti <franco.giannotti@mercadolibre.com> 2021-04-28 21:46:00 -0300
+
+    Add login input
+
+
+:100644 100644 bf38c760999dbdd76b2737b3a7f3477a5371b645 ca79ecceff25a6fdbafe6b280f963a96bb03d454 M	.gitignore
+:100644 100644 c7af31e37d74c8b08b54933f0c1f3b74cfcb3630 0ae6523abd7685ab969a1bd1fc69054b739f4a2a M	src/main/scala/routes/Routes.scala
+:000000 100644 0000000000000000000000000000000000000000 f29533d47d3c8083fda9a45c8d8d52fef3e7c508 A	src/main/scala/routes/inputs/LoginInputs.scala
+commit 88ccd82821fefa6dee85e9928a72e0d88294e96e
+tree 6783abc14b77a470a62a93d42c3801eb3a453cc6
+parent 09f0dc1d499763d025ada35b72aea64a1807a11c
+author JulietaAbuin <julieta.abuin@despegar.com> 2021-04-27 00:00:25 -0300
+committer JulietaAbuin <julieta.abuin@despegar.com> 2021-04-27 00:00:25 -0300
+
+    change db name
+
+
+:100644 100644 6deb93f2bba1070561c342fc7d1d3b6cda232b39 22b55656514dce69edcaaf3009469d7e0bdf53a1 M	src/main/scala/server/ClassInjection.scala
+commit 09f0dc1d499763d025ada35b72aea64a1807a11c
+tree fc431e6dbbaa511ef57e4c4cb6fade58552bb205
+parent 987ff5d0db396968f61409b3fb609b1aa9ecafa8
+author JulietaAbuin <julieta.abuin@despegar.com> 2021-04-26 23:51:44 -0300
+committer JulietaAbuin <julieta.abuin@despegar.com> 2021-04-26 23:51:44 -0300
+
+    delete testcontext
+
+
+:100644 000000 65ada08e4981848c23081f2f3e33b6821def9074 0000000000000000000000000000000000000000 D	src/test/scala/utils/TestContext.scala
+commit 987ff5d0db396968f61409b3fb609b1aa9ecafa8
+tree 674ec33a15dbebbd772bd7f6f3c7b9603f68243d
+parent 53c51448eaf55878794a22f43b74a784c927eda6
+author JulietaAbuin <julieta.abuin@despegar.com> 2021-04-26 23:50:50 -0300
+committer JulietaAbuin <julieta.abuin@despegar.com> 2021-04-26 23:50:50 -0300
+
+    delete unnecessary format in object deck
+
+
+:100644 100644 eb1e95e2fede3e197325bcdc96d0b45020cfad83 b63045b246faa3dc67af831110630da589edae04 M	src/main/scala/models/Deck.scala
+:100644 100644 f8e0846316f902e1a5c80934eab6d896386b048c d1a4d02b7216ef39ff543e88cbb8a19f82df237d M	src/main/scala/routes/DeckRoutes.scala
+:100644 100644 c28665aae4e797f37862e1b8e10042c7d00509e6 c7af31e37d74c8b08b54933f0c1f3b74cfcb3630 M	src/main/scala/routes/Routes.scala
+:100644 100644 6274e6a37714932923d4d4e0a121dc7d628cdcb1 a7b97ea8e187734eb8b41328709c1cfd0e249288 M	src/main/scala/serializers/Json4sSnakeCaseSupport.scala
+commit 53c51448eaf55878794a22f43b74a784c927eda6
+tree ee786e1e75c1f2def978b1feb16d87df78ae699f
+parent 90305ae8c2c6b9f182188f7c9497dc9ebf32030b
+author JulietaAbuin <julieta.abuin@despegar.com> 2021-04-26 23:46:33 -0300
+committer JulietaAbuin <julieta.abuin@despegar.com> 2021-04-26 23:46:33 -0300
+
+    add integration tests
+
+
+:000000 100644 0000000000000000000000000000000000000000 0bcbec1326b87c32084aefcd67fc7121b000219b A	src/test/scala/integrationTests/DeckCRUDIntegrationTest.scala
+:000000 100644 0000000000000000000000000000000000000000 65ada08e4981848c23081f2f3e33b6821def9074 A	src/test/scala/utils/TestContext.scala
+commit 90305ae8c2c6b9f182188f7c9497dc9ebf32030b
+tree a9c7d572ba756e16ef88d5dc97edc8cf60af1a94
+parent bf3d3dfdcd48a4594a2b2664ad6b1ceee44d72bd
+author JulietaAbuin <julieta.abuin@despegar.com> 2021-04-26 23:03:02 -0300
+committer JulietaAbuin <julieta.abuin@despegar.com> 2021-04-26 23:03:02 -0300
+
+    add request handler to avoid exception handling repetition
+
+
+:100644 100644 39cbbf6a24e83a43d8b86b8ff498aec74febd884 fba36e0bf895f079d13f1f106caa90bd1e46cbca M	src/main/scala/repositories/DeckRepository.scala
+:100644 100644 b4eae7c2b92dce55832a1f990a26f0443b75f2c2 f8e0846316f902e1a5c80934eab6d896386b048c M	src/main/scala/routes/DeckRoutes.scala
+:000000 100644 0000000000000000000000000000000000000000 0a6149636da9488545772b8e10d0a1c828f1be8f A	src/main/scala/routes/Utils.scala
+:100644 100644 b8676b6e11b3ceef0da2f2fd065e0067d203bbf8 6cf7a42058377972e6cc326c441c4d42edf922f0 M	src/main/scala/server/HttpServer.scala
+:100644 100644 8231628004617864051e226d5c074b1f5730b0a0 7041ad4ea8ee6364f4ce57b292f40090250bad91 M	src/main/scala/services/DeckService.scala
+commit bf3d3dfdcd48a4594a2b2664ad6b1ceee44d72bd
+tree 3986089dfbc321a000986f0a195e85527b77979e
+parent c527e2224798d7c745aa74e38526e4970872fd68
+author JulietaAbuin <julieta.abuin@despegar.com> 2021-04-26 21:16:18 -0300
+committer JulietaAbuin <julieta.abuin@despegar.com> 2021-04-26 21:16:18 -0300
+
+    added abm service and repo
+
+
+:000000 100644 0000000000000000000000000000000000000000 76aaa3c28f8dd05138cfe83693aa192e53c9525b A	src/main/scala/exceptions/Exceptions.scala
+:000000 100644 0000000000000000000000000000000000000000 39cbbf6a24e83a43d8b86b8ff498aec74febd884 A	src/main/scala/repositories/DeckRepository.scala
+:100644 100644 1fd63dc25454af987c3cbeb918f845ea794d15f8 b4eae7c2b92dce55832a1f990a26f0443b75f2c2 M	src/main/scala/routes/DeckRoutes.scala
+:100644 100644 1625f24b5264f7b2e83b455b57afefdf7c43638c c28665aae4e797f37862e1b8e10042c7d00509e6 M	src/main/scala/routes/Routes.scala
+:100644 100644 5dd839810ae0fd12314ea68571d5fee8e40469e6 bc6414e6d40d2f96854c5e7980be2c829b82e2b4 M	src/main/scala/routes/inputs/DeckInputs.scala
+:100644 100644 73b9e8badc8a591efbf9f79a3fbc766f4d889866 6274e6a37714932923d4d4e0a121dc7d628cdcb1 M	src/main/scala/serializers/Json4sSnakeCaseSupport.scala
+:100644 100644 8aeda8c33cbcdca46ecc8c4bdbbd31f172729e61 6deb93f2bba1070561c342fc7d1d3b6cda232b39 M	src/main/scala/server/ClassInjection.scala
+:100644 100644 d95ae735dd577d07fc71bc3ee370f64e268648f0 b8676b6e11b3ceef0da2f2fd065e0067d203bbf8 M	src/main/scala/server/HttpServer.scala
+:100644 100644 cbb7fff7e8c202619ac7a2cb97b7bb12c3a6a446 8231628004617864051e226d5c074b1f5730b0a0 M	src/main/scala/services/DeckService.scala
+commit c527e2224798d7c745aa74e38526e4970872fd68
+tree 30d70b16614f283b417ad8b82903f8cfbcb0ada4
+parent dc61155ce1c4b64b123732179c24ed97102bb0ca
+author JulietaAbuin <julieta.abuin@despegar.com> 2021-04-25 21:35:18 -0300
+committer JulietaAbuin <julieta.abuin@despegar.com> 2021-04-25 21:35:18 -0300
+
+    Added unmarshaller and class injection and separated route with dummy response
+
+
+:100644 100644 dadaa4514da06567dea916618b8e1bf1767b994f 1e70e87edbdf197fcedf8f3811ebf3688382ad06 M	build.sbt
+:100644 100644 b9a93f26d2a8b1196ec0eeab311f9ec5a770aa2d eb1e95e2fede3e197325bcdc96d0b45020cfad83 M	src/main/scala/models/Deck.scala
+:000000 100644 0000000000000000000000000000000000000000 1fd63dc25454af987c3cbeb918f845ea794d15f8 A	src/main/scala/routes/DeckRoutes.scala
+:100644 100644 734fe6524612e15ad821701400cedb2585e28f0b 1625f24b5264f7b2e83b455b57afefdf7c43638c M	src/main/scala/routes/Routes.scala
+:000000 100644 0000000000000000000000000000000000000000 5dd839810ae0fd12314ea68571d5fee8e40469e6 A	src/main/scala/routes/inputs/DeckInputs.scala
+:000000 100644 0000000000000000000000000000000000000000 73b9e8badc8a591efbf9f79a3fbc766f4d889866 A	src/main/scala/serializers/Json4sSnakeCaseSupport.scala
+:000000 100644 0000000000000000000000000000000000000000 8aeda8c33cbcdca46ecc8c4bdbbd31f172729e61 A	src/main/scala/server/ClassInjection.scala
+:100644 100644 60157086727221f6a4a9b0ff5571f4b781871600 d95ae735dd577d07fc71bc3ee370f64e268648f0 M	src/main/scala/server/HttpServer.scala
+:000000 100644 0000000000000000000000000000000000000000 cbb7fff7e8c202619ac7a2cb97b7bb12c3a6a446 A	src/main/scala/services/DeckService.scala
+commit dc61155ce1c4b64b123732179c24ed97102bb0ca
+tree 7b6c6f3ee72dc50e7187a261552916de9a0612d9
+parent 69d57234f3cc8b2a5fdafdf378d8b07adf2a21de
+author JulietaAbuin <julieta.abuin@despegar.com> 2021-04-25 18:54:02 -0300
+committer JulietaAbuin <julieta.abuin@despegar.com> 2021-04-25 18:54:02 -0300
+
+    change deck to accept cardids
+
+
+:100644 100644 337a24168f54217415467a3feb354f3e3f0410c0 b9a93f26d2a8b1196ec0eeab311f9ec5a770aa2d M	src/main/scala/models/Deck.scala
+commit 69d57234f3cc8b2a5fdafdf378d8b07adf2a21de
+tree 2d43011f956609cea66c1748018a30d19c56b583
+parent bcb55d64d000d10d520cb25e4e56ac25f91fb36f
+author JulietaAbuin <julieta.abuin@despegar.com> 2021-04-24 21:33:12 -0300
+committer JulietaAbuin <julieta.abuin@despegar.com> 2021-04-24 21:33:12 -0300
+
+    add deck id
+
+
+:100644 100644 f6301382e39ee797c55ecef1c64e520d08e4c3d7 337a24168f54217415467a3feb354f3e3f0410c0 M	src/main/scala/models/Deck.scala
+commit bcb55d64d000d10d520cb25e4e56ac25f91fb36f
+tree 109f47f4c8d957000b73b3273058360c4eeb2a82
+parent fb93446a589d9b060697f924a4866ca0dd18a709
+author JulietaAbuin <julieta.abuin@despegar.com> 2021-04-24 21:13:04 -0300
+committer JulietaAbuin <julieta.abuin@despegar.com> 2021-04-24 21:13:04 -0300
+
+    Added basic models
+
+
+:000000 100644 0000000000000000000000000000000000000000 67e062750f7b255d0b4059766b99be90bef6c29d A	src/main/scala/models/CardAttribute.scala
+:000000 100644 0000000000000000000000000000000000000000 f6301382e39ee797c55ecef1c64e520d08e4c3d7 A	src/main/scala/models/Deck.scala
+:000000 100644 0000000000000000000000000000000000000000 1f0e373465ae2e267b0760e84c39a977212631e0 A	src/main/scala/models/Match.scala
+:000000 100644 0000000000000000000000000000000000000000 58f3c9d59866a26a65dd4ec9869f1ba153b834b2 A	src/main/scala/models/Player.scala
+:100644 100644 5aab25b8339fe23861b91f71595c9354ce85a40e be7f0c2a21060e856af30a518862e38dc9a9f557 M	src/test/scala/unitTests/TestRoutes.scala

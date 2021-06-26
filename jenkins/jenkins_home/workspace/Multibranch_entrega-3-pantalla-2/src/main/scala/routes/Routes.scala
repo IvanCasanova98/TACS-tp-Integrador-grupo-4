@@ -1,0 +1,44 @@
+package routes
+
+import akka.actor.ActorSystem
+import akka.http.scaladsl.model.HttpMethods._
+import akka.http.scaladsl.model.StatusCodes
+import akka.http.scaladsl.server.Directives.{path, _}
+import akka.http.scaladsl.server.Route
+import akka.stream.Materializer
+import ch.megard.akka.http.cors.scaladsl.CorsDirectives
+import ch.megard.akka.http.cors.scaladsl.model.{HttpHeaderRange, HttpOriginMatcher}
+import ch.megard.akka.http.cors.scaladsl.settings.CorsSettings
+import routes.MatchRoutes.logger
+import routes.Utils.handleRequest
+import routes.inputs.MatchInputs.PostMatchDTO
+import serializers.Json4sSnakeCaseSupport
+import server.ClassInjection
+import services.ConnectedPlayersService
+
+object Routes extends ClassInjection with Json4sSnakeCaseSupport with CorsDirectives {
+
+  val settings: CorsSettings = CorsSettings.defaultSettings.withAllowGenericHttpRequests(true)
+    .withAllowedOrigins(HttpOriginMatcher.*)
+    .withAllowedMethods(Seq(GET, POST, DELETE, OPTIONS, PUT, PATCH))
+    .withAllowedHeaders(HttpHeaderRange.*)
+
+  def apply()(implicit actorSystem: ActorSystem): Route = {
+    implicit val materializer: Materializer = Materializer.matFromSystem
+    val conectionsService = new ConnectedPlayersService(actorSystem)
+
+    handleRejections(CorsDirectives.corsRejectionHandler) {
+      cors(settings) {
+        concat(PlayRoutes(conectionsService)
+          ~ DeckRoutes(deckService)
+          ~ MatchRoutes(matchService)
+          ~ LoginRoute()
+          ~ CardRoutes()
+          ~ StatisticsRoutes()
+        )
+      }
+    }
+  }
+}
+
+

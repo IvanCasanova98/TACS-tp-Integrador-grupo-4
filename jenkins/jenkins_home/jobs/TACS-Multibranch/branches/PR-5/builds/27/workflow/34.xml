@@ -1,0 +1,44 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<Tag plugin="workflow-support@3.8">
+  <node class="cps.n.StepAtomNode" plugin="workflow-cps@2.90">
+    <parentIds>
+      <string>33</string>
+    </parentIds>
+    <id>34</id>
+    <descriptorId>org.jenkinsci.plugins.workflow.steps.CoreStep</descriptorId>
+  </node>
+  <actions>
+    <cps.a.ArgumentsActionImpl plugin="workflow-cps@2.90">
+      <arguments>
+        <entry>
+          <string>delegate</string>
+          <linked-hash-map>
+            <entry>
+              <string>$class</string>
+              <string>CompareCoverageAction</string>
+            </entry>
+            <entry>
+              <string>publishResultAs</string>
+              <string>statusCheck</string>
+            </entry>
+            <entry>
+              <string>scmVars</string>
+              <linked-hash-map>
+                <entry>
+                  <string>GIT_URL</string>
+                  <string>https://github.com/IvanCasanova98/TACS-tp-Integrador-grupo-4.git</string>
+                </entry>
+              </linked-hash-map>
+            </entry>
+          </linked-hash-map>
+        </entry>
+      </arguments>
+      <sensitiveVariables/>
+      <isUnmodifiedBySanitization>true</isUnmodifiedBySanitization>
+    </cps.a.ArgumentsActionImpl>
+    <wf.a.TimingAction plugin="workflow-api@2.42">
+      <startTime>1619491167076</startTime>
+    </wf.a.TimingAction>
+    <s.a.LogStorageAction/>
+  </actions>
+</Tag>

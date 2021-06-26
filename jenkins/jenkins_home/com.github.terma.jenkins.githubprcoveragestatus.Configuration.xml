@@ -1,0 +1,11 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<com.github.terma.jenkins.githubprcoveragestatus.Configuration_-ConfigurationDescriptor plugin="github-pr-coverage-status@2.1.1">
+  <coverageByRepo class="concurrent-hash-map"/>
+  <disableSimpleCov>false</disableSimpleCov>
+  <personalAccessToken>{AQAAABAAAAAwofjfeJbrL0CAITyBhYDOY3xlaHrAY+E9jdWPqXgzDZNxDpJvUgv8wH3gz80l4Hd7DjC+sXbC930HiAlu7ixzhA==}</personalAccessToken>
+  <jenkinsUrl>https://www.jenkins.io/images/logos/stay-safe/stay-safe.png</jenkinsUrl>
+  <privateJenkinsPublicGitHub>false</privateJenkinsPublicGitHub>
+  <useSonarForMasterCoverage>false</useSonarForMasterCoverage>
+  <yellowThreshold>80</yellowThreshold>
+  <greenThreshold>90</greenThreshold>
+</com.github.terma.jenkins.githubprcoveragestatus.Configuration_-ConfigurationDescriptor>

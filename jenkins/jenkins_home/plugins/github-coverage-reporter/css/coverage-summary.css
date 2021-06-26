@@ -1,0 +1,20 @@
+
+table.coverage-table {
+    border: 1px #BBBBBB solid;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+table.coverage-table th {
+    padding: 3px 8px;
+    font-weight: bold;
+}
+
+table.coverage-table tr {
+
+}
+
+table.coverage-table td  {
+    padding: 3px;
+}
+

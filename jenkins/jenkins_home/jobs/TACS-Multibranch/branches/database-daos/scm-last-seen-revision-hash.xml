@@ -1,0 +1,7 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<jenkins.plugins.git.AbstractGitSCMSource_-SCMRevisionImpl plugin="git@4.7.1">
+  <head class="org.jenkinsci.plugins.github_branch_source.BranchSCMHead" plugin="github-branch-source@2.10.2">
+    <name>database-daos</name>
+  </head>
+  <hash>61e21c1b2400b1a3a3805b028b5fac8c4202fc4a</hash>
+</jenkins.plugins.git.AbstractGitSCMSource_-SCMRevisionImpl>

@@ -1,0 +1,104 @@
+Pull request #3 updated
+Running with default Jenkinsfile ID: Jenkinsfile
+Running in Durability level: MAX_SURVIVABILITY
+[8mha:////4L1B1iXLdzceBzQsn6xR/Kfa6ea8iwGi5TVc0jkt6CwoAAAAoh+LCAAAAAAAAP9tjTEOwjAQBM8BClpKHuFItIiK1krDC0x8GCfWnbEdkooX8TX+gCESFVvtrLSa5wtWKcKBo5UdUu8otU4GP9jS5Mixv3geZcdn2TIl9igbHBs2eJyx4YwwR1SwULBGaj0nRzbDRnX6rmuvydanHMu2V1A5c4MHCFXMWcf8hSnC9jqYxPTz/BXAFEIGsfuclm8zQVqFvQAAAA==[0m[Pipeline] Start of Pipeline
+[8mha:////4L8ZcDcahKbDSHp+hswyqJgq6iNGXaZ7S01zZ+sKHcvmAAAApR+LCAAAAAAAAP9tjTEOwjAUQ3+KOrAycohUghExsUZZOEFIQkgb/d8mKe3EibgadyBQiQlLlmxL1nu+oE4RjhQdby12HpP2vA+jK4lPFLtroIm3dOGaMFGwXNpJkrGnpUrKFhaxClYC1hZ1oOTRZdiIVt1VExS65pxj2Q4CKm8GeAAThZxVzN8yR9jeRpMIf5y/AJj7DGxXvP/86jduZBmjwAAAAA==[0m[Pipeline] node
+Running on [8mha:////4KGX/HQvZ/tFJZU0Td0fwaNBJ+UBEYYnjZIB/4BmtuCdAAAAnh+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAyOEgZh/eT83ILSktQifY3cxGIgrakPAPBA2lXIAAAA[0mJenkins  in /Users/icasanova/.jenkins/workspace/TACS-Multibranch_PR-3@2
+[8mha:////4DJf+b3PN2CtlRJtlDJYaVYFaYGb2yxDH/dfBFIp54CXAAAApR+LCAAAAAAAAP9tjTEOwjAUQ3+KOrAycoh0gA0xsUZZOEFIQkgb/d8mKe3EibgadyBQiQlLlmxL1nu+oE4RjhQdby12HpP2vA+jK4lPFLtroIm3dOGaMFGwXNpJkrGnpUrKFhaxClYC1hZ1oOTRZdiIVt1VExS65pxj2Q4CKm8GeAAThZxVzN8yR9jeRpMIf5y/AJj7DGxXvP/86jfoP95RwAAAAA==[0m[Pipeline] {
+[8mha:////4Cf/m4lyRsUPQfOtmCSD0JrQJWL6j2iP1EGl5OPdLs2UAAAAhB+LCAAAAAAAAP9b85aBtbiIwSa/KF0vKzUvOzOvODlTryCnNB3I0kvPLMkoTYpPKkrMS86IL84vLUpO1XPPLPEoTXLOzyvOz0n1yy9JZYAARiYGRi8GzpLM3NTiksTcgooiBqmM0pTi/Dy9ZIhiPayaGCoKgHQlV76DLQBczs5RjgAAAA==[0mConnecting to https://api.github.com using 111575/****** (Jekins-Tacs)
+[8mha:////4LMpFR71Ic2WhIlUaaHAVBcs9xSo/Dl/Nc8Cj2EU2pJXAAAApR+LCAAAAAAAAP9tjTEOwjAUQ3+KOrAycoh0gQkxsUZZOEFIQkgb/d8mKe3EibgadyBQiQlLlmxL1nu+oE4RjhQdby12HpP2vA+jK4lPFLtroIm3dOGaMFGwXNpJkrGnpUrKFhaxClYC1hZ1oOTRZdiIVt1VExS65pxj2Q4CKm8GeAAThZxVzN8yR9jeRpMIf5y/AJj7DGxXvP/86jc09154wAAAAA==[0m[Pipeline] stage
+[8mha:////4Kz9Uj8WjFhCQcED2uWxvuwqURci5/HSlO5MnO0kTiuhAAAApR+LCAAAAAAAAP9tjTEOwjAUQ3+KOrAycoh0ggUxsUZZOEFIQkgb/d8mKe3EibgadyBQiQlLlmxL1nu+oE4RjhQdby12HpP2vA+jK4lPFLtroIm3dOGaMFGwXNpJkrGnpUrKFhaxClYC1hZ1oOTRZdiIVt1VExS65pxj2Q4CKm8GeAAThZxVzN8yR9jeRpMIf5y/AJj7DGxXvP/86jek7ggRwAAAAA==[0m[Pipeline] { (Declarative: Checkout SCM)
+[8mha:////4AdSG8Lv3/XV51FkGLcB8QDkjJ46t8sttn7SLUaP29ctAAAAoh+LCAAAAAAAAP9tjTEOAiEURD9rLGwtPQTbaWGsbAmNJ0AWEZb8zwLrbuWJvJp3kLiJlZNMMm+a93rDOic4UbLcG+wdZu14DKOti0+U+lugiXu6ck2YKRguzSSpM+cFJRUDS1gDKwEbgzpQdmgLbIVXD9UGhba9lFS/o4DGdQM8gYlqLiqVL8wJdvexy4Q/z18BzLEA29ce4gfg7KmOvAAAAA==[0m[Pipeline] checkout
+Selected Git installation does not exist. Using Default
+The recommended git tool is: NONE
+using credential Jekins-Tacs
+ > git rev-parse --resolve-git-dir /Users/icasanova/.jenkins/workspace/TACS-Multibranch_PR-3@2/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/IvanCasanova98/TACS-tp-Integrador-grupo-4.git # timeout=10
+Fetching without tags
+Fetching upstream changes from https://github.com/IvanCasanova98/TACS-tp-Integrador-grupo-4.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.24.1'
+using GIT_ASKPASS to set credentials Jekins-Tacs
+ > git fetch --no-tags --force --progress -- https://github.com/IvanCasanova98/TACS-tp-Integrador-grupo-4.git +refs/pull/3/head:refs/remotes/origin/PR-3 +refs/heads/master:refs/remotes/origin/master # timeout=10
+Merging remotes/origin/master commit fb93446a589d9b060697f924a4866ca0dd18a709 into PR head commit 0bc1fa5f13d9f3464e7e67d55a75792f5f89cd02
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 0bc1fa5f13d9f3464e7e67d55a75792f5f89cd02 # timeout=10
+ > git remote # timeout=10
+ > git config --get remote.origin.url # timeout=10
+using GIT_ASKPASS to set credentials Jekins-Tacs
+ > git merge fb93446a589d9b060697f924a4866ca0dd18a709 # timeout=10
+ > git rev-parse HEAD^{commit} # timeout=10
+Merge succeeded, producing 0bc1fa5f13d9f3464e7e67d55a75792f5f89cd02
+Checking out Revision 0bc1fa5f13d9f3464e7e67d55a75792f5f89cd02 (PR-3)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 0bc1fa5f13d9f3464e7e67d55a75792f5f89cd02 # timeout=10
+Commit message: "Update README.md"
+ > git rev-list --no-walk 43cff236155d556b25732f468a41b953170aa88a # timeout=10
+[8mha:////4GI0zV5GDQGuEByKXp04yNj4kMZwqHWzcL9p4it1KUdnAAAAoh+LCAAAAAAAAP9tjTEOAiEURD9rLGwtPQTbGRNjZUtoPAGyiLDkfxZYdytP5NW8g8RNrJxkknnTvNcb1jnBiZLl3mDvMGvHYxhtXXyi1N8CTdzTlWvCTMFwaSZJnTkvKKkYWMIaWAnYGNSBskNbYCu8eqg2KLTtpaT6HQU0rhvgCUxUc1GpfGFOsLuPXSb8ef4KYI6xADvU7j9Dg2gqvAAAAA==[0m[Pipeline] }
+[8mha:////4Jtd+RH0mhwWbsbdJAq7ASL+ekaFcNbSfDj2gSx7TVoPAAAAoh+LCAAAAAAAAP9tjTEOAiEURD9rLGwtPQRbWRhjZUtoPAGyiLDkfxZYdytP5NW8g8RNrJxkknnTvNcb1jnBiZLl3mDvMGvHYxhtXXyi1N8CTdzTlWvCTMFwaSZJnTkvKKkYWMIaWAnYGNSBskNbYCu8eqg2KLTtpaT6HQU0rhvgCUxUc1GpfGFOsLuPXSb8ef4KYI6xADvU7j9J+wGOvAAAAA==[0m[Pipeline] // stage
+[8mha:////4JhyBDhOIEqZaDWZS1Z1TaEviP2diMdLzeZycyRKhzp7AAAAph+LCAAAAAAAAP9tjTEOwjAQBM9BKWgpeYQDEh2iorXc8AITG+PEugv2haTiRXyNPxCIRMVWOyut5vmCMic4UPKycdgGzHWQXez91ORAqb1EGmRDZ1kTZopOajdosu44oyZ2MEcUsFCwdFhHygE9w0o15m6qaNBXJ07TtldQBHuDBwg1mdkk/sKYYH3tbSb8ef4KYOwYxI6h2G4+x/INtuQqUcEAAAA=[0m[Pipeline] withEnv
+[8mha:////4Ewf2eQeKeEwSfurbEJ19PI7toI92N5LEjdIcxLlkQU0AAAApR+LCAAAAAAAAP9tjTEOwjAUQ3+DOrAycoiUzoiJNerCCUITQtLo/zZJSSdOxNW4Ay2VmPBg2Zas93pDGQOcKBjuNHYWY2t570czJ54pdDdPmTu68pYwkte80bkhpc9rbShpWFUw2AjYamw9RYsmwU44+ZCVl2iqSwrzdhTArBrgCYWYyUmG9C1TgP19VJHwx/kLgKlPwOrDYvXyLD8BobDcwgAAAA==[0m[Pipeline] {
+[8mha:////4Pc+9x8FgoKt5insWpmaFzwkpYqrCqLIkeOUNUER1Y49AAAAph+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycohUZUVMrFEWThCaEJJG/7dJSjpxIq7GHWipxIQHy7ZkvdcbqhjgRMEwp7GzGFvLej+aObFMobt5yszRlbWEkbxmQmdBSp/XKihpWFWUsOGw1dh6ihZNgh138iFrL9HUlxTm7cihtGqAJxR8JicZ0rdMAfb3UUXCH+cvAKY+Qdk0ix2WZ/UBbwyqm8IAAAA=[0m[Pipeline] timeout
+Timeout set to expire in 10 Min
+[8mha:////4Oiu/N4qpz2rVLIb7MVWGKmhc9nVKyfKMNuEnj7b2UbxAAAAph+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycohUwIiYukZZOEFoQkgb/V9+UtqJE3E17kBLJSY8WLYl673eUESGE7ETjcXWY6y96ELvpiQG4vYaaBANXURNGClYoeygyNhqqYqShUVZDisJa4t1oOjRJdjIRj90GTS68px42o4Scm/u8IRMTuSkOX3LyLC99SYS/jh/ATB2CfLdfrbD/Cw+y7kUycIAAAA=[0m[Pipeline] {
+[8mha:////4Ik7yM3CaoUjJBHA36nmKm7W3xlRmerkxQRwrlbeqC3MAAAApx+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycohUCDbE1DXKwglCE0La6P/yk9JOnIircQdaKjHhwbItWe/1hiIynIidaCy2HmPtRRd6NyUxELfXQINo6CJqwkjBCmUHRcZWS1WULCzKclhJWFusA0WPLsFGNvqhy6DRlefE03aUkHtzhydkciInzelbRobtrTeR8Mf5C4CxS5Dv9rMd5mfxAbNWnxXCAAAA[0m[Pipeline] stage
+[8mha:////4By5DPNSJ7kGL3OUtgDzEMo8dr8I+x/NmH2nrE2M4/KKAAAApx+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycohUSDAhpq5RFk4QmhDSRv+Xn5R24kRcjTvQUokJD5ZtyXqvNxSR4UTsRGOx9RhrL7rQuymJgbi9BhpEQxdRE0YKVig7KDK2WqqiZGFRlsNKwtpiHSh6dAk2stEPXQaNrjwnnrajhNybOzwhkxM5aU7fMjJsb72JhD/OXwCMXYJ8t5/tMD+LD5WQ+PfCAAAA[0m[Pipeline] { (Application Unit Tests)
+[8mha:////4D+0geUJhHE7eD/OwuxoiKxBZ0Znc49Gs0ioOOpnhXp9AAAApB+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIiCmgQVVrLDS8wsTFOrDtjOyQVL+Jr/IFAJCq2WO1sM88XLFOEI0eLraHOUWocBt/baeHAsbt4HrDlMzZMib1BaQbJ2tQzSs4G5hQlLASsDDWekyObYS1adVeVV2SrU47TdxBQOn2DBxRiMmcV8xfGCJtrrxPTz/NXAGPIUG53n9qHN7LjSKW+AAAA[0m[Pipeline] sh
++ sbt clean coverage test coverageReport
+[0m[[0m[0minfo[0m] [0m[0mwelcome to sbt 1.4.7 (Amazon.com Inc. Java 11.0.10)[0m
+[0m[[0m[0minfo[0m] [0m[0mloading global plugins from /Users/icasanova/.sbt/1.0/plugins[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project tacs-multibranch_pr-3-2-build from plugins.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mloading project definition from /Users/icasanova/.jenkins/workspace/TACS-Multibranch_PR-3@2/project[0m
+[0m[[0m[0minfo[0m] [0m[0mloading settings for project tacs-multibranch_pr-3-2 from build.sbt ...[0m
+[0m[[0m[0minfo[0m] [0m[0mset current project to tacs-tp-integrador-grupo-4 (in build file:/Users/icasanova/.jenkins/workspace/TACS-Multibranch_PR-3@2/)[0m
+[0m[[0m[32msuccess[0m] [0m[0mTotal time: 0 s, completed 25 abr. 2021 16:09:05[0m
+[0m[[0m[0minfo[0m] [0m[0mDefining ThisBuild / coverageEnabled[0m
+[0m[[0m[0minfo[0m] [0m[0mThe new value will be used by Compile / compile / scalacOptions, libraryDependencies[0m
+[0m[[0m[0minfo[0m] [0m[0mReapplying settings...[0m
+[0m[[0m[0minfo[0m] [0m[0mset current project to tacs-tp-integrador-grupo-4 (in build file:/Users/icasanova/.jenkins/workspace/TACS-Multibranch_PR-3@2/)[0m
+[0m[[0m[0minfo[0m] [0m[0mcompiling 2 Scala sources to /Users/icasanova/.jenkins/workspace/TACS-Multibranch_PR-3@2/target/scala-2.13/classes ...[0m
+[0m[[0m[0minfo[0m] [0m[0mCleaning datadir [/Users/icasanova/.jenkins/workspace/TACS-Multibranch_PR-3@2/target/scala-2.13/scoverage-data][0m
+[0m[[0m[0minfo[0m] [0m[0mBeginning coverage instrumentation[0m
+[0m[[0m[0minfo[0m] [0m[0mInstrumentation completed [133 statements][0m
+[0m[[0m[0minfo[0m] [0m[0mWrote instrumentation file [/Users/icasanova/.jenkins/workspace/TACS-Multibranch_PR-3@2/target/scala-2.13/scoverage-data/scoverage.coverage][0m
+[0m[[0m[0minfo[0m] [0m[0mWill write measurement data to [/Users/icasanova/.jenkins/workspace/TACS-Multibranch_PR-3@2/target/scala-2.13/scoverage-data][0m
+[0m[[0m[0minfo[0m] [0m[0mdone compiling[0m
+[0m[[0m[0minfo[0m] [0m[0mcompiling 1 Scala source to /Users/icasanova/.jenkins/workspace/TACS-Multibranch_PR-3@2/target/scala-2.13/test-classes ...[0m
+[0m[[0m[0minfo[0m] [0m[0mdone compiling[0m
+[unitTests-TestRoutes-akka.actor.default-dispatcher-4] INFO akka.event.slf4j.Slf4jLogger - Slf4jLogger started
+[0m[[0m[0minfo[0m] [0m[0m[32mTestRoutes:[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mThe routes[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should return pong when ping is called[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mRun completed in 1 second, 235 milliseconds.[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mTotal number of tests run: 1[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mSuites: completed 1, aborted 0[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mTests: succeeded 1, failed 0, canceled 0, ignored 0, pending 0[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mAll tests passed.[0m[0m
+[0m[[0m[32msuccess[0m] [0m[0mTotal time: 16 s, completed 25 abr. 2021 16:09:22[0m
+[0m[[0m[0minfo[0m] [0m[0mWaiting for measurement data to sync...[0m
+[0m[[0m[0minfo[0m] [0m[0mReading scoverage instrumentation [/Users/icasanova/.jenkins/workspace/TACS-Multibranch_PR-3@2/target/scala-2.13/scoverage-data/scoverage.coverage][0m
+[0m[[0m[0minfo[0m] [0m[0mReading scoverage measurements...[0m
+[0m[[0m[0minfo[0m] [0m[0mGenerating scoverage reports...[0m
+[0m[[0m[0minfo[0m] [0m[0mWritten Cobertura report [/Users/icasanova/.jenkins/workspace/TACS-Multibranch_PR-3@2/target/scala-2.13/coverage-report/cobertura.xml][0m
+[0m[[0m[0minfo[0m] [0m[0mWritten XML coverage report [/Users/icasanova/.jenkins/workspace/TACS-Multibranch_PR-3@2/target/scala-2.13/scoverage-report/scoverage.xml][0m
+[0m[[0m[0minfo[0m] [0m[0mWritten HTML coverage report [/Users/icasanova/.jenkins/workspace/TACS-Multibranch_PR-3@2/target/scala-2.13/scoverage-report/index.html][0m
+[0m[[0m[0minfo[0m] [0m[0mStatement coverage.: 19.55%[0m
+[0m[[0m[0minfo[0m] [0m[0mBranch coverage....: 100.00%[0m
+[0m[[0m[0minfo[0m] [0m[0mCoverage reports completed[0m
+[0m[[0m[0minfo[0m] [0m[0mAll done. Coverage was [19.55%][0m
+[0m[[0m[32msuccess[0m] [0m[0mTotal time: 1 s, completed 25 abr. 2021 16:09:24[0m
+[0J
+[8mha:////4IDBA++ZHQVpRAIb5OSbQ3Z9r/biAy9AgfRBorpcqcHWAAAApR+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIiCkSBqNJabniBiY1xYt0Z2yGpeBFf4w8EIlGxxWpnm3m+YJkiHDlabA11jlLjMPjeTgsHjt3F84Atn7FhSuwNSjNI1qaeUXI2MKcoYSFgZajxnBzZDGvRqruqvCJbnXKcvoOA0ukbPKAQkzmrmL8wRthce52Yfp6/AhhDyFBu95/avQGOY4V7vgAAAA==[0m[Pipeline] }
+[8mha:////4D0nfLaJicwlRdtchoVsWMydGyVw+iB5BEujVPhqpa9LAAAApR+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIiJAokRJXWcsMLTGyME+vO2A5JxYv4Gn8gEImKLVY728zzBcsU4cjRYmuoc5Qah8H3dlo4cOwungds+YwNU2JvUJpBsjb1jJKzgTlFCQsBK0ON5+TIZliLVt1V5RXZ6pTj9B0ElE7f4AGFmMxZxfyFMcLm2uvE9PP8FcAYQoZyu//U7g3N4dT9vgAAAA==[0m[Pipeline] // stage
+[8mha:////4CLYV18IzTa6rxOhfwlvcAsLIQ0BHEEY7PBVc0NrRORYAAAApB+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIiRIUQVVrLDS8wsTFOrDtjOyQVL+Jr/IFAJCq2WO1sM88XLFOEI0eLraHOUWocBt/baeHAsbt4HrDlMzZMib1BaQbJ2tQzSs4G5hQlLASsDDWekyObYS1adVeVV2SrU47TdxBQOn2DBxRiMmcV8xfGCJtrrxPTz/NXAGMIGcrt/lO7N8un7Ki+AAAA[0m[Pipeline] }
+[8mha:////4CX1ZXpKiWXbOMSMN3GTYtltlHTTLF94sWK6wbtEtYf6AAAApB+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOICaRFVWisNLzCxMU6sO2M7JBUv4mv8AYtIVGyx2tlmXm9YxwAnDgZ7TYOl2Fn0bjR54cRhuDqesOcLdkyRncZWTy0r3SzYctKwpChhJWCjqXMcLZkEW9HLh6ycJFOdU8jfUUBp1R2eUIhsTjKkL8wBdrdRRaaf568AZu8TlPU+16H+AAjcDMm+AAAA[0m[Pipeline] // timeout
+[8mha:////4Kjf+qtPWv9Z0tQJSSPfIUGTynuHQl5c0dWJSboSbX9OAAAAox+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPMJRaBEVreWGF5jEGDvWnbEvJBUv4mv8AYtIVGyx2tlmXm9Y5wRHSlZ4g4PD3DkRw2jLEhOl4RpoEp4uoiPMFIxQZlLUm9OCitjAkqqGlYSNwS5QdmgZttLrh26CRtucOZXvIKF2/R2eUMliZp34C3OC3W3sM+HP81cAc4wM9b4t1bYfF15Zm74AAAA=[0m[Pipeline] }
+[8mha:////4JDKHLEMuj7z14bqxak1uwcmvO3+/KtmwDzcNBcHmI1pAAAApB+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOICaRFVWisNLzCxMU6sO2M7JBUv4mv8AYtIVGyx2tlmXm9YxwAnDgZ7TYOl2Fn0bjR54cRhuDqesOcLdkyRncZWTy0r3SzYctKwpChhJWCjqXMcLZkEW9HLh6ycJFOdU8jfUUBp1R2eUIhsTjKkL8wBdrdRRaaf568AZu8TlHWd67D/AC8cymq+AAAA[0m[Pipeline] // withEnv
+[8mha:////4JT/Jx420dPA3rhvU7H2pbTkuqSrMibBBykXodQGiWE9AAAAox+LCAAAAAAAAP9tjTEOwjAQBDdBFLSUPMKRgA5R0VppeIFJjHFi3QX7QlLxIr7GH4iIRMVWO9PM641lijhydKqx1HpKlVdd6N301MCxvQYeVMMXVTElDlaVdii5tqcZSxaLeVmOhcbKUhU4eXKCtW7MwxTBkCvOEid30Mh9fccTmZ7KYqJ8YYzY3Po6Mf06fwMYu06Qb3eCbP8B+yNxE70AAAA=[0m[Pipeline] }
+[8mha:////4EZS4ROl+5LlxoPNBdJsayeIJzuv6zXqdKdIPYB0SbqJAAAAox+LCAAAAAAAAP9tjTEOwjAQBDdBFLSUPMKRgA5R0VppeIFJjHFi3QX7QlLxIr7GH4iIRMVWO9PM641lijhydKqx1HpKlVdd6N301MCxvQYeVMMXVTElDlaVdii5tqcZSxaLeVmOhcbKUhU4eXKCtW7MwxTBkCvOEid30Mh9fccTmZ7KYqJ8YYzY3Po6Mf06fwMYu06Qb/eCbPcBSGo1P70AAAA=[0m[Pipeline] // node
+[8mha:////4IjBzSJg9yjr4Mrn/1YlXBGF/kgMvWRwAdgl5VWQ1wc8AAAAox+LCAAAAAAAAP9tjbEOgjAURS8YB1dHP6IkJE7GybVh8Qsq1Fpo3sP2IUx+kb/mP0gkcfJO95zlvN5Yp4gjR6daS52nVHvVh8HNT40cu2vgUbV8UTVT4mBVZceKG3tasGKxWJblWGlsLNWBkycn2OrWPEwRDLniLHF2B43cN3c8kem5LCbKF6aI3W1oEtOv8zeAqe8FebkXZOUHbnNSdb0AAAA=[0m[Pipeline] End of Pipeline
+
+GitHub has been notified of this commit’s build result
+
+Finished: SUCCESS

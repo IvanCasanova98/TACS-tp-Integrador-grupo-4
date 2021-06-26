@@ -1,0 +1,22 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<org.jenkinsci.plugins.github__branch__source.PullRequestSCMRevision plugin="github-branch-source@2.10.2">
+  <head class="org.jenkinsci.plugins.github_branch_source.PullRequestSCMHead">
+    <name>PR-5</name>
+    <merge>true</merge>
+    <number>5</number>
+    <target>
+      <name>master</name>
+    </target>
+    <sourceOwner>IvanCasanova98</sourceOwner>
+    <sourceRepo>TACS-tp-Integrador-grupo-4</sourceRepo>
+    <sourceBranch>jekins-test-3</sourceBranch>
+    <origin class="jenkins.scm.api.SCMHeadOrigin$Default" plugin="scm-api@2.6.4"/>
+  </head>
+  <target class="jenkins.plugins.git.AbstractGitSCMSource$SCMRevisionImpl" plugin="git@4.7.1">
+    <head class="org.jenkinsci.plugins.github_branch_source.BranchSCMHead" reference="../../head/target"/>
+    <hash>cafaf5d0a10ebad18279f90d4e13b51034ea5303</hash>
+  </target>
+  <baseHash>cafaf5d0a10ebad18279f90d4e13b51034ea5303</baseHash>
+  <pullHash>a7883c63f7b247fb6b7b64e5a718b8c78ad5ea66</pullHash>
+  <mergeHash>f9d3e62a07c893265a0393d7d011631738a3fdf4</mergeHash>
+</org.jenkinsci.plugins.github__branch__source.PullRequestSCMRevision>

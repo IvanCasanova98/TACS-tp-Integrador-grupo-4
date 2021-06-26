@@ -1,0 +1,66 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<flow-definition plugin="workflow-job@2.40">
+  <actions>
+    <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobAction plugin="pipeline-model-definition@1.8.4"/>
+    <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction plugin="pipeline-model-definition@1.8.4">
+      <jobProperties/>
+      <triggers/>
+      <parameters/>
+      <options/>
+    </org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction>
+  </actions>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <org.jenkinsci.plugins.workflow.multibranch.BranchJobProperty plugin="workflow-multibranch@2.23">
+      <branch plugin="branch-api@2.6.3">
+        <sourceId>e453cfb4-aace-4ef8-8223-5fad656b2940</sourceId>
+        <head class="org.jenkinsci.plugins.github_branch_source.BranchSCMHead" plugin="github-branch-source@2.10.2">
+          <name>sockets-rooms</name>
+        </head>
+        <scm class="hudson.plugins.git.GitSCM" plugin="git@4.7.1">
+          <configVersion>2</configVersion>
+          <userRemoteConfigs>
+            <hudson.plugins.git.UserRemoteConfig>
+              <name>origin</name>
+              <refspec>+refs/heads/sockets-rooms:refs/remotes/origin/sockets-rooms</refspec>
+              <url>https://github.com/IvanCasanova98/TACS-tp-Integrador-grupo-4.git</url>
+              <credentialsId>Jekins-Tacs</credentialsId>
+            </hudson.plugins.git.UserRemoteConfig>
+          </userRemoteConfigs>
+          <branches class="singleton-list">
+            <hudson.plugins.git.BranchSpec>
+              <name>sockets-rooms</name>
+            </hudson.plugins.git.BranchSpec>
+          </branches>
+          <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+          <browser class="hudson.plugins.git.browser.GithubWeb">
+            <url>https://github.com/IvanCasanova98/TACS-tp-Integrador-grupo-4</url>
+          </browser>
+          <submoduleCfg class="empty-list"/>
+          <extensions>
+            <jenkins.plugins.git.GitSCMSourceDefaults>
+              <includeTags>false</includeTags>
+            </jenkins.plugins.git.GitSCMSourceDefaults>
+          </extensions>
+        </scm>
+        <properties/>
+        <actions>
+          <org.jenkinsci.plugins.github__branch__source.GitHubLink plugin="github-branch-source@2.10.2">
+            <iconClassName>icon-github-branch</iconClassName>
+            <url>https://github.com/IvanCasanova98/TACS-tp-Integrador-grupo-4/tree/sockets-rooms</url>
+          </org.jenkinsci.plugins.github__branch__source.GitHubLink>
+          <jenkins.scm.api.metadata.ObjectMetadataAction plugin="scm-api@2.6.4">
+            <objectDisplayName>sockets-rooms</objectDisplayName>
+            <objectUrl>https://github.com/IvanCasanova98/TACS-tp-Integrador-grupo-4/tree/sockets-rooms</objectUrl>
+          </jenkins.scm.api.metadata.ObjectMetadataAction>
+        </actions>
+      </branch>
+    </org.jenkinsci.plugins.workflow.multibranch.BranchJobProperty>
+  </properties>
+  <definition class="org.jenkinsci.plugins.pipeline.multibranch.defaults.DefaultsBinder" plugin="pipeline-multibranch-defaults@2.1">
+    <scriptId>Jenkinsfile</scriptId>
+    <useSandbox>false</useSandbox>
+  </definition>
+  <triggers/>
+  <disabled>false</disabled>
+</flow-definition>

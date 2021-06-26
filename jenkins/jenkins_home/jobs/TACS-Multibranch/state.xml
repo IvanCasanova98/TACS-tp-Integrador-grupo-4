@@ -1,0 +1,21 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<jenkins.branch.MultiBranchProject_-State plugin="branch-api@2.6.3">
+  <sourceActions>
+    <entry>
+      <string>e453cfb4-aace-4ef8-8223-5fad656b2940</string>
+      <list>
+        <org.jenkinsci.plugins.github__branch__source.GitHubRepoMetadataAction plugin="github-branch-source@2.10.2"/>
+        <jenkins.scm.api.metadata.ObjectMetadataAction plugin="scm-api@2.6.4"/>
+        <org.jenkinsci.plugins.github__branch__source.GitHubLink plugin="github-branch-source@2.10.2">
+          <iconClassName>icon-github-repo</iconClassName>
+          <url>https://github.com/IvanCasanova98/TACS-tp-Integrador-grupo-4</url>
+        </org.jenkinsci.plugins.github__branch__source.GitHubLink>
+        <org.jenkinsci.plugins.github__branch__source.GitHubDefaultBranch plugin="github-branch-source@2.10.2">
+          <repoOwner>IvanCasanova98</repoOwner>
+          <repository>TACS-tp-Integrador-grupo-4</repository>
+          <defaultBranch>master</defaultBranch>
+        </org.jenkinsci.plugins.github__branch__source.GitHubDefaultBranch>
+      </list>
+    </entry>
+  </sourceActions>
+</jenkins.branch.MultiBranchProject_-State>

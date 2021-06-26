@@ -1,0 +1,57 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<org.jenkinsci.plugins.configfiles.GlobalConfigFiles plugin="config-file-provider@3.7.0">
+  <configs class="sorted-set">
+    <comparator class="org.jenkinsci.plugins.configfiles.ConfigByIdComparator"/>
+    <org.jenkinsci.plugins.configfiles.groovy.GroovyScript>
+      <id>Jenkinsfile</id>
+      <name>Jenkinsfile TACS</name>
+      <comment>Jekinsfile para TACS</comment>
+      <content>// Instead of annotating an unnecessary import statement, the symbol _ is annotated, according to the annotation pattern.
+
+def repoName = &quot;scala-sbt-sample&quot;
+def version = env.CHANGE_ID
+
+
+pipeline {
+    agent any
+    options {
+      timeout(time: 10, unit: &apos;MINUTES&apos;) 
+  	}
+
+    stages{
+
+        stage(&quot;Application Compile&quot;){
+            steps{
+                sh &quot;${tool name: &apos;sbt&apos;, type:&apos;org.jvnet.hudson.plugins.SbtPluginBuilder$SbtInstallation&apos;}/bin/sbt compile&quot;
+            }
+        }
+        stage(&quot;Application Test&quot;){
+            steps{
+                sh &quot;sbt test&quot;
+            }
+        }
+		stage(&apos;Record Coverage&apos;) {
+            when { branch &apos;master&apos; }
+            steps {
+                script {
+                    currentBuild.result = &apos;SUCCESS&apos;
+                 }
+                step([$class: &apos;MasterCoverageAction&apos;, scmVars: [GIT_URL: env.GIT_URL]])
+            }
+        }
+        stage(&apos;PR Coverage to Github&apos;) {
+            when { allOf {not { branch &apos;master&apos; }; expression { return env.CHANGE_ID != null }} }
+            steps {
+                script {
+                    currentBuild.result = &apos;SUCCESS&apos;
+                 }
+                step([$class: &apos;CompareCoverageAction&apos;, publishResultAs: &apos;statusCheck&apos;, scmVars: [GIT_URL: env.GIT_URL]])
+            }
+        }
+
+    }
+}</content>
+      <providerId>org.jenkinsci.plugins.configfiles.groovy.GroovyScript</providerId>
+    </org.jenkinsci.plugins.configfiles.groovy.GroovyScript>
+  </configs>
+</org.jenkinsci.plugins.configfiles.GlobalConfigFiles>
