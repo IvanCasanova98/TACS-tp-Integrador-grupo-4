@@ -7,7 +7,6 @@ import io.really.jwt.{JWT, JWTResult}
 import play.api.libs.json.JsObject
 import routes.DeckRoutes.logger
 import exceptions.Exceptions.{DeckNotFoundException, InvalidQueryParamsException}
-import org.joda.time.Seconds
 import routes.Routes.matchRepository
 import serializers.Json4sSnakeCaseSupport
 
