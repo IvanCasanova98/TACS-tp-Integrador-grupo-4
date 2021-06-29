@@ -1,4 +1,4 @@
-/*package integrationTests
+package integrationTests
 
 import java.sql.{Connection, Date}
 
@@ -145,4 +145,3 @@ class StatisticsIntegrationTest extends AnyWordSpecLike with Matchers with Scala
     }
   }
 }
-/*

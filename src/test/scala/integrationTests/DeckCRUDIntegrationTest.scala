@@ -1,4 +1,4 @@
-/* package integrationTests
+/*package integrationTests
 
 import akka.http.scaladsl.marshalling.Marshal
 import akka.http.scaladsl.model.{MessageEntity, StatusCodes}
