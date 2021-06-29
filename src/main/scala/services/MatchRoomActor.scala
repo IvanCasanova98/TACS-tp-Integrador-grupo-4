@@ -69,15 +69,16 @@ class MatchRoomActor(matchId: Int, matchService: MatchService) extends Actor {
       participants -= userId
       TextMessage(s"User $userId left match [$matchId]")
       matchService.updateMatchStatus(matchId, PAUSED.name())
-      val otherPlayer = participants.find(p => p._1 != userId).get
-      sendMessageToUserId("STOP_MATCH", otherPlayer._1)
+      participants.find(p => p._1 != userId).foreach(otherPlayer =>
+        sendMessageToUserId("STOP_MATCH", otherPlayer._1))
 
     case UserAbandonMatch(userId) =>
       logger.info(s"User $userId abandoned match")
       matchService.updateMatchStatus(matchId, FINISHED.name())
-      val otherPlayer = participants.find(p => p._1 != userId).get
-      matchService.updateMatchWinner(matchId, otherPlayer._1)
-      sendJsonToUser(MatchResult("MATCH_RESULT", otherPlayer._1),otherPlayer._1)
+      participants.find(p => p._1 != userId).foreach(otherPlayer => {
+        matchService.updateMatchWinner(matchId, otherPlayer._1)
+        sendJsonToUser(MatchResult("MATCH_RESULT", otherPlayer._1), otherPlayer._1)
+      })
 
     case UserIsReady(userId) =>
       logger.info(s"User $userId is ready to play")
