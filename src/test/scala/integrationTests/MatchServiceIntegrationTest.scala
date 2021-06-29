@@ -17,8 +17,9 @@ import routes.MatchRoutes
 import routes.inputs.MatchInputs.{PostMatchDTO, UpdateMatchStatus}
 import serializers.Json4sSnakeCaseSupport
 import services.{ConnectedPlayersService, DeckService, MatchService}
-
 import java.sql.Connection
+
+import akka.http.scaladsl.model.headers.{Authorization, OAuth2BearerToken}
 
 class MatchServiceIntegrationTest extends AnyWordSpecLike with Matchers with ScalatestRouteTest with Json4sSnakeCaseSupport with BeforeAndAfter {
   val sqlDB: Connection = H2DB()
@@ -28,6 +29,7 @@ class MatchServiceIntegrationTest extends AnyWordSpecLike with Matchers with Sca
   val matchRoutes: Route = MatchRoutes(matchService, connectedPlayersService)
   val playerSQLDao = new PlayerSQLDao(sqlDB)
   val deckSQLDao = new DeckSQLDao(sqlDB)
+  val authorization: Authorization = Authorization(OAuth2BearerToken("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnb29nbGVJZCI6IjExNTc0ODAyODM4NzA3OTU0ODc1NyIsImlzQXV0aGVudGljYXRlZCI6dHJ1ZSwiaXNBdXRob3JpemVkIjp0cnVlLCJpc0FkbWluIjp0cnVlLCJleHAiOjExNjI0ODM1Mjc5LCJpYXQiOjE2MjQ4MzUyODB9.77-977-9zb4i77-977-977-977-977-9eWDvv73bqu-_vVPvv70B77-9De-_vcuK77-977-977-9Vg02MA"))
 
   def postMatchEntity(postMatchDTO: PostMatchDTO): MessageEntity = Marshal(postMatchDTO).to[MessageEntity].futureValue
 
@@ -44,7 +46,7 @@ class MatchServiceIntegrationTest extends AnyWordSpecLike with Matchers with Sca
     "Return 201 and id when posting new match" in {
       val deckId = deckSQLDao.createDeck("deck", List(3, 2, 5))
       val postMatchDTO = PostMatchDTO(deckId, "userId", "anotherUserId")
-      Post("/matches").withEntity(postMatchEntity(postMatchDTO.copy(deckId = deckId))) ~> matchRoutes ~>
+      Post("/matches").withEntity(postMatchEntity(postMatchDTO.copy(deckId = deckId))).addHeader(authorization) ~> matchRoutes ~>
         check {
           response.status shouldBe StatusCodes.Created
         }
@@ -52,9 +54,9 @@ class MatchServiceIntegrationTest extends AnyWordSpecLike with Matchers with Sca
     "Return match of user" in {
       val deckId = deckSQLDao.createDeck("deck", List(3, 2, 5))
 
-      Post("/matches").withEntity(postMatchEntity(PostMatchDTO(deckId, "userId", "anotherUserId"))) ~> matchRoutes ~> check {
+      Post("/matches").withEntity(postMatchEntity(PostMatchDTO(deckId, "userId", "anotherUserId"))).addHeader(authorization) ~> matchRoutes ~> check {
         val id = responseAs[Int]
-        Patch(s"/matches/$id/status").withEntity(patchMatchStatus(UpdateMatchStatus("IN_PROCESS"))) ~> matchRoutes ~>
+        Patch(s"/matches/$id/status").withEntity(patchMatchStatus(UpdateMatchStatus("IN_PROCESS"))).addHeader(authorization) ~> matchRoutes ~>
           check {
             response.status shouldBe StatusCodes.NoContent
           }
