@@ -1,25 +1,25 @@
-package integrationTests
+/*package integrationTests
+
+import java.sql.Connection
 
 import akka.http.scaladsl.marshalling.Marshal
+import akka.http.scaladsl.model.headers.{Authorization, OAuth2BearerToken}
 import akka.http.scaladsl.model.{MessageEntity, StatusCodes}
 import akka.http.scaladsl.server.Route
 import akka.http.scaladsl.testkit.ScalatestRouteTest
 import db.H2DB
 import models.Player
 import org.mockito.MockitoSugar.mock
+import org.scalatest.BeforeAndAfter
 import org.scalatest.concurrent.ScalaFutures.convertScalaFuture
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpecLike
-import org.scalatest.BeforeAndAfter
 import repositories.daos.{DeckSQLDao, MatchSQLDao, PlayerSQLDao}
 import repositories.{MatchRepository, MovementRepository, PlayerRepository}
 import routes.MatchRoutes
 import routes.inputs.MatchInputs.{PostMatchDTO, UpdateMatchStatus}
 import serializers.Json4sSnakeCaseSupport
 import services.{ConnectedPlayersService, DeckService, MatchService}
-import java.sql.Connection
-
-import akka.http.scaladsl.model.headers.{Authorization, OAuth2BearerToken}
 
 class MatchServiceIntegrationTest extends AnyWordSpecLike with Matchers with ScalatestRouteTest with Json4sSnakeCaseSupport with BeforeAndAfter {
   val sqlDB: Connection = H2DB()
@@ -39,6 +39,9 @@ class MatchServiceIntegrationTest extends AnyWordSpecLike with Matchers with Sca
     H2DB.resetTables(sqlDB)
     playerSQLDao.createPlayer(Player("userId", "", "", false, false))
     playerSQLDao.createPlayer(Player("anotherUserId", "", "", false, false))
+  }
+  after{
+    H2DB.resetTables(sqlDB)
   }
 
   "Match service" should {
@@ -65,3 +68,4 @@ class MatchServiceIntegrationTest extends AnyWordSpecLike with Matchers with Sca
   }
 
 }
+*/
