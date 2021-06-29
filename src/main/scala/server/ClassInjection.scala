@@ -1,35 +1,35 @@
 package server
 
+import java.sql.{Connection, DriverManager}
+import java.util.Date
+
 import com.fasterxml.jackson.annotation.JsonInclude
-import com.fasterxml.jackson.databind.{DeserializationFeature, ObjectMapper, PropertyNamingStrategy, SerializationFeature}
 import com.fasterxml.jackson.databind.module.SimpleModule
+import com.fasterxml.jackson.databind.{DeserializationFeature, ObjectMapper, PropertyNamingStrategy, SerializationFeature}
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.scala.DefaultScalaModule
 import models.AttributeName.AttributeName
 import models.MatchStatus.{FINISHED, PAUSED}
 import models._
-import repositories.daos.{DeckLocalDao, DeckSQLDao, MatchLocalDAO, MatchSQLDao, MovementSQLDao, PlayerSQLDao}
+import repositories.daos.{DeckSQLDao, MatchSQLDao, MovementSQLDao, PlayerSQLDao}
 import repositories.dbdtos.MatchDBDTO
-import repositories.{DeckRepository, MatchRepository, MovementRepository, PlayerRepository, StatisticsRepository}
+import repositories._
 import serializers.JsonParser
-import services.{DeckService, LoginService, MatchService, StatisticsService, SuperheroApi}
-import java.sql.DriverManager
-import java.util.Date
-import java.sql.Connection
+import services._
+
 import scala.collection.mutable
 
 trait ClassInjection {
 
-  var connectionDatabase: Connection
   //init connection
   try{
-    connectionDatabase = DBConnection.getConnection
+    val connectionDatabase: Connection = DBConnection.getConnection
   }catch{
     case e: Exception =>
       println("ERROR: No connection: " + e.getMessage)
       val url = "jdbc:h2:mem:"
-      connectionDatabase = DriverManager.getConnection(url)
+      val connectionDatabase: Connection = DriverManager.getConnection(url)
   }
   val deckLocalDb: mutable.HashMap[Int, DeckDbDTO] = mutable.HashMap[Int, DeckDbDTO]()
   deckLocalDb.put(1, DeckDbDTO(1, "Primer mazo", List(10, 11, 12, 13)))
