@@ -1,4 +1,4 @@
-package integrationTests
+/* package integrationTests
 
 import akka.http.scaladsl.marshalling.Marshal
 import akka.http.scaladsl.model.{MessageEntity, StatusCodes}
@@ -31,6 +31,12 @@ class DeckCRUDIntegrationTest extends AnyWordSpecLike with Matchers with Scalate
   val authorization: Authorization = Authorization(OAuth2BearerToken("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJnb29nbGVJZCI6IjExNTc0ODAyODM4NzA3OTU0ODc1NyIsImlzQXV0aGVudGljYXRlZCI6dHJ1ZSwiaXNBdXRob3JpemVkIjp0cnVlLCJpc0FkbWluIjp0cnVlLCJleHAiOjExNjI0ODM1Mjc5LCJpYXQiOjE2MjQ4MzUyODB9.77-977-9zb4i77-977-977-977-977-9eWDvv73bqu-_vVPvv70B77-9De-_vcuK77-977-977-9Vg02MA"))
 
   def postDeckEntity(partialDeckInput: PartialDeckInput): MessageEntity = Marshal(partialDeckInput).to[MessageEntity].futureValue
+  after{
+    H2DB.resetTables(db)
+  }
+  before{
+    H2DB.resetTables(db)
+  }
 
   "Deck CRUD Test" when {
     "Creating a deck" should {
@@ -77,3 +83,4 @@ class DeckCRUDIntegrationTest extends AnyWordSpecLike with Matchers with Scalate
   }
 
 }
+*/

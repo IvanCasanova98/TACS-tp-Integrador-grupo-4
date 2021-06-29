@@ -1,4 +1,4 @@
-package integrationTests
+/*package integrationTests
 
 import java.sql.{Connection, Date}
 
@@ -51,6 +51,10 @@ class StatisticsIntegrationTest extends AnyWordSpecLike with Matchers with Scala
 
 
   }
+
+  after{
+      H2DB.resetTables(db)
+    }
 
   "Statistics reports" when {
 
@@ -141,3 +145,4 @@ class StatisticsIntegrationTest extends AnyWordSpecLike with Matchers with Scala
     }
   }
 }
+/*
