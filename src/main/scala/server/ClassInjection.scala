@@ -21,8 +21,15 @@ import scala.collection.mutable
 
 trait ClassInjection {
 
+  var connectionDatabase: Connection
   //init connection
-  var connectionDatabase: Connection = DBConnection.getConnection
+  try{
+    connectionDatabase = DBConnection.getConnection
+  }catch{
+    case e: Exception =>
+      println("ERROR: No connection: " + e.getMessage)
+      connectionDatabase = Connection
+  }
   val deckLocalDb: mutable.HashMap[Int, DeckDbDTO] = mutable.HashMap[Int, DeckDbDTO]()
   deckLocalDb.put(1, DeckDbDTO(1, "Primer mazo", List(10, 11, 12, 13)))
   deckLocalDb.put(2, DeckDbDTO(2, "Batman super mazo", List(1, 8, 4, 5, 3)))
