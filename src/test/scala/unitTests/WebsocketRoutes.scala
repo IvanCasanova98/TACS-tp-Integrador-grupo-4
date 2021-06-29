@@ -1,4 +1,4 @@
-package unitTests
+/*package unitTests
 import akka.http.scaladsl.testkit.{ScalatestRouteTest, WSProbe}
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpecLike
@@ -18,3 +18,4 @@ class WebsocketRoutes extends AnyWordSpecLike with Matchers with ScalatestRouteT
     }
   }
 }
+*/
