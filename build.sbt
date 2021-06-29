@@ -10,6 +10,12 @@ val AkkaVersion = "2.6.8"
 val AkkaHttpVersion = "10.2.2"
 val vJson4s = "3.7.0-M16"
 
+assemblyMergeStrategy in assembly := {
+  case PathList("META-INF", xs @ _*) => MergeStrategy.discard
+  case "reference.conf" => MergeStrategy.concat
+  case x => MergeStrategy.first
+}
+
 libraryDependencies ++= Seq(
   "com.github.xuwei-k" %% "jwt-scala" % "1.7.0",
   "com.typesafe.akka" %% "akka-actor-typed" % AkkaVersion,
@@ -20,7 +26,6 @@ libraryDependencies ++= Seq(
   "org.slf4j" % "slf4j-api" % "1.7.5",
   "org.slf4j" % "slf4j-simple" % "1.7.5",
   "org.scalatest" %% "scalatest" % "3.2.9" % Test,
-  "com.fasterxml.jackson.datatype" % "jackson-datatype-jsr310" % "2.9.6",
   "org.json4s" %% "json4s-jackson" % vJson4s,
   "org.json4s" %% "json4s-native" % vJson4s,
   "ch.megard" %% "akka-http-cors" % "1.1.1",
