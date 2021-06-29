@@ -23,13 +23,14 @@ import scala.collection.mutable
 trait ClassInjection {
 
   //init connection
+  val url = "jdbc:h2:mem:"
+  var connectionDatabase: Connection = DriverManager.getConnection(url)
+
   try{
-    val connectionDatabase: Connection = DBConnection.getConnection
+    connectionDatabase = DBConnection.getConnection
   }catch{
     case e: Exception =>
       println("ERROR: No connection: " + e.getMessage)
-      val url = "jdbc:h2:mem:"
-      val connectionDatabase: Connection = DriverManager.getConnection(url)
   }
   val deckLocalDb: mutable.HashMap[Int, DeckDbDTO] = mutable.HashMap[Int, DeckDbDTO]()
   deckLocalDb.put(1, DeckDbDTO(1, "Primer mazo", List(10, 11, 12, 13)))
