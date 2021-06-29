@@ -14,7 +14,7 @@ import repositories.dbdtos.MatchDBDTO
 import repositories.{DeckRepository, MatchRepository, MovementRepository, PlayerRepository, StatisticsRepository}
 import serializers.JsonParser
 import services.{DeckService, LoginService, MatchService, StatisticsService, SuperheroApi}
-
+import java.sql.DriverManager
 import java.util.Date
 import java.sql.Connection
 import scala.collection.mutable
@@ -28,7 +28,8 @@ trait ClassInjection {
   }catch{
     case e: Exception =>
       println("ERROR: No connection: " + e.getMessage)
-      connectionDatabase = Connection
+      val url = "jdbc:h2:mem:"
+      connectionDatabase = DriverManager.getConnection(url)
   }
   val deckLocalDb: mutable.HashMap[Int, DeckDbDTO] = mutable.HashMap[Int, DeckDbDTO]()
   deckLocalDb.put(1, DeckDbDTO(1, "Primer mazo", List(10, 11, 12, 13)))
