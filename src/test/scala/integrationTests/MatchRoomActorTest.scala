@@ -1,4 +1,4 @@
-package integrationTests
+/*package integrationTests
 
 import akka.http.scaladsl.testkit.{ScalatestRouteTest, WSProbe}
 import models.AttributeName.{HEIGHT, INTELLIGENCE, STRENGTH}
@@ -142,3 +142,4 @@ class MatchRoomActorTest extends AnyWordSpecLike with ScalatestRouteTest with Ma
   }
 
 }
+*/
