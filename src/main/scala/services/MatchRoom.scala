@@ -1,23 +1,18 @@
 package services
 
-import akka.actor.{Actor, ActorRef, ActorSystem, Props}
+import akka.actor.{ActorRef, ActorSystem, Props}
 import akka.http.scaladsl.model.ws.{BinaryMessage, Message, TextMessage}
 import akka.stream.scaladsl.{Flow, Keep, Sink, Source}
 import akka.stream.{Materializer, OverflowStrategy}
+import models.AutomatedPlayer
 import models.Events._
-import models.MatchStatus.{FINISHED, IN_PROCESS, PAUSED}
-import models.{AttributeName, AutomatedPlayer, Card, Match, PlayerScore}
 import org.reactivestreams.Publisher
-import org.slf4j.{Logger, LoggerFactory}
-import routes.Routes.jsonParser
 import serializers.JsonParser
 
-import scala.collection.mutable
-import scala.util.Random
 
-class MatchRoom(matchId: Int, actorSystem: ActorSystem, matchService: MatchService)(implicit val mat: Materializer) {
+class MatchRoom(matchId: Int, actorSystem: ActorSystem, matchService: MatchService, jsonParser: JsonParser)(implicit val mat: Materializer) {
 
-  private[this] val matchRoomActor = actorSystem.actorOf(Props(classOf[MatchRoomActor], matchId, matchService))
+  private[this] val matchRoomActor = actorSystem.actorOf(Props(classOf[MatchRoomActor], matchId, matchService, jsonParser))
 
   def websocketFlow(userId: String): Flow[Message, Message, Any] = {
     val (actorRef: ActorRef, publisher: Publisher[TextMessage.Strict]) =
@@ -65,13 +60,13 @@ class MatchRoom(matchId: Int, actorSystem: ActorSystem, matchService: MatchServi
 }
 
 object MatchRoom {
-  def apply(roomId: Int)(implicit actorSystem: ActorSystem, matchService: MatchService) = new MatchRoom(roomId, actorSystem, matchService)
+  def apply(roomId: Int)(implicit actorSystem: ActorSystem, matchService: MatchService, jsonParser: JsonParser) = new MatchRoom(roomId, actorSystem, matchService, jsonParser)
 }
 
 class MatchRooms(actorSystem: ActorSystem, matchService: MatchService, jsonParser: JsonParser) {
   var matchRooms: Map[Int, MatchRoom] = Map.empty[Int, MatchRoom]
 
-  def findOrCreate(number: Int): MatchRoom = matchRooms.getOrElse(number, createNewMatchRoom(number)(actorSystem, matchService))
+  def findOrCreate(number: Int): MatchRoom = matchRooms.getOrElse(number, createNewMatchRoom(number)(actorSystem, matchService, jsonParser))
 
   def findOrCreateAutomatedRoom(matchId: Int): MatchRoom = {
     val room = findOrCreate(matchId)
@@ -79,7 +74,7 @@ class MatchRooms(actorSystem: ActorSystem, matchService: MatchService, jsonParse
     room
   }
 
-  private def createNewMatchRoom(number: Int)(implicit actorSystem: ActorSystem, matchService: MatchService): MatchRoom = {
+  private def createNewMatchRoom(number: Int)(implicit actorSystem: ActorSystem, matchService: MatchService, jsonParser: JsonParser): MatchRoom = {
     val matchRoom = MatchRoom(number)
     matchRooms += number -> matchRoom
     matchRoom

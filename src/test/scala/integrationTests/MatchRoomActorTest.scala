@@ -1,10 +1,16 @@
 package integrationTests
 
 import akka.http.scaladsl.testkit.{ScalatestRouteTest, WSProbe}
-import models.AttributeName.{HEIGHT, INTELLIGENCE, STRENGTH}
-import models.{Attribute, Card, Deck, Match, Player}
+import com.fasterxml.jackson.annotation.JsonInclude
+import com.fasterxml.jackson.databind.module.SimpleModule
+import com.fasterxml.jackson.databind.{DeserializationFeature, ObjectMapper, PropertyNamingStrategy, SerializationFeature}
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
+import com.fasterxml.jackson.module.scala.DefaultScalaModule
+import models.AttributeName.{AttributeName, HEIGHT, INTELLIGENCE, STRENGTH}
+import models.{Attribute, AttributeNameDeserializer, AttributeNameSerializer, Card, Deck, Match, Player}
 import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito.when
+import org.mockito.Mockito.{doNothing, when}
 import org.mockito.MockitoSugar.mock
 import org.scalatest.BeforeAndAfter
 import org.scalatest.matchers.should.Matchers
@@ -14,11 +20,27 @@ import serializers.JsonParser
 import services.{ConnectedPlayersService, MatchRooms, MatchService}
 
 class MatchRoomActorTest extends AnyWordSpecLike with ScalatestRouteTest with Matchers with BeforeAndAfter {
+  def defaultObjectMapper(): ObjectMapper = {
+    val customModule = new SimpleModule("CustomModule")
+      .addSerializer(classOf[AttributeName], new AttributeNameSerializer(classOf[AttributeName]))
+      .addDeserializer(classOf[AttributeName], new AttributeNameDeserializer(classOf[AttributeName]))
+
+    new ObjectMapper()
+      .registerModule(DefaultScalaModule)
+      .registerModule(new Jdk8Module)
+      .registerModule(new JavaTimeModule)
+      .registerModule(customModule)
+      .disable(SerializationFeature.INDENT_OUTPUT)
+      .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
+      .setSerializationInclusion(JsonInclude.Include.NON_ABSENT)
+      .setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE)
+  }
   val matchServiceMock: MatchService = mock[MatchService]
-  var matchRooms = new MatchRooms(system, matchServiceMock, mock[JsonParser])
+  val jsonParser = new JsonParser(defaultObjectMapper())
+  var matchRooms = new MatchRooms(system, matchServiceMock, jsonParser)
   val aBombCard: Card = Card(1, "A-bomb", List(Attribute(STRENGTH, 300), Attribute(HEIGHT, 200)), "")
   val deck: Deck = Deck(7, "deck",
-    List(aBombCard, aBombCard.copy(id=399), aBombCard.copy(id=3423), aBombCard.copy(id=45363),
+    List(aBombCard, aBombCard.copy(id = 399), aBombCard.copy(id = 3423), aBombCard.copy(id = 45363),
       aBombCard.copy(id = 3, name = "saraza", powerStats = List(Attribute(STRENGTH, 800))),
       aBombCard.copy(id = 40, name = "monster", powerStats = List(Attribute(INTELLIGENCE, 300))),
       aBombCard.copy(id = 5, name = "Ajax", powerStats = List(Attribute(INTELLIGENCE, 234)))))
@@ -26,7 +48,7 @@ class MatchRoomActorTest extends AnyWordSpecLike with ScalatestRouteTest with Ma
     Player("12345", "user2", "", false, false), deck, List(), None)
 
   before {
-    matchRooms = new MatchRooms(system, matchServiceMock, mock[JsonParser])
+    matchRooms = new MatchRooms(system, matchServiceMock, jsonParser)
   }
 
   "Match rooms actor" should {
@@ -111,6 +133,7 @@ class MatchRoomActorTest extends AnyWordSpecLike with ScalatestRouteTest with Ma
       when(matchServiceMock.findMatchById(1)).thenReturn(matchInfo)
       when(matchServiceMock.getDeckCountOfMatch(any())).thenReturn(4)
       when(matchServiceMock.getMovementResult(any(), any())).thenReturn("12345")
+      doNothing().when(matchServiceMock).updateMatchStatus(1, "IN_PROCESS")
 
       WS("/join-match/1?userId=526151", wsClient1.flow) ~> routes ~>
         check {

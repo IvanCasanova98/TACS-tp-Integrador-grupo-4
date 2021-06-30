@@ -6,12 +6,12 @@ import models.Events.{MatchInit, MatchResult, MatchSetAttribute, MovementResult,
 import models.MatchStatus.{FINISHED, IN_PROCESS, PAUSED}
 import models.{AttributeName, Card, Match, PlayerScore}
 import org.slf4j.{Logger, LoggerFactory}
-import routes.Routes.jsonParser
 import routes.Utils.getRandomItemOfSeq
+import serializers.JsonParser
 
 import scala.collection.mutable
 
-class MatchRoomActor(matchId: Int, matchService: MatchService) extends Actor {
+class MatchRoomActor(matchId: Int, matchService: MatchService, jsonParser: JsonParser) extends Actor {
   val logger: Logger = LoggerFactory.getLogger(classOf[MatchRoomActor])
   var participants: Map[String, ActorRef] = Map.empty[String, ActorRef]
   var playersReady: Set[String] = Set.empty
@@ -33,7 +33,6 @@ class MatchRoomActor(matchId: Int, matchService: MatchService) extends Actor {
   def getTurn(playerIdTurn: String, userId: String): Turn = {
     val selectedCardForPlayer = getUnusedCard
     cardsBeingPlayed += userId -> selectedCardForPlayer
-    logger.info("Sending turn to user" + userId + Turn("TURN", playerIdTurn, selectedCardForPlayer).toString)
     Turn("TURN", playerIdTurn, selectedCardForPlayer)
   }
 
@@ -148,6 +147,7 @@ class MatchRoomActor(matchId: Int, matchService: MatchService) extends Actor {
   }
 
   def sendJsonToUser[T](message: T, userId: String): Unit = {
+    logger.info(s"Sending message $message to user $userId")
     sendMessageToUserId(jsonParser.writeJson(message), userId)
   }
 }
