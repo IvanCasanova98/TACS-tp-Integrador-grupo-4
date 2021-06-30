@@ -6,6 +6,9 @@ import com.fasterxml.jackson.databind.module.SimpleModule
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.scala.DefaultScalaModule
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier
+import com.google.api.client.http.javanet.NetHttpTransport
+import com.google.api.client.json.gson.GsonFactory
 import models.AttributeName.AttributeName
 import models.MatchStatus.{FINISHED, PAUSED}
 import models._
@@ -15,7 +18,7 @@ import repositories.{DeckRepository, MatchRepository, MovementRepository, Player
 import serializers.JsonParser
 import services.{DeckService, LoginService, MatchService, StatisticsService, SuperheroApi}
 
-import java.util.Date
+import java.util.{Collections, Date}
 import java.sql.Connection
 import scala.collection.mutable
 
@@ -69,6 +72,11 @@ trait ClassInjection {
 
   val jsonParser = new JsonParser(defaultObjectMapper())
 
+  val verifier: GoogleIdTokenVerifier =
+    new GoogleIdTokenVerifier.Builder(new NetHttpTransport(), new GsonFactory())
+      .setAudience(Collections.singletonList("1058494963753-drauquf06tsu1jnbl7k13ptrp98s323d.apps.googleusercontent.com"))
+      .build()
+
   //Local Dao for saving stuff in memory
   val deckDao = new DeckSQLDao(connectionDatabase)
   val matchDao = new MatchSQLDao(connectionDatabase)
@@ -84,6 +92,6 @@ trait ClassInjection {
   val statisticsService = new StatisticsService(statisticsRepository)
   val deckService = new DeckService(deckRepository, superheroApi)
   val matchService = new MatchService(matchRepository, playerRepository, deckService, movementRepository)
-  val loginService = new LoginService(playerRepository)
+  val loginService = new LoginService(playerRepository, verifier)
 
 }
