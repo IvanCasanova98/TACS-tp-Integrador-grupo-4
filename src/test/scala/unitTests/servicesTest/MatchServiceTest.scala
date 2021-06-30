@@ -22,7 +22,7 @@ class MatchServiceTest extends AnyWordSpecLike with Matchers {
   val matchService = new MatchService(new MatchRepository(new MatchLocalDAO(db)), playersRepoMock, deckServiceMock, movementRepositoryMock)
   val aBombCard: Card = Card(1, "A-bomb", List(Attribute(STRENGTH, 300), Attribute(HEIGHT, 200)), "")
   val deck: Deck = Deck(7, "deck",
-    List(aBombCard, aBombCard.copy(id=399), aBombCard.copy(id=3423), aBombCard.copy(id=45363),
+    List(aBombCard, aBombCard.copy(id = 399), aBombCard.copy(id = 3423), aBombCard.copy(id = 45363),
       aBombCard.copy(id = 3, name = "saraza", powerStats = List(Attribute(STRENGTH, 800))),
       aBombCard.copy(id = 40, name = "monster", powerStats = List(Attribute(INTELLIGENCE, 300))),
       aBombCard.copy(id = 5, name = "Ajax", powerStats = List(Attribute(INTELLIGENCE, 234)))))
@@ -113,6 +113,36 @@ class MatchServiceTest extends AnyWordSpecLike with Matchers {
       "return deck count minus moves made" in {
         matchService.getDeckCountOfMatch(matchInfo) shouldBe 1
       }
+    }
+    "Return true if user is authorized to join match" in {
+      db.put(1, MatchDBDTO(matchInfo.id,
+        MatchStatus.fromName(matchInfo.status),
+        matchCreatorId = matchInfo.matchCreator.userId,
+        challengedUserId = matchInfo.challengedPlayer.userId,
+        deckId = matchInfo.deck.id,
+        winnerId = matchInfo.winnerId,
+        createdDate = new Date(System.currentTimeMillis())))
+      matchService.isUserAuthorizedToJoinMatch(1, matchInfo.matchCreator.userId) shouldBe true
+      db.clear()
+    }
+    "Get complete match by id" in {
+      db.put(1, MatchDBDTO(matchInfo.id,
+        MatchStatus.fromName(matchInfo.status),
+        matchCreatorId = matchInfo.matchCreator.userId,
+        challengedUserId = matchInfo.challengedPlayer.userId,
+        deckId = matchInfo.deck.id,
+        winnerId = matchInfo.winnerId,
+        createdDate = new Date(System.currentTimeMillis())))
+      when(playersRepoMock.getPlayerById(matchInfo.matchCreator.userId)).thenReturn(matchInfo.matchCreator)
+      when(playersRepoMock.getPlayerById(matchInfo.challengedPlayer.userId)).thenReturn(matchInfo.challengedPlayer)
+      when(deckServiceMock.getCompleteDeckById(matchInfo.deck.id)).thenReturn(matchInfo.deck)
+      when(movementRepositoryMock.getMovementsOfMatch(1)).thenReturn(matchInfo.movements)
+
+      val createdMatch = matchService.findMatchById(1)
+      createdMatch.matchCreator.userId shouldBe matchInfo.matchCreator.userId
+      createdMatch.deck shouldBe matchInfo.deck
+      createdMatch.movements shouldBe matchInfo.movements
+      db.clear()
     }
   }
 
