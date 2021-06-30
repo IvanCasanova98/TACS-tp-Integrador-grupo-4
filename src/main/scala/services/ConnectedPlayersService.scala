@@ -8,19 +8,17 @@ import models.Events.{GenericMessageToUser, UserJoined, UserLeft}
 import org.reactivestreams.Publisher
 import org.slf4j.{Logger, LoggerFactory}
 import play.api.libs.json.{Json, Writes}
-import routes.Routes.playerRepository
-
+import repositories.PlayerRepository
 
 case class PlayerDTO(userId: String, userName: String)
 
-class ConnectedPlayersActor extends Actor {
+class ConnectedPlayersActor(playerRepository: PlayerRepository) extends Actor {
 
   var participantsActors: Map[String, ActorRef] = Map.empty[String, ActorRef]
   var playersConnected: Map[String, PlayerDTO] = Map.empty[String, PlayerDTO]
   val logger: Logger = LoggerFactory.getLogger(classOf[ConnectedPlayersActor])
 
   def broadcast(users: List[PlayerDTO]): Unit = {
-    //no se donde meter esto :)
     implicit val PlayerDTO = new Writes[PlayerDTO] {
       def writes(player: PlayerDTO) = Json.obj(
         "user_name" -> player.userName,
@@ -64,8 +62,8 @@ class ConnectedPlayersActor extends Actor {
   }
 }
 
-class ConnectedPlayersService(actorSystem: ActorSystem)(implicit val mat: Materializer) {
-  private[this] val connectedPlayersActor = actorSystem.actorOf(Props(classOf[ConnectedPlayersActor]))
+class ConnectedPlayersService(actorSystem: ActorSystem, playerRepository: PlayerRepository)(implicit val mat: Materializer) {
+  private[this] val connectedPlayersActor = actorSystem.actorOf(Props(classOf[ConnectedPlayersActor], playerRepository))
   val logger: Logger = LoggerFactory.getLogger(classOf[ConnectedPlayersService])
 
   def sendMessageToUserId(message: String, userId: String): Unit = connectedPlayersActor ! GenericMessageToUser(message, userId)
@@ -74,7 +72,6 @@ class ConnectedPlayersService(actorSystem: ActorSystem)(implicit val mat: Materi
     val (actorRef: ActorRef, publisher: Publisher[TextMessage.Strict]) =
       Source.actorRef[String](16, OverflowStrategy.fail)
         .map(msg =>
-          // outgoing message to ws
           TextMessage(msg)
         ).toMat(Sink.asPublisher(false))(Keep.both).run()
 
@@ -94,7 +91,6 @@ class ConnectedPlayersService(actorSystem: ActorSystem)(implicit val mat: Materi
       logger.error(a.get.toString)
       connectedPlayersActor ! UserLeft(userId)
     })
-    //Factory method allows for materialization of this Source
     Flow.fromSinkAndSource(sink, Source.fromPublisher(publisher))
   }
 }

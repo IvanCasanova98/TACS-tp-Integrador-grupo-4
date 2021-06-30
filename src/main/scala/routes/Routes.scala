@@ -21,7 +21,7 @@ object Routes extends ClassInjection with Json4sSnakeCaseSupport with CorsDirect
 
   def apply()(implicit actorSystem: ActorSystem): Route = {
     implicit val materializer: Materializer = Materializer.matFromSystem
-    val connectionsService = new ConnectedPlayersService(actorSystem)
+    val connectionsService = new ConnectedPlayersService(actorSystem, playerRepository)
     val matchRooms = new MatchRooms(actorSystem, matchService, jsonParser)
 
     handleRejections(CorsDirectives.corsRejectionHandler) {
