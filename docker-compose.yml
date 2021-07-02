@@ -1,7 +1,7 @@
 version: "2.3"
 services:
   backend:
-    build: .
+    image: lolokip/tacs-tp-integrador-grupo-4
     ports:
       - "9000:9000"
     depends_on:
