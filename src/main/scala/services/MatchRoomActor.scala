@@ -67,7 +67,10 @@ class MatchRoomActor(matchId: Int, matchService: MatchService, jsonParser: JsonP
       logger.info(s"User $userId left match[$matchId]")
       participants -= userId
       TextMessage(s"User $userId left match [$matchId]")
-      matchService.updateMatchStatus(matchId, PAUSED.name())
+
+      if (participants.size == 1 && matchService.findMatchById(matchId).status != "FINISHED") {
+        matchService.updateMatchStatus(matchId, PAUSED.name())
+      }
       participants.find(p => p._1 != userId).foreach(otherPlayer =>
         sendMessageToUserId("STOP_MATCH", otherPlayer._1))
 
