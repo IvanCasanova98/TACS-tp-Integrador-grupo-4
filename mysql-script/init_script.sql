@@ -24,7 +24,6 @@ CREATE TABLE IF NOT EXISTS `matches` (
   `created_date` datetime,
   FOREIGN KEY (`creator_id`) REFERENCES `players` (`id`),
   FOREIGN KEY (`challenged_user_id`) REFERENCES `players` (`id`),
-  FOREIGN KEY (`winner_id`) REFERENCES `players` (`id`),
   FOREIGN KEY (`deck_id`) REFERENCES `decks` (`id`)
 );
 
