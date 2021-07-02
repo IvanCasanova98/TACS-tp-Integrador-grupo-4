@@ -5,7 +5,7 @@ import java.sql.{Connection, DriverManager}
 object DBConnection {
   var url = "jdbc:mysql://localhost:3306/tacs?allowPublicKeyRetrieval=true&useSSL=false"
   if(sys.env.contains("SCOPE")){
-    url = "jdbc:mysql://database:3306/tacs?allowPublicKeyRetrieval=true&useSSL=false"
+    url = "jdbc:mysql://database:3306/tacs?allowPublicKeyRetrieval=true&useSSL=false&autoReconnect=true"
   }
   val driver = "com.mysql.jdbc.Driver"
   val username = "superfriends_app"
