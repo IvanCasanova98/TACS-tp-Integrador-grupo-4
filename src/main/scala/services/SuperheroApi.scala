@@ -29,11 +29,15 @@ case class SuperheroApi() {
   }
 
   def searchHeroesByName(hero_name: String): List[Card] = {
-    val get = new HttpGet(uri.concat(access_token).concat("/search/").concat(hero_name))
-    val response = httpClient.execute(get)
-    val handler = new BasicResponseHandler
-    val json = JSON.parseFull(handler.handleResponse(response)).get.asInstanceOf[Map[Any, Any]]("results").asInstanceOf[List[Map[Any, Any]]]
-    json.filter(jsonHasAllAttributes).filter(card => jsonHasAllPowerStats(card.asInstanceOf[Map[String, Any]]("powerstats").asInstanceOf[Map[Any, Any]], card.asInstanceOf[Map[String, Any]]("appearance").asInstanceOf[Map[Any, Any]])).map(adaptCardJson)
+    try {
+      val get = new HttpGet(uri.concat(access_token).concat("/search/").concat(hero_name))
+      val response = httpClient.execute(get)
+      val handler = new BasicResponseHandler
+      val json = JSON.parseFull(handler.handleResponse(response)).get.asInstanceOf[Map[Any, Any]]("results").asInstanceOf[List[Map[Any, Any]]]
+      json.filter(jsonHasAllAttributes).filter(card => jsonHasAllPowerStats(card.asInstanceOf[Map[String, Any]]("powerstats").asInstanceOf[Map[Any, Any]], card.asInstanceOf[Map[String, Any]]("appearance").asInstanceOf[Map[Any, Any]])).map(adaptCardJson)
+    } catch {
+      case _: Throwable => List.empty
+    }
   }
 
   def adaptCardJson(cardJson: Map[Any, Any]): Card = {
