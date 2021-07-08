@@ -9,7 +9,6 @@ services:
         condition: service_healthy
     environment:
       - SCOPE=DOCKER
-      - JAVA_OPTS=-Xmx=512m
   database:
     image: mysql:8.0.25
     ports:
