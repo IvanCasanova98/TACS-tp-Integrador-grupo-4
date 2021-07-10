@@ -96,7 +96,12 @@ case class SuperheroApi() {
         return false
       }
     }
-    Set("combat", "intelligence", "strength", "power", "speed", "height", "weight").subsetOf(attribute.toSet)
+    val neededAttributes: List[String] = List("combat", "intelligence", "strength", "power", "speed")
+    val neededAppearance: List[String] = List("height", "weight")
+    Set("combat", "intelligence", "strength", "power", "speed", "height", "weight").subsetOf(attribute.toSet) &&
+    powerStats.forall({case(k,v) => (neededAttributes.contains(k) && v.asInstanceOf[String].toInt > 0) || !neededAttributes.contains(k)}) &&
+      appearance.forall({case(k,v) =>(neededAppearance.contains(k) && v.asInstanceOf[List[String]](1).replace(" cm", "").replace(",", "").replace(" meters", "").replace(" tons", "").replace(" kg", "").toFloat > 0) || !neededAppearance.contains(k)})
+
   }
 
 
