@@ -5,7 +5,7 @@ import exceptions.Exceptions.SqlConnectionException
 import java.sql.{Connection, DriverManager, SQLException}
 
 object H2DB {
-  val url = "jdbc:h2:mem:;INIT=RUNSCRIPT FROM './../TACS-tp-Integrador-grupo-4/src/test/resources/superamigos.sql'"
+  val url = "jdbc:h2:mem:;INIT=RUNSCRIPT FROM 'classpath:superamigos.sql'"
   val JDBC_DRIVER = "org.h2.Driver"
   var con: Connection = DriverManager.getConnection(url)
 
