@@ -1,6 +1,6 @@
 package unitTests.servicesTest
 
-import models.AttributeName.{HEIGHT, INTELLIGENCE, POWER, STRENGTH}
+import models.AttributeName.{HEIGHT, INTELLIGENCE, POWER, STRENGTH, WEIGHT}
 import models.{Attribute, Card, Deck, DeckDbDTO, Match, MatchStatus, Movement, Player}
 import org.mockito.Mockito.when
 import org.mockito.MockitoSugar.mock
@@ -48,6 +48,14 @@ class MatchServiceTest extends AnyWordSpecLike with Matchers {
         val result = matchService.getMovementResult(cardsMap, INTELLIGENCE)
 
         result shouldBe "player1"
+      }
+      "return winner as lower weight" in {
+        val cardsMap = mutable.HashMap("player1" -> Card(1, "A-bomb", List(Attribute(WEIGHT, 425), Attribute(POWER, 200)), ""),
+          "player2" -> Card(2, "Somecard", List(Attribute(WEIGHT, 50), Attribute(POWER, 100)), ""))
+
+        val result = matchService.getMovementResult(cardsMap, WEIGHT)
+
+        result shouldBe "player2"
       }
       "return TIE if values are the same for chosen attribute" in {
         val cardsMap = mutable.HashMap("player1" -> Card(1, "A-bomb", List(Attribute(INTELLIGENCE, 125), Attribute(POWER, 200)), ""),

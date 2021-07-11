@@ -1,6 +1,6 @@
 package services
 
-import models.AttributeName.AttributeName
+import models.AttributeName.{AttributeName, WEIGHT}
 import models.MatchStatus.PAUSED
 import models.{Card, Match, MatchWithoutCardsAndMovements, Movement}
 import repositories.dbdtos.MatchDBDTO
@@ -63,12 +63,15 @@ class MatchService(matchRepository: MatchRepository, playersRepo: PlayerReposito
     val firstPlayerValue = firstPlayer._2.getValueOfAttribute(chosenAttribute)
     val secondPlayerValue = secondPlayer._2.getValueOfAttribute(chosenAttribute)
 
-    if (firstPlayerValue > secondPlayerValue)
-      firstPlayer._1
-    else if (firstPlayerValue < secondPlayerValue)
-      secondPlayer._1
-    else
+    if (firstPlayerValue == secondPlayerValue) {
       "TIE"
+    } else {
+      if ((firstPlayerValue > secondPlayerValue && chosenAttribute.name() != WEIGHT.name()
+        || (firstPlayerValue < secondPlayerValue && chosenAttribute.name() == WEIGHT.name())))
+        firstPlayer._1
+      else
+        secondPlayer._1
+    }
   }
 
   def saveMovement(matchId: Int, attribute: String, creatorCardId: Int, opponentCardId: Int, winnerIdOrTie: String, turn: String): Unit = {
@@ -79,7 +82,7 @@ class MatchService(matchRepository: MatchRepository, playersRepo: PlayerReposito
     // user ID --> movements won
     val winsCounter: mutable.Map[String, Int] = mutable.Map(playerId -> 0, otherPlayerId -> 0)
     movementRepository.getMovementsOfMatch(matchId).foreach(mov => {
-      if (mov.winnerIdOrTie != "TIE")  winsCounter.put(mov.winnerIdOrTie,winsCounter(mov.winnerIdOrTie).+(1))
+      if (mov.winnerIdOrTie != "TIE") winsCounter.put(mov.winnerIdOrTie, winsCounter(mov.winnerIdOrTie).+(1))
     })
     if (winsCounter(playerId) == winsCounter(otherPlayerId)) return "TIE"
     //get userId that has most wins
