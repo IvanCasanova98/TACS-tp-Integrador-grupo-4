@@ -20,7 +20,7 @@ class DeckLocalDao(db: mutable.HashMap[Int, DeckDbDTO]) extends DeckDao {
     db.update(deck.id, deck)
   }
 
-  def deleteDeck(deckId: Int): DeckDbDTO = {
+  def deleteDeck(deckId: Int): Unit = {
     db.remove(deckId).getOrElse(throw DeckNotFoundException(deckId))
   }
 

@@ -46,7 +46,7 @@ class DeckService(deckRepository: DeckRepository, superheroApi: SuperheroApi) {
     deckRepository.updateDeck(deck)
   }
 
-  def deleteDeck(deckId: Int): DeckDbDTO = {
+  def deleteDeck(deckId: Int): Unit = {
     logger.info(s"Deleting deck $deckId")
     deckRepository.deleteDeck(deckId)
   }

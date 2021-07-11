@@ -11,7 +11,8 @@ CREATE TABLE IF NOT EXISTS `players` (
 CREATE TABLE IF NOT EXISTS `decks` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
   `name` varchar(255),
-  `card_ids` varchar(255)
+  `card_ids` varchar(255),
+  `deleted` boolean DEFAULT FALSE
 );
 
 CREATE TABLE IF NOT EXISTS `matches` (
@@ -43,11 +44,11 @@ CREATE USER 'superfriends_app'@'database' IDENTIFIED BY 'batman';
 GRANT ALL PRIVILEGES ON *.* TO superfriends_app@database;
 
 INSERT INTO decks(name, card_ids) values ("Primer mazo", "10,11,12,13");
-INSERT INTO decks(name, card_ids) values ("Batman super mazo", "1,8,4,5,3");
-INSERT INTO decks(name, card_ids) values ("Mazo 3", "1,2,3,4");
-INSERT INTO decks(name, card_ids) values ("Another deck", "1,2,4,16");
-INSERT INTO decks(name, card_ids) values ("A-bomb mazo", "1,2,3,4");
-INSERT INTO decks(name, card_ids) values ("Batman super deck", "1,4,5,3,2");
+INSERT INTO decks(name, card_ids) values ("Batman super mazo", "1,8,4,3");
+INSERT INTO decks(name, card_ids) values ("Mazo 3", "20,1,2,3,13");
+INSERT INTO decks(name, card_ids) values ("Another deck", "1,2,4,14");
+INSERT INTO decks(name, card_ids) values ("A-bomb mazo", "11,2,3,4");
+INSERT INTO decks(name, card_ids) values ("Batman super deck", "24,1,4,3,2");
 
 INSERT INTO players(id,username,image_url,is_admin,is_blocked) values ("104725077753706905086", "Franco Giannotti", "https://lh3.googleusercontent.com/a-/AOh14GgjwE38QY3xY6yljKclSoVRnByF-59pAG1wdvx_=s96-c", true, false);
 INSERT INTO players(id,username,image_url,is_admin,is_blocked) values ("104065320855221322833", "Julieta Abuin", "https://lh3.googleusercontent.com/a-/AOh14Gh5tYvnhd0arKFn9ot7FU6D6mrnSpfuh6_hAPvMsg=s96-c", true, false);

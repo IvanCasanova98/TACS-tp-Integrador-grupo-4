@@ -5,7 +5,6 @@ import models.MatchStatus.PAUSED
 import models.{Card, Match, MatchWithoutCardsAndMovements, Movement}
 import repositories.dbdtos.MatchDBDTO
 import repositories.{MatchRepository, MovementRepository, PlayerRepository}
-import routes.DeckRoutes.logger
 
 import scala.collection.mutable
 

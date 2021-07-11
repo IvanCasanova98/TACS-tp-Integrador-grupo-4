@@ -19,7 +19,8 @@ CREATE TABLE `matches` (
 CREATE TABLE `decks` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
   `name` varchar(255),
-  `card_ids` varchar(255)
+  `card_ids` varchar(255),
+  `deleted` boolean DEFAULT FALSE
 );
 
 CREATE TABLE `movements` (

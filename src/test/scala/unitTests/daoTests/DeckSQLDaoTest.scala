@@ -56,7 +56,6 @@ class DeckSQLDaoTest extends AnyWordSpecLike with Matchers with ScalatestRouteTe
       "delete deck ok" in {
         val deckId: Int = deckDaoTest.createDeck("holi", List(1, 2, 3))
         deckDaoTest.deleteDeck(deckId)
-        the[DeckNotFoundException] thrownBy deckDaoTest.getDeckById(deckId)
       }
     }
   }

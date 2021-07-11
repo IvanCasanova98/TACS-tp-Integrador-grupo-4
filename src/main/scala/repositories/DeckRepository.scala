@@ -18,7 +18,7 @@ class DeckRepository(dao: DeckDao) {
     dao.updateDeck(deck)
   }
 
-  def deleteDeck(deckId: Int): DeckDbDTO = {
+  def deleteDeck(deckId: Int): Unit = {
     dao.deleteDeck(deckId)
   }
 

@@ -49,22 +49,14 @@ class DeckSQLDao(db: Connection) extends DeckDao {
     stmt.executeUpdate()
   }
 
-  override def deleteDeck(deckId: Int): DeckDbDTO = {
-    val deck: DeckDbDTO = getDeckById(deckId)
-    deleteDeckById(deckId)
-
-    deck
-  }
-
-  protected def deleteDeckById(deckId: Int): Unit = {
-    val stmt = db.prepareStatement("DELETE FROM decks WHERE id = ?")
+  override def deleteDeck(deckId: Int): Unit = {
+    val stmt = db.prepareStatement("UPDATE decks set deleted = true where id = ?")
     stmt.setInt(1, deckId)
-
     stmt.executeUpdate()
   }
 
   override def getDecks: List[DeckDbDTO] = {
-    val stmt: PreparedStatement = db.prepareStatement("SELECT id, name, card_ids FROM decks")
+    val stmt: PreparedStatement = db.prepareStatement("SELECT id, name, card_ids FROM decks WHERE deleted <> true")
     val result: ResultSet = stmt.executeQuery()
     val resultList: mutable.Set[DeckDbDTO] = mutable.Set()
 

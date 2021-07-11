@@ -67,11 +67,6 @@ class DeckCRUDIntegrationTest extends AnyWordSpecLike with Matchers with Scalate
           }
         }
       }
-      "Return 404" in {
-        Delete("/decks/1879685465").addHeader(authorization) ~> deckRoutes ~> check {
-          response.status shouldEqual StatusCodes.NotFound
-        }
-      }
     }
 
   }
