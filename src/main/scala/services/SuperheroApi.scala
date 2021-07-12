@@ -7,11 +7,13 @@ import org.apache.http.client.methods.HttpGet
 import org.apache.http.impl.client.BasicResponseHandler
 import org.apache.http.client.HttpClient
 import org.apache.http.impl.client.HttpClientBuilder
+import org.slf4j.{Logger, LoggerFactory}
 
 import scala.util.parsing.json.JSON
 
 case class SuperheroApi() {
   val httpClient: HttpClient = HttpClientBuilder.create.build
+  val logger: Logger = LoggerFactory.getLogger(classOf[SuperheroApi])
 
   var uri = "https://superheroapi.com/api/"
   val access_token = "103706338543731"
@@ -38,7 +40,8 @@ case class SuperheroApi() {
         json("results").asInstanceOf[List[Map[Any, Any]]].filter(jsonHasAllAttributes).filter(card => jsonHasAllPowerStats(card.asInstanceOf[Map[String, Any]]("powerstats").asInstanceOf[Map[Any, Any]], card.asInstanceOf[Map[String, Any]]("appearance").asInstanceOf[Map[Any, Any]])).map(adaptCardJson)
       }
     } catch {
-      case _: Throwable => List()
+      case e: Throwable => logger.error(e.getMessage)
+        List()
     }
   }
 
