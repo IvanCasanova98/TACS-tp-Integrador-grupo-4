@@ -2,14 +2,18 @@ package server
 
 import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
+import akka.http.scaladsl.model.HttpMethods._
 import akka.http.scaladsl.model.{StatusCodes, Uri}
-import akka.http.scaladsl.server.{Directive0, Rejection, RejectionHandler}
 import akka.http.scaladsl.server.Directives.{complete, extractRequest, handleRejections, mapResponse, reject}
+import akka.http.scaladsl.server.{Directive0, Rejection, RejectionHandler}
+import ch.megard.akka.http.cors.scaladsl.CorsDirectives
+import ch.megard.akka.http.cors.scaladsl.model.{HttpHeaderRange, HttpOriginMatcher}
+import ch.megard.akka.http.cors.scaladsl.settings.CorsSettings
 import routes.Routes
 
 import java.util.concurrent.atomic.AtomicInteger
 
-object HttpServer {
+object HttpServer extends CorsDirectives {
   case class PathBusyRejection(path: Uri.Path, max: Int) extends Rejection
 
   class Limiter(max: Int) {
@@ -33,6 +37,11 @@ object HttpServer {
 
     implicit val system: ActorSystem = ActorSystem("tacs-tp")
 
+    val settings: CorsSettings = CorsSettings.defaultSettings.withAllowGenericHttpRequests(true)
+      .withAllowedOrigins(HttpOriginMatcher.*)
+      .withAllowedMethods(Seq(GET, POST, DELETE, OPTIONS, PUT, PATCH))
+      .withAllowedHeaders(HttpHeaderRange.*)
+
     val rejectionHandler = RejectionHandler.newBuilder()
       .handle {
         case PathBusyRejection(path, max) =>
@@ -41,9 +50,13 @@ object HttpServer {
 
     val limiter = new Limiter(max = 3)
 
-    val route =  handleRejections(rejectionHandler) {
-      limiter.limitConcurrentRequests {
-        Routes()
+    val route =  handleRejections(CorsDirectives.corsRejectionHandler) {
+      cors(settings) {
+        handleRejections(rejectionHandler) {
+          limiter.limitConcurrentRequests {
+            Routes()
+          }
+        }
       }
     }
 
